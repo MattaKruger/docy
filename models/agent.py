@@ -45,3 +45,11 @@ class AgentIn(SQLModel, table=False):
     system_prompt_id: int = Field()
     agent_type: AgentType = Field(default=AgentType.DEFAULT)
     agent_model: AgentModel = Field(default=AgentModel.GROQ_DEFAULT)
+
+
+class AgentOut(SQLModel, table=False):
+    id: int = Field()
+    name: str = Field()
+    system_prompt: "Prompt" = Field()
+    agent_type: AgentType = Field()
+    agent_model: AgentModel = Field()

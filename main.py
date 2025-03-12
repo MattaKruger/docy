@@ -6,7 +6,6 @@ from sqlmodel import SQLModel, Field, create_engine, Session, text
 
 from load_dotenv import load_dotenv
 
-# from github_scraper import GithubScraper
 
 from routers import chroma_router
 

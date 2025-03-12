@@ -12,13 +12,16 @@ class ProjectType(Enum, str):
 
 
 class Project(Base, table=True):
-    pass
+    name: str = Field()
+    project_type: ProjectType = Field(default=ProjectType.DEFAULT)
+    description: str = Field()
+    owner_id: 
 
 
 class ProjectOut(SQLModel, table=False):
-    id: int
-    name: str
-    type: ProjectType
+    id: int = Field()
+    name: str = Field()
+    project_type: ProjectType = Field()
     description: Optional[str] = None
     owner_id: Optional[int] = None
     owner: Optional["User"] = Relationship(back_populates="projects")
