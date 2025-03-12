@@ -4,7 +4,7 @@ from chroma_client import ChromaClient
 from pydantic import BaseModel
 
 
-router = APIRouter(prefix="/chroma", tags=["Chroma"])
+router = APIRouter(prefix="/chroma", tags=["chroma"])
 
 
 @router.get("/")

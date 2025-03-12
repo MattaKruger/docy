@@ -2,16 +2,16 @@ import os
 from typing import Optional, Any, List
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, UploadFile, HTTPException
-from sqlmodel import SQLModel, Field, create_engine, Session, text
+from sqlmodel import SQLModel, Field
 
 from load_dotenv import load_dotenv
+from database.db import engine, get_session
 
+from models import *
 
-from routers import chroma_router
+from routers import chroma_router, user_router, project_router
 
 load_dotenv()
-
-engine = create_engine(os.environ.get("DB_URL", ""))
 
 
 @asynccontextmanager
@@ -22,14 +22,12 @@ async def lifespan(app: FastAPI):
     print("Application shutdown")
 
 
-def get_session():
-    with Session(engine) as session:
-        yield session
-
-
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(chroma_router)
+app.include_router(chroma_router, dependencies=[Depends(get_session)])
+app.include_router(user_router)
+app.include_router(project_router)
+
 
 @app.get("/")
 def read_root():
