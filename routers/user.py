@@ -1,7 +1,8 @@
 from typing import List
 from fastapi import APIRouter, Depends
 from database.db import get_session, Session
-from models import User, UserIn, UserOut
+from models import UserIn, UserOut
+
 
 from repositories import UserRepository
 
@@ -10,7 +11,7 @@ router = APIRouter(prefix="/user", tags=["user"])
 
 
 def get_user_repo(session: Session = Depends(get_session)) -> UserRepository:
-    return UserRepository(User, session)
+    return UserRepository(session)
 
 
 @router.get("/", response_model=List[UserOut])

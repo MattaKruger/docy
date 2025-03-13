@@ -10,9 +10,7 @@ class ChromaClient:
         self.client = chromadb.PersistentClient()
 
     def create_collection(self, name, metadata):
-        chroma_collection = self.client.get_or_create_collection(
-            name, metadata=metadata
-        )
+        chroma_collection = self.client.get_or_create_collection(name, metadata=metadata)
         return chroma_collection
 
     def get_collection(self, name: str):
@@ -23,9 +21,7 @@ class ChromaClient:
 
     def add_document_to_collection(self, name: str, ids: list[str], documents: list[str], metadatas: list[dict]):
         collection = self.client.get_collection(name)
-        collection.add(
-            ids=ids, documents=documents, metadatas=metadatas
-        )
+        collection.add(ids=ids, documents=documents, metadatas=metadatas)
         return collection
 
     # def query_collection(self, query):

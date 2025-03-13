@@ -22,7 +22,7 @@ class Prompt(Base, table=True):
     agent_id: int = Field(default=None, foreign_key="agents.id")
     agent: "Agent" = Relationship(back_populates="system_prompt")
 
-    __tablename__ = "prompts" #type: ignore
+    __tablename__ = "prompts"  # type: ignore
 
 
 class PromptIn(SQLModel, table=False):
@@ -42,7 +42,8 @@ class Agent(Base, table=True):
     agent_type: AgentType = Field(default=AgentType.DEFAULT)
     agent_model: AgentModel = Field(default=AgentModel.GROQ_DEFAULT)
 
-    __tablename__ = "agents" #type: ignore
+    __tablename__ = "agents"  # type: ignore
+
 
 class AgentIn(SQLModel, table=False):
     name: str = Field()

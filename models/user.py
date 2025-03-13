@@ -11,7 +11,7 @@ class User(Base, SQLModel, table=True):
     name: str = Field(index=True)
     projects: List["Project"] = Relationship(back_populates="owner")
 
-    __tablename__ = "users" #type: ignore
+    __tablename__ = "users"  # type: ignore
 
 
 class UserIn(SQLModel, table=False):

@@ -1,13 +1,11 @@
-import os
-from typing import Optional, Any, List
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Depends, UploadFile, HTTPException
-from sqlmodel import SQLModel, Field
+from fastapi import FastAPI, Depends
+from sqlmodel import SQLModel
 
 from load_dotenv import load_dotenv
 from database.db import engine, get_session
 
-from models import *
+# import models
 
 from routers import chroma_router, user_router, project_router
 
