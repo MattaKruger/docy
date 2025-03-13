@@ -7,12 +7,8 @@ from models import (
 from .base import BaseRepository
 
 
-class ProjectArtifactRepository(
-    BaseRepository[ProjectArtifact, ProjectArtifactIn, ProjectArtifactUpdate]
-):
+class ProjectArtifactRepository(BaseRepository[ProjectArtifact, ProjectArtifactIn, ProjectArtifactUpdate]):
     """Repository for ProjectArtifact model operations."""
 
     def __init__(self, session: Session):
         super().__init__(ProjectArtifact, session)
-    
-    

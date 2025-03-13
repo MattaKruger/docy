@@ -7,7 +7,7 @@ from database.db import engine, get_session
 
 # import models
 
-from routers import chroma_router, user_router, project_router
+from routers import chroma_router, user_router, project_router, artifact_router
 
 load_dotenv()
 
@@ -25,6 +25,7 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(chroma_router, dependencies=[Depends(get_session)])
 app.include_router(user_router)
 app.include_router(project_router)
+app.include_router(artifact_router)
 
 
 @app.get("/")

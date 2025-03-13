@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from chroma_client import ChromaClient
+from services import ChromaService
 
 from pydantic import BaseModel
 
@@ -7,8 +7,14 @@ from pydantic import BaseModel
 router = APIRouter(prefix="/chroma", tags=["chroma"])
 
 
+class CollectionMetadata(BaseModel):
+    framework: str
+    language: str
+
+
+
 @router.get("/")
-def get_collection(name: str, chroma_client: ChromaClient = Depends(ChromaClient)):
+def get_collection(name: str, chroma_client: ChromaService = Depends(ChromaService)):
     try:
         collection = chroma_client.get_collection(name)
     except:
@@ -16,7 +22,7 @@ def get_collection(name: str, chroma_client: ChromaClient = Depends(ChromaClient
 
 
 @router.delete("/")
-def delete_collection(name: str, chroma_client: ChromaClient = Depends(ChromaClient)):
+def delete_collection(name: str, chroma_client: ChromaService = Depends(ChromaService)):
     try:
         collection = chroma_client.get_collection(name)
         chroma_client.delete_collection(collection.name)
@@ -24,11 +30,6 @@ def delete_collection(name: str, chroma_client: ChromaClient = Depends(ChromaCli
         return HTTPException(status_code=404, detail="Not found.")
 
 
-# @router.post("/")
-# def create_collection(collection: CollectionCreate, chroma_client: ChromaClient = Depends(ChromaClient)):
-#     chroma_client.create_collection(collection)
-
-
-# @router.get("/query")
-# def query_collection(query: CollectionQuery, chroma_client: ChromaClient = Depends(ChromaClient)):
-#     chroma_client.query_collection(query)
+@router.post("/")
+def create_collection(name: str, metadata: CollectionMetadata, chroma_client: ChromaService = Depends(ChromaService)):
+    chroma_client.create_collection(name, metadata.model_dump())

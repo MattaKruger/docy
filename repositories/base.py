@@ -68,10 +68,7 @@ class BaseRepository(Generic[T, C, U]):
                     setattr(db_obj, field, value)
         else:
             for field in self.model.__fields__:  # type: ignore
-                if (
-                    hasattr(update_model, field)
-                    and getattr(update_model, field) is not None
-                ):
+                if hasattr(update_model, field) and getattr(update_model, field) is not None:
                     setattr(db_obj, field, getattr(update_model, field))
 
         self.session.add(db_obj)

@@ -26,5 +26,3 @@ async def get_project(project_id: int, project_repo: ProjectRepository = Depends
 @router.post("/")
 async def create_project(project: ProjectIn, project_repo: ProjectRepository = Depends(get_project_repo)):
     return await project_repo.create(project)
-
-

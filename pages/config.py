@@ -9,19 +9,7 @@ AVAILABLE_MODELS = {
 }
 
 AVAILABLE_AGENTS = {
-    "Helpful Assistant": {
-        "model": "llama_model",
-        "system_prompt": "",
-        "settings": MODEL_SETTINGS
-    },
-    "Code Expert": {
-        "model": "llama_model",
-        "system_prompt": "",
-        "settings": MODEL_SETTINGS
-    },
-    "Document Analyzer": {
-        "model": "llama_model",
-        "system_prompt": "",
-        "settings": MODEL_SETTINGS
-    }
+    "Helpful Assistant": {"model": "llama_model", "system_prompt": "", "settings": MODEL_SETTINGS},
+    "Code Expert": {"model": "llama_model", "system_prompt": "", "settings": MODEL_SETTINGS},
+    "Document Analyzer": {"model": "llama_model", "system_prompt": "", "settings": MODEL_SETTINGS},
 }

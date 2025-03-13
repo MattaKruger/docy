@@ -19,15 +19,15 @@ llama_model = AVAILABLE_MODELS["llama_model"]
 groq_model = GroqModel(llama_model)
 model_settings = ModelSettings(**AVAILABLE_AGENTS["Helpful Assistant"]["settings"])
 
+
 def initialize_agents():
     available_agents = {}
     for agent_name, agent_config in AVAILABLE_AGENTS.items():
         available_agents[agent_name] = Agent(
-            groq_model,
-            system_prompt=agent_config["system_prompt"],
-            model_settings=model_settings
+            groq_model, system_prompt=agent_config["system_prompt"], model_settings=model_settings
         )
     return available_agents
+
 
 available_agents = initialize_agents()
 
@@ -44,11 +44,7 @@ with st.sidebar:
     st.title(f"Current model: {llama_model}")
     st.header("Agent selection")
     agents_name = list(available_agents.keys())
-    selected_agent = st.selectbox(
-        "Choose which AI assistant to chat with:",
-        agents_name,
-        index=0
-    )
+    selected_agent = st.selectbox("Choose which AI assistant to chat with:", agents_name, index=0)
 
     if chat_interface.set_agent(selected_agent):
         st.success(f"Start chatting with {selected_agent}!")
@@ -57,7 +53,7 @@ with st.sidebar:
     uploaded_files = st.file_uploader(
         "Upload files to provide context for the conversation",
         accept_multiple_files=True,
-        type=["txt", "pdf", "py", "md", "csv"]
+        type=["txt", "pdf", "py", "md", "csv"],
     )
 
     if uploaded_files:
@@ -89,7 +85,9 @@ if prompt := st.chat_input("Ask something..."):
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    conversation_history = st.session_state.messages[-10:] if len(st.session_state.messages) > 10 else st.session_state.messages
+    conversation_history = (
+        st.session_state.messages[-10:] if len(st.session_state.messages) > 10 else st.session_state.messages
+    )
 
     with st.chat_message("assistant"):
         full_response = asyncio.run(chat_interface.generate_response(prompt, message_history=conversation_history[:-1]))

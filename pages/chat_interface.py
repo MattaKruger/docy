@@ -25,10 +25,10 @@ class StreamlitChatInterface:
             tmp_path = tmp_file.name
 
         try:
-            if uploaded_file.type == "text/plain" or uploaded_file.name.endswith(('.txt', '.md', '.py', '.csv')):
+            if uploaded_file.type == "text/plain" or uploaded_file.name.endswith((".txt", ".md", ".py", ".csv")):
                 with open(tmp_path, "r") as f:
                     file_content = f.read()
-            elif uploaded_file.name.endswith(('.pdf')):
+            elif uploaded_file.name.endswith((".pdf")):
                 file_content = f"PDF file uploaded: {uploaded_file.name}"
             else:
                 file_content = f"File uploaded: {uploaded_file.name} (content type: {uploaded_file.type})"
