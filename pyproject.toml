@@ -19,6 +19,7 @@ dependencies = [
     "sentence-transformers>=3.4.1",
     "sqlmodel>=0.0.24",
     "streamlit>=1.43.2",
+    "transformers>=4.49.0",
     "typer>=0.15.2",
     "uvicorn>=0.34.0",
 ]

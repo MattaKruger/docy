@@ -684,6 +684,7 @@ dependencies = [
     { name = "sentence-transformers" },
     { name = "sqlmodel" },
     { name = "streamlit" },
+    { name = "transformers" },
     { name = "typer" },
     { name = "uvicorn" },
 ]
@@ -704,6 +705,7 @@ requires-dist = [
     { name = "sentence-transformers", specifier = ">=3.4.1" },
     { name = "sqlmodel", specifier = ">=0.0.24" },
     { name = "streamlit", specifier = ">=1.43.2" },
+    { name = "transformers", specifier = ">=4.49.0" },
     { name = "typer", specifier = ">=0.15.2" },
     { name = "uvicorn", specifier = ">=0.34.0" },
 ]
