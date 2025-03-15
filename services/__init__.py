@@ -1,5 +1,5 @@
-from .chroma import ChromaService
-from .github import GithubService
+from .chroma_service import ChromaService
+from .github_service import GithubService
 
 __all__ = [
     "ChromaService",

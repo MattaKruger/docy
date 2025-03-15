@@ -12,9 +12,12 @@ dependencies = [
     "logfire>=3.7.1",
     "pgvector>=0.3.6",
     "psycopg2>=2.9.10",
+    "psycopg2-binary>=2.9.10",
     "pydantic-ai>=0.0.36",
     "pydantic-ai-slim[groq]>=0.0.36",
+    "pydantic-settings>=2.8.1",
     "pygithub>=2.6.1",
+    "pymilvus>=2.5.5",
     "python-multipart>=0.0.20",
     "sentence-transformers>=3.4.1",
     "sqlmodel>=0.0.24",
@@ -24,7 +27,6 @@ dependencies = [
     "uvicorn>=0.34.0",
 ]
 
-
 [tool.ruff]
 line-length = 120
 
@@ -33,3 +35,7 @@ extend-select = ["E", "F", "W", "I", "N", "B"]
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
+
+[tool.ruff.format]
+quote-style = "double"
+docstring-code-format = true

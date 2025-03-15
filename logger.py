@@ -33,4 +33,5 @@ def setup_logger(name: str, level: int = logging.INFO):
 
 
 main_logger = setup_logger("main")
-github_logger = setup_logger("github_logger")
+github_logger = setup_logger("github")
+chroma_logger = setup_logger("chroma")

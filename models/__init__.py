@@ -11,7 +11,7 @@ from .project import (
     ProjectArtifactUpdate,
 )
 from .user import User, UserIn, UserOut, UserUpdate
-
+from .collection import CollectionMetadata, DocumentMetadata, DocumentQuery
 
 __all__ = [
     "Base",
@@ -24,8 +24,11 @@ __all__ = [
     "ProjectArtifactIn",
     "ProjectArtifactOut",
     "ProjectArtifactUpdate",
+    "CollectionMetadata",
+    "DocumentMetadata",
     "User",
     "UserIn",
     "UserOut",
     "UserUpdate",
+    "DocumentQuery"
 ]

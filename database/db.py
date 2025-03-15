@@ -1,11 +1,10 @@
-import os
 from sqlmodel import create_engine, Session
-from load_dotenv import load_dotenv
+from settings import Settings
+
+settings = Settings()
 
 
-load_dotenv()
-
-engine = create_engine(os.environ.get("DB_URL", ""))
+engine = create_engine(f"postgresql://{settings.DB_USER}:{settings.DB_PASS}@{settings.DB_HOST}/{settings.DB_NAME}")
 
 
 def get_session():
