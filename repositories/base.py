@@ -2,6 +2,7 @@ from typing import Generic, List, Optional, Type, TypeVar, Dict, Any
 from sqlmodel import SQLModel, Session, select, func
 from fastapi import HTTPException, status
 
+
 T = TypeVar("T", bound=SQLModel)
 C = TypeVar("C", bound=SQLModel)
 U = TypeVar("U", bound=SQLModel)
@@ -12,8 +13,7 @@ class BaseRepository(Generic[T, C, U]):
     Base repository implementing common CRUD operations for SQLModel models.
 
     This class provides generic database operations that can be used by
-    all model repositories, reducing code duplication and ensuring
-    consistent implementation of data access patterns.
+    all model repositories
     """
 
     def __init__(self, model: Type[T], session: Session):

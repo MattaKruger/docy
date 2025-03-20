@@ -8,6 +8,7 @@ dependencies = [
     "chromadb>=0.6.3",
     "crawl4ai>=0.5.0.post4",
     "fastapi[standard]>=0.115.11",
+    "httpx>=0.28.1",
     "load-dotenv>=0.1.0",
     "logfire>=3.7.1",
     "pgvector>=0.3.6",

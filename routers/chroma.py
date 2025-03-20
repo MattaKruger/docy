@@ -8,6 +8,7 @@ from services import ChromaService
 
 from logger import chroma_logger
 
+
 router = APIRouter(prefix="/chroma", tags=["chroma"])
 
 

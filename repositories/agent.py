@@ -1,5 +1,6 @@
-from .base import BaseRepository
 from sqlmodel import Session
+
+from .base import BaseRepository
 from models import Agent
 
 

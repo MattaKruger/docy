@@ -1,5 +1,5 @@
 from .base import Base
-from .agent import Agent, AgentIn, AgentOut, AgentUpdate
+from .agent import Agent, AgentIn, AgentOut, AgentUpdate, AgentState
 from .project import (
     Project,
     ProjectIn,
@@ -10,15 +10,22 @@ from .project import (
     ProjectArtifactOut,
     ProjectArtifactUpdate,
 )
+from .task import Task, TaskIn, TaskOut, TaskUpdate, TaskType
 from .user import User, UserIn, UserOut, UserUpdate
 from .collection import CollectionMetadata, DocumentMetadata, DocumentQuery
 
 __all__ = [
     "Base",
+    "Task",
+    "TaskIn",
+    "TaskOut",
+    "TaskUpdate",
+    "TaskType",
     "Agent",
     "AgentIn",
     "AgentOut",
     "AgentUpdate",
+    "AgentState",
     "Project",
     "ProjectIn",
     "ProjectOut",
