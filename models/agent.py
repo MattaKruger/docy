@@ -1,8 +1,13 @@
 from enum import Enum
-from typing import Optional, List
+from typing import Optional
 from sqlmodel import SQLModel, Field, Relationship
 
 from .base import Base
+
+
+class AgentState(str, Enum):
+    ACTIVE = "active"
+    INACTIVE = "inactive"
 
 
 class AgentType(str, Enum):
@@ -41,6 +46,7 @@ class Agent(Base, table=True):
     system_prompt: Optional["Prompt"] = Relationship(back_populates="agent")
     agent_type: AgentType = Field(default=AgentType.DEFAULT)
     agent_model: AgentModel = Field(default=AgentModel.GROQ_DEFAULT)
+    state: AgentState = Field(default=AgentState.INACTIVE)
 
     __tablename__ = "agents"  # type: ignore
 
@@ -50,6 +56,7 @@ class AgentIn(SQLModel, table=False):
     system_prompt_id: int = Field()
     agent_type: AgentType = Field(default=AgentType.DEFAULT)
     agent_model: AgentModel = Field(default=AgentModel.GROQ_DEFAULT)
+    state: AgentState = Field(default=AgentState.INACTIVE)
 
 
 class AgentOut(SQLModel, table=False):
@@ -58,3 +65,12 @@ class AgentOut(SQLModel, table=False):
     system_prompt: "Prompt" = Field()
     agent_type: AgentType = Field()
     agent_model: AgentModel = Field()
+    state: AgentState = Field()
+
+
+class AgentUpdate(SQLModel, table=False):
+    name: Optional[str] = Field()
+    system_prompt: Optional[str] = Field()
+    agent_type: Optional[AgentType] = Field()
+    agent_model: Optional[AgentModel] = Field()
+    state: Optional[AgentState] = Field()

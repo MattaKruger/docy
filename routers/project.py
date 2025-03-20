@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Path
 
 from database.db import get_session, Session
 
@@ -19,7 +19,7 @@ async def get_projects(project_repo: ProjectRepository = Depends(get_project_rep
 
 
 @router.get("/{project_id}")
-async def get_project(project_id: int, project_repo: ProjectRepository = Depends(get_project_repo)):
+async def get_project(project_id: int = Path(...), project_repo: ProjectRepository = Depends(get_project_repo)):
     return await project_repo.get(project_id)
 
 

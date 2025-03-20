@@ -1,5 +1,5 @@
 from .base import Base
-from .agent import Agent
+from .agent import Agent, AgentIn, AgentOut, AgentUpdate
 from .project import (
     Project,
     ProjectIn,
@@ -16,6 +16,9 @@ from .collection import CollectionMetadata, DocumentMetadata, DocumentQuery
 __all__ = [
     "Base",
     "Agent",
+    "AgentIn",
+    "AgentOut",
+    "AgentUpdate",
     "Project",
     "ProjectIn",
     "ProjectOut",
@@ -30,5 +33,5 @@ __all__ = [
     "UserIn",
     "UserOut",
     "UserUpdate",
-    "DocumentQuery"
+    "DocumentQuery",
 ]
