@@ -1,9 +1,9 @@
 from argparse import Namespace
 
-from base import CLIBase
+from base import Base
 
 
-class AgentCLI(CLIBase):
+class AgentCLI(Base):
     def __init__(self):
         super().__init__(description="Agent CLI app")
 

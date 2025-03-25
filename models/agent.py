@@ -1,8 +1,9 @@
 from enum import Enum
-from typing import Optional
+from typing import Optional, List
 from sqlmodel import SQLModel, Field, Relationship
 
 from .base import Base
+from models import Task
 
 
 class AgentState(str, Enum):
@@ -47,6 +48,7 @@ class Agent(Base, table=True):
     agent_type: AgentType = Field(default=AgentType.DEFAULT)
     agent_model: AgentModel = Field(default=AgentModel.GROQ_DEFAULT)
     state: AgentState = Field(default=AgentState.INACTIVE)
+    tasks: List[Task] = Relationship(back_populates="agent")
 
     __tablename__ = "agents"  # type: ignore
 

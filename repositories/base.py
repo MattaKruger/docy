@@ -11,9 +11,7 @@ U = TypeVar("U", bound=SQLModel)
 class BaseRepository(Generic[T, C, U]):
     """
     Base repository implementing common CRUD operations for SQLModel models.
-
-    This class provides generic database operations that can be used by
-    all model repositories
+    This class provides generic database operations that can be used by all model repositories
     """
 
     def __init__(self, model: Type[T], session: Session):

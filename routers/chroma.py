@@ -1,12 +1,11 @@
 import uuid
-
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Path
-from models import CollectionMetadata, DocumentMetadata, DocumentQuery
-from services import ChromaService
 
 from logger import chroma_logger
+from models import CollectionMetadata, DocumentMetadata, DocumentQuery
+from services import ChromaService
 
 
 router = APIRouter(prefix="/chroma", tags=["chroma"])
@@ -20,15 +19,16 @@ def get_collection(
     try:
         collection = chroma_service.get(name=name)
         if collection:
-            return {
-                "name": collection.name,
-                "metadata": collection.metadata,
-                "documents": collection.get(include=["embeddings", "documents", "metadatas"]),  # type: ignore
-                "document_count": collection.count(),
-            }
-    except Exception as e:
-        chroma_logger.error(e)
-        raise HTTPException(status_code=400, detail="Not found.")
+            return {"name": collection.name, "count": collection.count()}
+        return None
+    except Exception as err:
+        chroma_logger.error(err)
+        raise err
+
+
+@router.get("/collections")
+def get_collections(chroma_service: ChromaService = Depends(ChromaService)):
+    return chroma_service.get_collections()
 
 
 @router.post("/{name}/create")
@@ -42,7 +42,7 @@ def create_collection(
 @router.put("/{name}/update")
 def update_collection(
     name: str = Path(..., description="The name of the collection you want to update"),
-    updated_documents: Optional[List[str]] = [],
+    updated_documents: Optional[List[str]] = None,
     updated_metadata: CollectionMetadata = CollectionMetadata(),
     chroma_service: ChromaService = Depends(ChromaService),
 ):

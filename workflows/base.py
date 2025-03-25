@@ -1,12 +1,11 @@
 import argparse
-from typing import Optional, Dict, Callable
-
 from abc import ABC, abstractmethod
+from typing import Optional, Dict, Callable
 
 from rich.console import Console
 
 
-class CLIBase(ABC):
+class Base(ABC):
     """
     Base class for rich-based CLI applications.
 

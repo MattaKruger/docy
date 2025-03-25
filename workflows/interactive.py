@@ -1,15 +1,16 @@
 import argparse
-from base import CLIBase
+
+from base import Base
 
 
-class MyInteractiveCLI(CLIBase):
+class MyInteractiveCLI(Base):
     def __init__(self):
         super().__init__(description="My Interactive CLI App")
         self._data = []
 
     def add_arguments(self):
         super().add_arguments()
-        self._parser.add_argument("-n", "--name", help="Your name", default="World")
+        self._parser.add_argument("-n", "--name", help="Your name", default="Matthijs")
 
     def add_interactive_commands(self):
         super().add_interactive_commands()

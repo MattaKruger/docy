@@ -1,5 +1,6 @@
 from enum import Enum
-from sqlmodel import Field, Relationship, SQLModel
+
+from sqlmodel import Field, SQLModel, Relationship
 from typing import Optional
 from models import Base, Agent
 
@@ -15,7 +16,7 @@ class Task(Base, table=True):
 
     # Relationships
     agent_id: int = Field(default=None, foreign_key="agents.id")
-    # agent: "Agent" = Relationship(back_populates="task")
+    agent: "Agent" = Relationship(back_populates="tasks")
 
     __tablename__ = "tasks"  # type: ignore
 
