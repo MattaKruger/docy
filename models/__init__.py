@@ -13,9 +13,14 @@ from .project import (
 from .task import Task, TaskIn, TaskOut, TaskUpdate, TaskType
 from .user import User, UserIn, UserOut, UserUpdate
 from .collection import CollectionMetadata, DocumentMetadata, DocumentQuery
+from .prompt import Prompt, PromptIn, PromptOut, PromptUpdate
 
 __all__ = [
     "Base",
+    "Prompt",
+    "PromptIn",
+    "PromptOut",
+    "PromptUpdate",
     "Task",
     "TaskIn",
     "TaskOut",

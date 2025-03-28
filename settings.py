@@ -14,3 +14,4 @@ class Settings(BaseSettings):
     DB_USER: str = Field(default="")
     DB_PASS: str = Field(default="")
     DB_NAME: str = Field(default="")
+    DB_PORT: str = Field(default="5432")

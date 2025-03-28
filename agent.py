@@ -23,9 +23,6 @@ from system_prompts import (
     implementation_prompt,
 )
 
-logfire.configure()
-Agent.instrument_all()
-
 
 # Define your models
 class DataModelDetails(BaseModel):

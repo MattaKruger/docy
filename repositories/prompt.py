@@ -12,7 +12,7 @@ class PromptUpdate(SQLModel):
 
 
 class PromptRepository(BaseRepository[Prompt, PromptIn, PromptUpdate]):
-    def __init__(elf, session: AsyncSession):
+    def __init__(self, session: AsyncSession):
         super().__init__(Prompt, session)
 
     async def get_by_name(self, name: str) -> Optional[Prompt]:
@@ -21,11 +21,11 @@ class PromptRepository(BaseRepository[Prompt, PromptIn, PromptUpdate]):
         result = await self.session.exec(statement)
         return result.first()
 
-    async def get_or_create(self, name: str) -> Prompt:
+    async def get_or_create(self, name: str, content: str) -> Prompt:
         """Gets a prompt by name, creating it if it doesnt exist"""
         prompt = await self.get_by_name(name)
         if not prompt:
-            prompt_in = PromptIn(name=name)
+            prompt_in = PromptIn(name=name, content=content)
             prompt = await self.create(prompt_in)
             print(f"Created prompt ID: {prompt.id}")
         return prompt
