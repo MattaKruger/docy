@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
 
 class User(Base, SQLModel, table=True):
-    name: str = Field(index=True)
+    name: str = Field(index=True, unique=True)
     projects: List["Project"] = Relationship(back_populates="owner")
 
     __tablename__ = "users"  # type: ignore
@@ -21,8 +21,13 @@ class UserIn(SQLModel, table=False):
 class UserOut(SQLModel, table=False):
     id: int = Field()
     name: str = Field()
-    # projects: Optional[List["Project"]]
 
 
 class UserUpdate(SQLModel, table=False):
     name: Optional[str] = Field()
+
+
+class UserProjects(SQLModel, table=False):
+    id: int
+    name: str
+    projects: Optional[List["Project"]] = None

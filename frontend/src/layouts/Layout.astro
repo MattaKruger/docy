@@ -1,0 +1,37 @@
+---
+import Navbar from "../components/static/Navbar.astro";
+import Sidebar from "../components/Sidebar.astro";
+
+import "../styles/global.css";
+---
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Docy</title>
+    </head>
+    <body
+        class="min-h-screen grid grid-rows-[auto_1fr_auto] grid-cols-[auto_1fr] bg-charcoal-gray text-warm-gray"
+    >
+        <header class="col-span-2 bg-navy-green text-white p-4">
+            <slot name="header">
+                <Navbar />
+            </slot>
+        </header>
+
+        <slot name="sidebar">
+            <Sidebar />
+        </slot>
+
+        <main class="p-6">
+            <slot name="main" />
+        </main>
+
+        <footer class="col-span-2 bg-navy-green text-white p-4">
+            <slot name="footer">
+                <p>Docy</p>
+            </slot>
+        </footer>
+    </body>
+</html>

@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Depends, Path
+from fastapi import Path, Depends, APIRouter
 
-from database.db import Session, get_session
-from models import ProjectIn, ProjectUpdate
+from database.db import get_session, Session
+from models import ProjectIn, ProjectUpdate, ProjectArtifact
 from repositories import ProjectRepository
+
 
 router = APIRouter(prefix="/projects", tags=["projects"])
 

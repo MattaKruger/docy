@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     GITHUB_ACCESS_TOKEN: str = Field(default="")
     GROQ_API_KEY: str = Field(default="")
     OBSIDIAN_VAULT_DIR: str = Field(default="")
+    GEMINI_API_KEY: str = Field(default="")
 
     DB_HOST: str = Field(default="")
     DB_USER: str = Field(default="")

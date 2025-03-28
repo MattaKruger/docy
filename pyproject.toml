@@ -1,12 +1,14 @@
 [project]
 name = "docy"
 version = "0.1.0"
-description = "Add your description here"
+description = "Docy"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = [
+    "asyncpg>=0.30.0",
     "chromadb>=0.6.3",
     "crawl4ai>=0.5.0.post4",
+    "faiss-gpu>=1.7.2",
     "fastapi[standard]>=0.115.11",
     "httpx>=0.28.1",
     "ipykernel>=6.29.5",
@@ -21,10 +23,12 @@ dependencies = [
     "pydantic-settings>=2.8.1",
     "pygithub>=2.6.1",
     "pymilvus>=2.5.5",
+    "pyright>=1.1.398",
     "python-frontmatter>=1.1.0",
     "python-multipart>=0.0.20",
     "python-slugify>=8.0.4",
     "pyyaml>=6.0.2",
+    "ruff>=0.11.2",
     "sentence-transformers>=3.4.1",
     "sqlmodel>=0.0.24",
     "streamlit>=1.43.2",

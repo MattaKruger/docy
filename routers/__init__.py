@@ -4,6 +4,14 @@ from .chroma import router as chroma_router
 from .notes import router as notes_router
 from .project import router as project_router
 from .user import router as user_router
+from .task import router as task_router
 
-
-__all__ = ["chroma_router", "user_router", "project_router", "artifact_router", "agent_router", "notes_router"]
+__all__ = [
+    "chroma_router",
+    "user_router",
+    "project_router",
+    "artifact_router",
+    "agent_router",
+    "notes_router",
+    "task_router",
+]

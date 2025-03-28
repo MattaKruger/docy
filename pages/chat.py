@@ -9,7 +9,6 @@ from pydantic_ai.models.groq import GroqModel
 from config import AVAILABLE_MODELS, AVAILABLE_AGENTS
 from chat_interface import StreamlitChatInterface
 
-logfire.configure()
 Agent.instrument_all()
 
 

@@ -1,9 +1,9 @@
 from typing import List
+
 from fastapi import APIRouter, Depends
-from database.db import get_session, Session
+from database import get_session, Session
+
 from models import UserIn, UserOut
-
-
 from repositories import UserRepository
 
 

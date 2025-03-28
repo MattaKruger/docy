@@ -10,9 +10,6 @@ from repositories import AgentRepository
 from models import AgentIn, AgentUpdate, AgentOut, AgentState
 
 
-logfire.configure()
-# Agent.instrument_all()
-
 router = APIRouter(prefix="/agent", tags=["agent"])
 
 
@@ -25,14 +22,14 @@ async def get_agents(agent_repo: AgentRepository = Depends(get_agent_repo)):
     return await agent_repo.get_multi()
 
 
-@router.get("/{agent_id}")
-async def get_agent(agent_id: int = Path(...), agent_repo: AgentRepository = Depends(get_agent_repo)):
-    return await agent_repo.get(agent_id)
-
-
 @router.post("/")
 async def create_agent(agent: AgentIn, agent_repo: AgentRepository = Depends(get_agent_repo)):
     return await agent_repo.create(agent)
+
+
+@router.get("/{agent_id}")
+async def get_agent(agent_id: int = Path(...), agent_repo: AgentRepository = Depends(get_agent_repo)):
+    return await agent_repo.get(agent_id)
 
 
 @router.put("/{agent_id}")
@@ -45,3 +42,6 @@ async def update_agent(
 @router.get("/active")
 async def get_active_agents(agent_repo: AgentRepository = Depends(get_agent_repo)):
     return await agent_repo.get_multi(filters={"state": AgentState.ACTIVE})
+
+
+@router.

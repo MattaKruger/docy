@@ -1,0 +1,43 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Task from "../components/Task.vue";
+---
+
+<Layout>
+    <div slot="header" class="text-white p-4">
+        <h1 class="text-2xl font-bold">Dashboard</h1>
+    </div>
+    <div slot="sidebar" class="h-full p-4">
+        <nav>
+            <ul class="space-y-3 w-35">
+                <li>
+                    <a href="/task" class="block p-2 bg-navy-green rounded"
+                        >Tasks</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="/transcribe"
+                        class="block p-2 bg-navy-green rounded">Transcribe</a
+                    >
+                </li>
+                <li>
+                    <a href="/agent" class="block p-2 bg-navy-green rounded"
+                        >Agents</a
+                    >
+                </li>
+                <li>
+                    <a href="/project" class="block p-2 bg-navy-green rounded"
+                        >Projects</a
+                    >
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div slot="main">
+        <h2 class="text-xl font-semibold mb-4">Task Overview</h2>
+        <div class="grid gap-4">
+            <Task client:load />
+        </div>
+    </div>
+</Layout>

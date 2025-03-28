@@ -3,7 +3,7 @@ from typing import Optional, List
 from sqlmodel import SQLModel, Field, Relationship
 
 from .base import Base
-from models import Task
+from .task import Task
 
 
 class AgentState(str, Enum):
@@ -24,9 +24,9 @@ class AgentModel(str, Enum):
 
 
 class Prompt(Base, table=True):
-    name: str = Field()
+    name: str = Field(unique=True, index=True)
     agent_id: int = Field(default=None, foreign_key="agents.id")
-    agent: "Agent" = Relationship(back_populates="system_prompt")
+    agent: Optional["Agent"] = Relationship(back_populates="system_prompt")
 
     __tablename__ = "prompts"  # type: ignore
 
@@ -43,12 +43,12 @@ class PromptOut(SQLModel, table=False):
 
 
 class Agent(Base, table=True):
-    name: str = Field()
+    name: str = Field(unique=True, index=True)
     system_prompt: Optional["Prompt"] = Relationship(back_populates="agent")
-    agent_type: AgentType = Field(default=AgentType.DEFAULT)
+    agent_type: AgentType = Field(default=AgentType.DEFAULT, index=True)
     agent_model: AgentModel = Field(default=AgentModel.GROQ_DEFAULT)
-    state: AgentState = Field(default=AgentState.INACTIVE)
-    tasks: List[Task] = Relationship(back_populates="agent")
+    state: AgentState = Field(default=AgentState.INACTIVE, index=True)
+    tasks: List["Task"] = Relationship(back_populates="agent")
 
     __tablename__ = "agents"  # type: ignore
 

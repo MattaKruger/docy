@@ -1,14 +1,16 @@
+from ssl import Options
 from typing import TYPE_CHECKING
 
 from enum import Enum
-from typing import Optional
+from typing import Optional, List
+from rich.color import Color
 from sqlmodel import SQLModel, Field, Relationship
+from sqlalchemy import Column, Text
 
 from .base import Base
 
-
-if TYPE_CHECKING:
-    from .user import User
+from .user import User
+from .task import Task
 
 
 class ProjectType(str, Enum):
@@ -17,15 +19,16 @@ class ProjectType(str, Enum):
 
 
 class Project(Base, table=True):
-    name: str = Field(unique=True)
-    project_type: ProjectType = Field(default=ProjectType.DEFAULT)
-    description: str = Field()
+    name: str = Field(unique=True, index=True)
+    project_type: ProjectType = Field(default=ProjectType.DEFAULT, index=True)
+    description: str = Field(sa_column=Column(Text))
     framework: str = Field()
 
     # Relationships
-    owner_id: Optional[int] = Field(default=None, foreign_key="users.id")
-    owner: "User" = Relationship(back_populates="projects")
-    artifacts: list["ProjectArtifact"] = Relationship(back_populates="project")
+    owner_id: Optional[int] = Field(default=None, foreign_key="users.id", index=True)
+    owner: Optional["User"] = Relationship(back_populates="projects")
+    artifacts: List["ProjectArtifact"] = Relationship(back_populates="project")
+    tasks: List["Task"] = Relationship(back_populates="project")
 
     __tablename__ = "projects"  # type:ignore
 
@@ -33,8 +36,10 @@ class Project(Base, table=True):
 class ProjectOut(SQLModel, table=False):
     id: int = Field()
     name: str = Field()
+
+    description: Optional[str] = Field()
+    framework: str = Field()
     project_type: ProjectType = Field()
-    description: Optional[str] = None
 
     # Relationships
     owner_id: Optional[int] = None
@@ -66,15 +71,17 @@ class ProjectArtifactType(str, Enum):
 
 
 class ProjectArtifact(Base, table=True):
-    name: str = Field(unique=True)
-    description: str = Field()
-    content: str = Field()
-    validated: bool = Field(default=False)
-    project_artifact_type: ProjectArtifactType = Field(default=ProjectArtifactType.DEFAULT)
+    name: str = Field(index=True)
+    description: str = Field(sa_column=Column(Text))
+    content: str = Field(sa_column=Column(Text))
+    validated: bool = Field(default=False, index=True)
+    project_artifact_type: ProjectArtifactType = Field(default=ProjectArtifactType.DEFAULT, index=True)
 
     # Relationships
     project_id: Optional[int] = Field(default=None, foreign_key="projects.id")
-    project: Project = Relationship(back_populates="artifacts")
+    project: Optional[Project] = Relationship(back_populates="artifacts")
+
+    __tablename__ = "project_artifacts"  # type: ignore
 
 
 class ProjectArtifactIn(SQLModel, table=False):
@@ -86,7 +93,7 @@ class ProjectArtifactIn(SQLModel, table=False):
     project_artifact_type: ProjectArtifactType = Field(default=ProjectArtifactType.DEFAULT)
 
     # Relationships
-    project_id: Optional[int] = None
+    project_id: Optional[int] = Field(default=None)
 
 
 class ProjectArtifactOut(SQLModel, table=False):
