@@ -1,10 +1,10 @@
 from typing import List
+
 from fastapi import APIRouter, Depends
 
-from database import get_session, Session
-from repositories import TaskRepository
+from database import Session, get_session
 from models import TaskIn, TaskOut
-
+from repositories import TaskRepository
 
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 

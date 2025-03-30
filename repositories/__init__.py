@@ -1,9 +1,9 @@
-from .user import UserRepository
 from .agent import AgentRepository
 from .project import ProjectRepository
 from .project_artifact import ProjectArtifactRepository
-from .task import TaskRepository
 from .prompt import PromptRepository
+from .task import TaskRepository
+from .user import UserRepository
 
 __all__ = [
     "UserRepository",

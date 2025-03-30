@@ -1,14 +1,13 @@
 from contextlib import asynccontextmanager
 
+import logfire
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 from load_dotenv import load_dotenv
-from sqlmodel import SQLModel
 from pydantic_ai import Agent
-from database.db import engine
-from routers import agent_router, artifact_router, chroma_router, notes_router, project_router, user_router, task_router
-import logfire
+
+from database import create_db_and_tables
+from routers import agent_router, artifact_router, chroma_router, notes_router, project_router, task_router, user_router
 
 load_dotenv()
 
@@ -21,9 +20,8 @@ origins = ["http://localhost", "http://localhost:4321", "http://localhost:8000"]
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Creating database tables")
-    SQLModel.metadata.create_all(engine)
+    await create_db_and_tables()
     yield
-    print("Application shutdown")
 
 
 app = FastAPI(lifespan=lifespan)

@@ -1,26 +1,23 @@
 import asyncio
-import logfire
-from typing import Callable, Any, Optional, Dict, List, Tuple, TypeVar, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from rich.prompt import Prompt
+from pydantic import BaseModel, Field
+from pydantic_ai import Agent
+from pydantic_ai.models.groq import GroqModel
+from pydantic_ai.usage import Usage
 from rich.console import Console, ConsoleOptions, RenderResult
 from rich.live import Live
 from rich.markdown import CodeBlock, Markdown
+from rich.prompt import Prompt
 from rich.syntax import Syntax
 from rich.text import Text
-from rich.panel import Panel
-
-from pydantic_ai import Agent, RunContext
-from pydantic_ai.usage import Usage
-from pydantic_ai.models.groq import GroqModel
-from pydantic import BaseModel, Field
 
 from system_prompts import (
-    project_brainstorming_prompt,
+    context_prompt,
     data_modelling_prompt,
     erd_generator_prompt,
-    context_prompt,
     implementation_prompt,
+    project_brainstorming_prompt,
 )
 
 

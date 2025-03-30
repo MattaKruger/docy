@@ -1,9 +1,8 @@
+from datetime import datetime, timezone
 from typing import Optional
-from datetime import datetime
-from datetime import timezone
 
-from sqlmodel import SQLModel, Field
-from sqlalchemy import event, Column
+from sqlalchemy import Column, event
+from sqlmodel import Field, SQLModel
 
 
 class Base(SQLModel, table=False):

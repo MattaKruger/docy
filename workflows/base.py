@@ -1,6 +1,6 @@
 import argparse
 from abc import ABC, abstractmethod
-from typing import Optional, Dict, Callable
+from typing import Callable, Dict, Optional
 
 from rich.console import Console
 

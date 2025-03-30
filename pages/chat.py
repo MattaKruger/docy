@@ -1,13 +1,11 @@
-import streamlit as st
 import asyncio
-import logfire
 
-from pydantic_ai import Agent
-from pydantic_ai.settings import ModelSettings
-from pydantic_ai.models.groq import GroqModel
-
-from config import AVAILABLE_MODELS, AVAILABLE_AGENTS
+import streamlit as st
 from chat_interface import StreamlitChatInterface
+from config import AVAILABLE_AGENTS, AVAILABLE_MODELS
+from pydantic_ai import Agent
+from pydantic_ai.models.groq import GroqModel
+from pydantic_ai.settings import ModelSettings
 
 Agent.instrument_all()
 

@@ -7,7 +7,9 @@ from pydantic import BaseModel
 from services import NoteService
 from settings import Settings
 
+
 settings = Settings()
+
 
 router = APIRouter(prefix="/notes", tags=["notes"])
 

@@ -1,13 +1,14 @@
 from typing import List, Optional
+
+from fastapi import HTTPException, status
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
-from fastapi import HTTPException, status
 
+from models import Task, TaskIn, TaskUpdate
+
+from .agent import AgentRepository
 from .base import BaseRepository
 from .project import ProjectRepository
-from .agent import AgentRepository
-
-from models import Task, TaskIn, TaskUpdate, Project
 
 
 class TaskRepository(BaseRepository[Task, TaskIn, TaskUpdate]):

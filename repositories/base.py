@@ -1,9 +1,9 @@
-from typing import Generic, List, Optional, Type, TypeVar, Dict, Any
-from sqlmodel.ext.asyncio.session import AsyncSession
-from sqlmodel import SQLModel, Session, select, func
-from fastapi import HTTPException, status
-from sqlalchemy.exc import NoResultFound, MultipleResultsFound
+from typing import Any, Dict, Generic, List, Optional, Type, TypeVar
 
+from fastapi import HTTPException, status
+from sqlalchemy.exc import MultipleResultsFound, NoResultFound
+from sqlalchemy.ext.asyncio.session import AsyncSession
+from sqlmodel import SQLModel, func, select
 
 M = TypeVar("M", bound=SQLModel)
 C = TypeVar("C", bound=SQLModel)

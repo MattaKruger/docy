@@ -1,4 +1,3 @@
-from .db import engine, get_session, Session
+from .db import create_db_and_tables, get_session
 
-
-__all__ = ["engine", "get_session", "Session"]
+__all__ = ["get_session", "create_db_and_tables"]

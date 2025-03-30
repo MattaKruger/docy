@@ -1,10 +1,8 @@
-from typing import Optional
 from datetime import datetime
+from typing import Optional
 
-from rich.color import Color
-from sqlmodel import SQLModel, Field, Relationship, Column
 from sqlalchemy import Text
-
+from sqlmodel import Column, Field, SQLModel
 
 from .base import Base
 

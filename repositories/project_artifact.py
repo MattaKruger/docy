@@ -1,10 +1,11 @@
-from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from models import (
     ProjectArtifact,
     ProjectArtifactIn,
     ProjectArtifactUpdate,
 )
+
 from .base import BaseRepository
 
 

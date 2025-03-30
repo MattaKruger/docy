@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends, Path
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from database import get_session, Session
-from models import ProjectArtifactIn, ProjectArtifactUpdate, ProjectArtifactOut
+from database import get_session
+from models import ProjectArtifactIn, ProjectArtifactUpdate
 from repositories import ProjectArtifactRepository
-
 
 router = APIRouter(prefix="/artifacts", tags=["artifacts"])
 
 
-def get_project_artifact_repository(session: Session = Depends(get_session)):
+def get_project_artifact_repository(session: AsyncSession = Depends(get_session)):
     return ProjectArtifactRepository(session)
 
 

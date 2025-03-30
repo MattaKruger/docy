@@ -1,10 +1,11 @@
 from typing import Optional
-from sqlmodel.ext.asyncio.session import AsyncSession
 
+from sqlalchemy.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 
-from .base import BaseRepository
 from models import Project, ProjectIn, ProjectUpdate
+
+from .base import BaseRepository
 
 
 class ProjectRepository(BaseRepository[Project, ProjectIn, ProjectUpdate]):

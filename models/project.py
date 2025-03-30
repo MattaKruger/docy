@@ -1,16 +1,13 @@
-from ssl import Options
-from typing import TYPE_CHECKING
 
 from enum import Enum
-from typing import Optional, List
-from rich.color import Color
-from sqlmodel import SQLModel, Field, Relationship
+from typing import List, Optional
+
 from sqlalchemy import Column, Text
+from sqlmodel import Field, Relationship, SQLModel
 
 from .base import Base
-
-from .user import User
 from .task import Task
+from .user import User
 
 
 class ProjectType(str, Enum):

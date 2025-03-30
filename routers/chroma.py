@@ -7,7 +7,6 @@ from logger import chroma_logger
 from models import CollectionMetadata, DocumentMetadata, DocumentQuery
 from services import ChromaService
 
-
 router = APIRouter(prefix="/chroma", tags=["chroma"])
 
 
@@ -57,8 +56,7 @@ def update_collection(
             documents=updated_documents,
             metadatas=updated_metadata.model_dump(),
         )
-    except Exception as e:
-        chroma_logger.error(e)
+    except Exception:
         raise HTTPException(status_code=400, detail="Not found.")
 
 

@@ -1,16 +1,13 @@
 from typing import Dict, Optional
 
-from github import Github, Auth
-from github.Repository import Repository
+from github import Auth, Github
 from github.ContentFile import ContentFile
 from github.GithubException import UnknownObjectException
-
+from github.Repository import Repository
 from pydantic import BaseModel
 
 from logger import github_logger as logger
-
 from settings import Settings
-
 
 settings = Settings()
 

@@ -1,10 +1,12 @@
 from typing import Optional
+
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel.main import SQLModel
 
+from models import Prompt, PromptIn
+
 from .base import BaseRepository
-from models import Prompt, PromptIn, PromptOut
 
 
 class PromptUpdate(SQLModel):

@@ -1,19 +1,19 @@
-# from pydantic_ai import Agent
-# from pydantic_ai.models.groq import GroqModel
-
 import logfire
+
 from typing import List
 from fastapi import APIRouter, Depends, Path
-from database import get_session, Session
+from sqlalchemy.ext.asyncio.session import AsyncSession
 
-from repositories import AgentRepository
+from database import get_session
+
+from repositories import AgentRepository, PromptRepository
 from models import AgentIn, AgentUpdate, AgentOut, AgentState
 
 
 router = APIRouter(prefix="/agent", tags=["agent"])
 
 
-def get_agent_repo(session: Session = Depends(get_session)) -> AgentRepository:
+def get_agent_repo(session: AsyncSession = Depends(get_session)) -> AgentRepository:
     return AgentRepository(session)
 
 
@@ -44,4 +44,4 @@ async def get_active_agents(agent_repo: AgentRepository = Depends(get_agent_repo
     return await agent_repo.get_multi(filters={"state": AgentState.ACTIVE})
 
 
-@router.
+# @router.

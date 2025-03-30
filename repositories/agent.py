@@ -10,7 +10,7 @@ from models import Agent, AgentIn, AgentUpdate, Prompt, AgentState
 
 
 class AgentRepository(BaseRepository[Agent, AgentIn, AgentUpdate]):
-    """Repoistory for agent model operations"""
+    """Repository for agent model operations"""
 
     def __init__(self, session: AsyncSession, prompt_repo: PromptRepository):
         super().__init__(Agent, session)
@@ -36,7 +36,7 @@ class AgentRepository(BaseRepository[Agent, AgentIn, AgentUpdate]):
 
         return agent
 
-    async def get_active_agent(self, agent_id: int) -> Optional[Agent]
+    async def get_active_agent(self, agent_id: int) -> Optional[Agent]:
         """Gets an agent by ID only if their state is ACTIVE"""
         statement = select(Agent).where(Agent.id == agent_id, Agent.state == AgentState.ACTIVE)
         agent = await self.session.execute(statement)

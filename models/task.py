@@ -1,10 +1,12 @@
 from enum import Enum
 from typing import Optional
 
-from sqlmodel import Field, SQLModel, Relationship
 from sqlalchemy import Column, Text
+from sqlmodel import Field, Relationship, SQLModel
 
-from models import Base, Agent, Project
+from .base import Base
+from .agent import Agent
+from .project import Project
 
 
 class TaskType(str, Enum):
@@ -48,7 +50,9 @@ class TaskOut(SQLModel, table=False):
 
 
 class TaskUpdate(SQLModel, table=False):
-    name: Optional[str] = Field()
-    description: Optional[str] = Field()
-    agent: Optional["Agent"] = Field(default=None)
+    name: Optional[str] = Field(default=None)
+    description: Optional[str] = Field(default=None)
     task_type: Optional[TaskType] = Field(default=None)
+
+    # Relationships
+    agent_id: Optional[int] = Field(default=None)

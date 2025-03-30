@@ -1,10 +1,9 @@
 from typing import TYPE_CHECKING, List, Optional
 
-from sqlmodel import SQLModel, Field, Relationship
-from .base import Base
+from sqlmodel import Field, Relationship, SQLModel
 
-if TYPE_CHECKING:
-    from .project import Project
+from .base import Base
+from .project import Project
 
 
 class User(Base, SQLModel, table=True):

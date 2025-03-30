@@ -1,16 +1,16 @@
 from typing import List
 
 from fastapi import APIRouter, Depends
-from database import get_session, Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
+from database import get_session
 from models import UserIn, UserOut
 from repositories import UserRepository
-
 
 router = APIRouter(prefix="/user", tags=["user"])
 
 
-def get_user_repo(session: Session = Depends(get_session)) -> UserRepository:
+def get_user_repo(session: AsyncSession = Depends(get_session)) -> UserRepository:
     return UserRepository(session)
 
 
