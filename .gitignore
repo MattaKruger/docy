@@ -16,5 +16,5 @@ logs/*
 volumes/*
 # chromadb
 chroma/*
-node_modules/*
+src/agents/node_modules/*
 src/agents/data/*
