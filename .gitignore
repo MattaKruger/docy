@@ -6,10 +6,15 @@ dist/
 wheels/
 *.egg-info
 
-# Virtual environments
+# virtual .envs
 .venv/*
 .env
+
 logs/*
+
+# docker
 volumes/*
+# chromadb
 chroma/*
 node_modules/*
+src/agents/data/*
