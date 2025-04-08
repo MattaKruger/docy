@@ -1,15 +1,13 @@
 from typing import Optional
 
 from fastapi import HTTPException, status
-
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 
 from ..models import Agent, AgentState
 from ..schemas import AgentIn, AgentUpdate
-
-from .prompt import PromptRepository
 from .base import BaseRepository
+from .prompt import PromptRepository
 
 
 class AgentRepository(BaseRepository[Agent, AgentIn, AgentUpdate]):

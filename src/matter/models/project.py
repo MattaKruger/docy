@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional
 
 from sqlalchemy import Column, Text
 from sqlmodel import Field, Relationship
@@ -27,6 +27,6 @@ class Project(Base, table=True):
 
     # Relationships
     user_id: Optional[int] = Field(default=None, foreign_key="users.id", index=True)
-    user: Optional["User"] = Relationship(back_populates="projects")
-    artifacts: List["Artifact"] = Relationship(back_populates="project")
-    tasks: List["Task"] = Relationship(back_populates="project")
+    user: Optional["User"] = Relationship(back_populates="projects", sa_relationship_kwargs=dict(lazy="selectin"))
+    artifacts: List["Artifact"] = Relationship(back_populates="project", sa_relationship_kwargs=dict(lazy="selectin"))
+    tasks: List["Task"] = Relationship(back_populates="project", sa_relationship_kwargs=dict(lazy="selectin"))

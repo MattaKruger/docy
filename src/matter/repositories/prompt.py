@@ -5,7 +5,6 @@ from sqlmodel import select
 
 from ..models.prompt import Prompt
 from ..schemas.prompt import PromptIn, PromptUpdate
-
 from .base import BaseRepository
 
 

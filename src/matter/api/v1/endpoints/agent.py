@@ -3,12 +3,10 @@ from typing import List
 from fastapi import APIRouter, Depends, Path
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
+from matter.db import get_session
 from matter.models import AgentState
 from matter.repositories import AgentRepository, PromptRepository
-
 from matter.schemas import AgentIn, AgentOut, AgentUpdate
-from matter.db import get_session
-
 
 router = APIRouter(prefix="/agents", tags=["agents"])
 
@@ -34,9 +32,10 @@ async def get_agent(agent_id: int = Path(...), agent_repo: AgentRepository = Dep
 
 @router.put("/{agent_id}")
 async def update_agent(
-    agent: AgentUpdate, agent_id: int = Path(...), agent_repo: AgentRepository = Depends(get_agent_repo)
+    agent_update: AgentUpdate, agent_id: int = Path(...), agent_repo: AgentRepository = Depends(get_agent_repo)
 ):
-    return await agent_repo.update(agent_id, agent)
+    agent_db = await agent_repo.get_or_404(agent_id)
+    return await agent_repo.update(agent_update, agent_db)
 
 
 @router.get("/active")

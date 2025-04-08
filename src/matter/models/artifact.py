@@ -1,6 +1,5 @@
 from enum import Enum
 
-from sqlalchemy import UniqueConstraint
 from sqlmodel import Column, Field, Relationship, Text
 
 from .base import Base
@@ -24,4 +23,4 @@ class Artifact(Base, table=True):
 
     # Relationships
     project_id: int = Field(foreign_key="projects.id")
-    project: Project = Relationship(back_populates="artifacts")
+    project: Project = Relationship(back_populates="artifacts", sa_relationship_kwargs=dict(lazy="selectin"))

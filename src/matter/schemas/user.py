@@ -1,7 +1,8 @@
 from typing import List, Optional
 
-from ..models import Project
 from pydantic import BaseModel, Field
+
+from ..models import Project
 
 
 class UserIn(BaseModel):

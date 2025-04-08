@@ -3,10 +3,9 @@ from typing import List
 from fastapi import APIRouter, Depends, Path
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
-from matter.schemas import ProjectIn, ProjectUpdate, ProjectOut
 from matter.db import get_session
-
 from matter.repositories import ProjectRepository
+from matter.schemas import ProjectIn, ProjectOut, ProjectUpdate
 
 router = APIRouter(prefix="/projects", tags=["projects"])
 
@@ -32,6 +31,9 @@ async def create_project(project: ProjectIn, project_repo: ProjectRepository = D
 
 @router.put("/{project_id}")
 async def update_project(
-    project: ProjectUpdate, project_id: int = Path(...), project_repo: ProjectRepository = Depends(get_project_repo)
+    project_update: ProjectUpdate,
+    project_id: int = Path(...),
+    project_repo: ProjectRepository = Depends(get_project_repo),
 ):
-    return await project_repo.update(project_id, project)
+    project_db = await project_repo.get_or_404(project_id)
+    return await project_repo.update(project_update, project_db)

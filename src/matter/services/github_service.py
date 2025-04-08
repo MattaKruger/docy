@@ -1,10 +1,11 @@
 from typing import Dict, Optional
 
+import logfire
+
 from github import Auth, Github
 from github.ContentFile import ContentFile
 from github.GithubException import UnknownObjectException
 from github.Repository import Repository
-
 from pydantic import BaseModel
 
 from matter.core import Settings
@@ -51,9 +52,9 @@ class GithubService:
 
                 docs_content[content_file.path] = file_content
             except Exception as e:
-                logger.info(f"Warning: Error decoding content of {content_file.path}: {e}")
+                logfire.info(f"Warning: Error decoding content of {content_file.path}: {e}")
         else:
-            logger.info(f"Skipping non-text document in docs path: {content_file.path}")
+            logfire.info(f"Skipping non-text document in docs path: {content_file.path}")
 
     def _extract_docs_from_path(self, repo: Repository, docs_path: str) -> Dict[str, str]:
         """Helper function to recursively extract documentation content from a given path."""
@@ -65,15 +66,15 @@ class GithubService:
                     if content_file.type == "file":
                         self._process_content_file(content_file, docs_content)
                     elif content_file.type == "dir":
-                        logger.info(f"Entering subdirectory: {content_file.path}")
+                        logfire.info(f"Entering subdirectory: {content_file.path}")
                         docs_content.update(self._extract_docs_from_path(repo, content_file.path))
             elif isinstance(contents, ContentFile):
                 self._process_content_file(contents, docs_content)
             else:
-                logger.info(f"Warning: Unexpected content type at {docs_path} in {repo.full_name}")
+                logfire.info(f"Warning: Unexpected content type at {docs_path} in {repo.full_name}")
 
         except UnknownObjectException:
-            logger.info(f"Info: No '{docs_path}' found in {repo.full_name}")
+            logfire.info(f"Info: No '{docs_path}' found in {repo.full_name}")
         except Exception as e:
-            logger.info(f"Warning: Error accessing '{docs_path}' in {repo.full_name}: {e}")
+            logfire.info(f"Warning: Error accessing '{docs_path}' in {repo.full_name}: {e}")
         return docs_content

@@ -1,6 +1,6 @@
 from .agent import AgentRepository
-from .project import ProjectRepository
 from .artifact import ArtifactRepository
+from .project import ProjectRepository
 from .prompt import PromptRepository
 from .task import TaskRepository
 from .user import UserRepository

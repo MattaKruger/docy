@@ -2,7 +2,6 @@ from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from ..models.user import User
 from ..schemas.user import UserIn, UserUpdate
-
 from .base import BaseRepository
 
 

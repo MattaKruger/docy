@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional
 
 from sqlmodel import Field, Relationship
 
@@ -32,8 +32,10 @@ class Agent(Base, table=True):
 
     name: str = Field(unique=True, index=True)
     system_prompt_id: Optional[int] = Field(default=None, foreign_key="prompts.id")
-    system_prompt: Optional["Prompt"] = Relationship(back_populates="agents")
+    system_prompt: Optional["Prompt"] = Relationship(
+        back_populates="agents", sa_relationship_kwargs=dict(lazy="selectin")
+    )
     agent_type: AgentType = Field(default=AgentType.DEFAULT, index=True)
     agent_model: AgentLLM = Field(default=AgentLLM.GROQ_DEFAULT)
     state: AgentState = Field(default=AgentState.INACTIVE, index=True)
-    tasks: List["Task"] = Relationship(back_populates="agent")
+    tasks: List["Task"] = Relationship(back_populates="agent", sa_relationship_kwargs=dict(lazy="selectin"))

@@ -7,9 +7,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
 from matter.db import get_session
-from matter.models import Artifact, Project
-from matter.schemas.artifact import ArtifactIn, ArtifactOut, ArtifactUpdate
+
+from matter.models import Artifact
 from matter.repositories import ArtifactRepository
+from matter.schemas.artifact import ArtifactIn, ArtifactOut, ArtifactUpdate
 
 router = APIRouter(prefix="/artifacts", tags=["artifacts"])
 
@@ -34,29 +35,26 @@ async def get_artifact(
     return artifact
 
 
-@router.post("/", response_model=ArtifactOut)
+@router.post("/", response_model=int)
 async def create_artifact(
     project_artifact: ArtifactIn,
     artifact_repo: ArtifactRepository = Depends(artifact_repository),
 ):
     artifact = await artifact_repo.create(project_artifact)
-    return ArtifactOut(**artifact.model_dump())
-
+    return artifact.id
 
 @router.put("/{artifact_id}")
 async def update_artifact(
-    artifact: ArtifactUpdate,
+    artifact_update: ArtifactUpdate,
     artifact_id: int = Path(...),
     artifact_repo: ArtifactRepository = Depends(artifact_repository),
 ):
     artifact_db = await artifact_repo.get_or_404(artifact_id)
 
-    updated_artifact = await artifact_repo.update(artifact_db, artifact)
+    updated_artifact = await artifact_repo.update(artifact_update, artifact_db)
     if updated_artifact is None:
-        # Handle potential update failure (e.g., internal commit error in repo)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to update artifact")
 
-    # return ArtifactOut.model_validate(updated_artifact)
     return updated_artifact
 
 

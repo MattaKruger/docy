@@ -4,10 +4,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from matter.db import get_session
-from matter.schemas import UserIn, UserOut
 from matter.repositories import UserRepository
-from matter.schemas.user import UserProjects
-
+from matter.schemas import UserIn, UserOut
 
 router = APIRouter(prefix="/user", tags=["user"])
 

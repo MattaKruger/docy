@@ -1,12 +1,11 @@
 from typing import Optional
 
-from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio.session import AsyncSession
+from sqlalchemy.orm import joinedload
 from sqlmodel import select
 
 from ..models.project import Project
 from ..schemas.project import ProjectIn, ProjectUpdate
-
 from .base import BaseRepository
 
 

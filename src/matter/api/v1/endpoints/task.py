@@ -3,23 +3,23 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from matter.db import AsyncSession, get_session
-from matter.schemas import TaskIn, TaskOut, TaskUpdate, AgentOut
 from matter.repositories import (
     AgentRepository,
     ProjectRepository,
     PromptRepository,
     TaskRepository,
 )
-from matter.services.task_service import TaskAssignmentService
+from matter.schemas import AgentOut, TaskIn, TaskOut, TaskUpdate
 from matter.services.exceptions import (
-    ServiceError,
-    TaskNotFoundError,
-    AgentNotFoundError,
     AgentInactiveError,
+    AgentNotFoundError,
+    NoSuitableAgentFoundError,
+    ServiceError,
     TaskAlreadyAssignedError,
     TaskNotAssignedError,
-    NoSuitableAgentFoundError,
+    TaskNotFoundError,
 )
+from matter.services.task_service import TaskAssignmentService
 
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 
@@ -30,7 +30,7 @@ def get_prompt_repo(session: AsyncSession = Depends(get_session)) -> PromptRepos
 
 def get_agent_repo(
     session: AsyncSession = Depends(get_session),
-    prompt_repo: PromptRepository = Depends(get_prompt_repo),  # Add if AgentRepo needs it
+    prompt_repo: PromptRepository = Depends(get_prompt_repo),
 ) -> AgentRepository:
     return AgentRepository(session=session, prompt_repo=prompt_repo)
 
@@ -56,7 +56,7 @@ def get_task_assignment_service(
 
 @router.post(
     "/",
-    response_model=TaskOut,
+    response_model=int,
     status_code=status.HTTP_201_CREATED,
     summary="Create a new task",
 )
@@ -68,20 +68,26 @@ async def create_task(
     """
     Creates a new task associated with a project.
     """
-    project = await project_repo.get(task_in.project_id)
-    if not project:
+    if not task_in.project_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Project ID not found"
+        )
+    project_db = await project_repo.get(task_in.project_id)
+    if not project_db:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Project with id {task_in.project_id} not found",
         )
 
-    created_task = await task_repo.create(task_in)
-    if not created_task:
+    task_in.project_id = project_db.id
+    task_db = await task_repo.create(task_in)
+    if not task_db:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to create task",
         )
-    return TaskOut(**created_task.model_dump())
+    return task_db.id
 
 
 @router.get(
@@ -122,6 +128,7 @@ async def get_all_tasks(
         filters["agent_id"] = agent_id
 
     tasks = await task_repo.get_multi(**filters)
+
     return tasks
 
 
@@ -162,21 +169,15 @@ async def update_task(
     Updates specific fields of an existing task.
     Note: Agent assignment is handled via dedicated endpoints.
     """
-    db_task = await task_repo.get(task_id)
-    if not db_task:
+    task_db = await task_repo.get(task_id)
+
+    if not task_db:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Task with id {task_id} not found",
         )
 
-    update_data = task_update.dict(exclude_unset=True)
-    if "agent_id" in update_data:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Agent assignment must be done via /assign or /unassign endpoints.",
-        )
-
-    updated_task = await task_repo.update(id=db_task.id, **update_data)
+    updated_task = await task_repo.update(task_update, task_db)
     if not updated_task:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -232,11 +233,10 @@ async def assign_task_to_agent(
     except AgentNotFoundError as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
     except AgentInactiveError as e:
-        # 400 Bad Request might be more appropriate than 409 Conflict for inactive state
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     except TaskAlreadyAssignedError as e:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
-    except ServiceError as e:  # Catch generic service errors
+    except ServiceError as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"An unexpected error occurred: {e}"
         )

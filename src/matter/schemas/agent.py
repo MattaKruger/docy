@@ -1,8 +1,8 @@
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel, Field
 
-from ..models import AgentLLM, AgentState, AgentType, Prompt
+from ..models import AgentLLM, AgentState, AgentType, Prompt, Task
 
 
 class AgentIn(BaseModel):
@@ -21,6 +21,7 @@ class AgentOut(BaseModel):
     agent_type: AgentType = Field()
     agent_model: AgentLLM = Field()
     state: AgentState = Field()
+    tasks: Optional[List["Task"]] = Field(default_factory=list)
 
 
 class AgentUpdate(BaseModel):

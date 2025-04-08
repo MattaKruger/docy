@@ -1,18 +1,14 @@
 from contextlib import asynccontextmanager
 
 import logfire
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from load_dotenv import load_dotenv
 from pydantic_ai import Agent
 
-from load_dotenv import load_dotenv
-
-from .api import agent_router, artifact_router, notes_router, project_router, task_router, user_router, prompt_router
+from .api import agent_router, artifact_router, notes_router, project_router, prompt_router, task_router, user_router
 from .db import create_db_and_tables, engine
-from .mcp_server import mcp
-
+# from .mcp_server import mcp
 
 load_dotenv()
 
@@ -43,7 +39,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/mcp", mcp.sse_app())
+# app.mount("/mcp", mcp.sse_app())
 
 app.include_router(user_router)
 app.include_router(prompt_router)

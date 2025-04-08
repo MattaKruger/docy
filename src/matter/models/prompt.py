@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from sqlalchemy import Text
 from sqlmodel import Column, Field, Relationship
@@ -21,4 +21,4 @@ class Prompt(Base, table=True):
     name: str = Field(index=True, unique=True, description="Unique name for the prompt")
     content: str = Field(sa_column=Column(Text), description="The full text content of the system prompt.")
 
-    agents: List["Agent"] = Relationship(back_populates="system_prompt")
+    agents: List["Agent"] = Relationship(back_populates="system_prompt", sa_relationship_kwargs=dict(lazy="selectin"))

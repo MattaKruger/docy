@@ -1,20 +1,16 @@
-import os
 import asyncio
-
 from typing import AsyncGenerator, Generator
 
 import pytest
 import pytest_asyncio
-
 from httpx import AsyncClient
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.ext.asyncio.session import AsyncSession
-
 from sqlmodel import SQLModel
 
-from matter.main import app
-from matter.db import get_session as get_app_session
 from matter.core import Settings
+from matter.db import get_session as get_app_session
+from matter.main import app
 
 settings = Settings()
 

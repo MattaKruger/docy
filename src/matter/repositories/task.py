@@ -1,11 +1,11 @@
 from typing import List, Optional
 
+import logfire
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 
-import logfire
-
+from ..models.project import Project
 from ..models.task import Task
 from ..schemas.task import TaskIn, TaskOut, TaskUpdate
 
@@ -21,6 +21,18 @@ class TaskRepository(BaseRepository[Task, TaskIn, TaskUpdate]):
         super().__init__(Task, session)
         self.project_repo = project_repo
         self.agent_repo = agent_repo
+
+    async def get_all_new(self):
+        statement = select(Task, Project).where(Task.project_id == Project.id)
+        result = await self.session.execute(statement)
+        tasks = list(result.scalars().all())
+        print(tasks)
+
+    async def get_all_by_project_id(self, project_id: int) -> List[Task]:
+        statement = select(Task).where(Task.project_id == project_id)
+        result = await self.session.execute(statement)
+        tasks = list(result.scalars().all())
+        return tasks
 
     async def create(self, create_model: TaskIn) -> Task:
         """Creates a new task, ensuring project exists and agent_id is initially None."""

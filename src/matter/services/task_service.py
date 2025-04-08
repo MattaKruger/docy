@@ -2,14 +2,15 @@ from typing import List, Optional
 
 from matter.models import Agent, AgentState, AgentType, Task, TaskType
 from matter.repositories import AgentRepository, TaskRepository
+
 from .exceptions import (
     AgentInactiveError,
     AgentNotFoundError,
     NoSuitableAgentFoundError,
+    ServiceError,
     TaskAlreadyAssignedError,
     TaskNotAssignedError,
     TaskNotFoundError,
-    ServiceError,
 )
 
 
@@ -53,17 +54,19 @@ class TaskAssignmentService:
             AgentInactiveError: If the agent is not in an 'ACTIVE' state.
             TaskAlreadyAssignedError: If the task is already assigned to this agent.
         """
-        task = await self._get_task_or_raise(task_id)
+        task_db = await self._get_task_or_raise(task_id)
         agent = await self._get_agent_or_raise(agent_id)
 
         if agent.state != AgentState.ACTIVE:
             raise AgentInactiveError(agent_id)
 
-        if task.agent_id == agent_id:
+        if task_db.agent_id == agent_id:
             raise TaskAlreadyAssignedError(task_id, agent_id)
 
-        task.agent_id = agent_id
-        updated_task = await self.task_repo.update(task.id, task)
+        task_db.agent_id = agent_id
+        updated_task = await self.task_repo.update(
+            task_db,
+        )
         if updated_task is None:
             raise ServiceError(f"Failed to update task {task_id} assignment.")
         return updated_task

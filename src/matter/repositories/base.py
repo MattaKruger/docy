@@ -1,21 +1,20 @@
-from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Sequence
+from typing import Any, Dict, Generic, List, Optional, Sequence, Type, TypeVar
 
-from sqlalchemy.orm import Load, joinedload
-from sqlalchemy.engine.base import log
-from sqlalchemy.exc import MultipleResultsFound, NoResultFound
-from sqlalchemy.ext.asyncio.session import AsyncSession
-from sqlmodel import SQLModel, func, select
+import logfire
 
 from fastapi import HTTPException, status
 from pydantic import BaseModel
 
-import logfire
+from sqlalchemy.orm import Load
+from sqlalchemy.exc import MultipleResultsFound
+from sqlalchemy.ext.asyncio.session import AsyncSession
+from sqlmodel import SQLModel, func, select
+
 
 ModelType = TypeVar("ModelType", bound=SQLModel)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
-# Define a type hint for loading options
 LoadOption = Load
 
 
@@ -42,8 +41,18 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         await self.session.commit()
         await self.session.refresh(db_obj)
 
-        logfire.debug(f"Successfully created {self.model_name} with id {db_obj.id}")
+        logfire.debug(f"Successfully created {self.model_name} with id {getattr(db_obj, 'id', None)}")
         return db_obj
+
+    async def create_all(self, create_models: List[CreateSchemaType]):
+        """Creates new records in the database."""
+        logfire.debug(f"Creating {self.model_name} instances")
+
+        for model in create_models:
+            model = self.model(model.model_dump())
+
+        self.session.add_all(create_models)
+        await self.session.commit()
 
     async def get(self, id: Any, *, load_options: Optional[List[LoadOption]] = None) -> Optional[ModelType]:
         """
@@ -95,7 +104,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         limit: int = 100,
         filters: Optional[Dict[str, Any]] = None,
         load_options: Optional[List[LoadOption]] = None,
-    ) -> Sequence[ModelType]:  # Changed List to Sequence for better compatibility with scalars().all()
+    ) -> List[ModelType]:
         """
         Gets multiple records with optional filtering, skip, limit,
         and relationship loading strategies.
@@ -125,20 +134,18 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         statement = statement.offset(skip).limit(limit)
         result = await self.session.execute(statement)
         items = result.scalars().all()
-        print(items)
         logfire.debug(f"Found {len(items)} {self.model_name} instances")
 
         return list(items)
 
-    async def update(self, db_obj: ModelType, obj_in: UpdateSchemaType) -> Optional[ModelType]:
+    async def update(self, obj_in: UpdateSchemaType, db_obj: ModelType) -> Optional[ModelType]:
         """Updates an existing record by ID."""
-        # Note: Update doesn't typically need load_options, as the object is already loaded.
-        # Refresh after commit will reload attributes, but relationships depend on session state or prior loading.
-        obj_id = getattr(db_obj, "id", "<unknown_id>")  # Get id for logging if possible
+        obj_id = getattr(db_obj, "id", "<unknown_id>")
         logfire.info(f"Updating {self.model_name} with id {obj_id}")
+
         update_data = obj_in.model_dump(exclude_unset=True)
         if not update_data:
-            return db_obj  # No changes
+            return db_obj
 
         for field, value in update_data.items():
             setattr(db_obj, field, value)
@@ -150,8 +157,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         except Exception as e:
             logfire.error(f"Failed to update {self.model_name} {obj_id}: {e}")
             await self.session.rollback()
-            # Consider re-raising or returning a specific error indicator
-            return None  # Indicate failure
+            return None
 
         await self.session.refresh(db_obj)
         logfire.debug(f"Successfully updated and refreshed {self.model_name} {obj_id}")
@@ -159,10 +165,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     async def delete(self, id: Any) -> ModelType:
         """Deletes a record by ID."""
-        # Note: Delete doesn't need load_options as we only need the object to delete it.
         logfire.debug(f"Deleting {self.model_name} with id {id}")
-        # We call get_or_404 internally, which now supports load_options, but
-        # we don't need them for delete itself, so we don't pass them here.
         db_obj = await self.get_or_404(id)
 
         await self.session.delete(db_obj)
@@ -173,7 +176,6 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     async def count(self, filters: Optional[Dict[str, Any]] = None) -> int:
         """Counts records with optional filtering."""
-        # Note: Count doesn't need load_options.
         logfire.debug(f"Counting {self.model_name} with filters={filters}")
 
         statement = select(func.count()).select_from(self.model)
@@ -186,12 +188,10 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
                     logfire.warning(f"Filter field '{field}' not found on model {self.model_name} during count")
 
         result = await self.session.execute(statement)
-        # Use scalar_one() which is appropriate for count aggregate
         count = result.scalar_one()  # count should always return one row
-        # No need for none check here, count(*) returns 0 if no rows match
         logfire.debug(f"Count result for {self.model_name}: {count}")
 
-        return count  # Directly return the count
+        return count
 
     async def _get_one_by_field(
         self, field_name: str, value: Any, *, load_options: Optional[List[LoadOption]] = None
@@ -217,26 +217,19 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
         statement = select(self.model).where(getattr(self.model, field_name) == value)
 
-        # Apply loading options
         if load_options:
             statement = statement.options(*load_options)
 
         result = await self.session.execute(statement)
         try:
-            # Use scalar_one_or_none() for potentially zero or one result
-            # Or use unique().scalar_one_or_none() if you expect strictly one or none
-            instance = result.scalar_one_or_none()  # Allows zero or one result
+            instance = result.scalar_one_or_none()
             if instance:
                 logfire.debug(f"Found one {self.model_name} for {field_name}={value}")
             else:
                 logfire.debug(f"No {self.model_name} found for {field_name}={value}")
             return instance
         except MultipleResultsFound:
-            # This shouldn't happen with scalar_one_or_none unless there's a DB constraint issue
-            # or if the unique() variant was used and multiple results existed.
-            # Keeping the log message for safety.
             logfire.error(
                 f"Multiple results found unexpectedly for {self.model_name} with {field_name}={value}. Returning None."
             )
             return None
-        # NoResultFound is handled by scalar_one_or_none returning None

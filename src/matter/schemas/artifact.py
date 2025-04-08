@@ -1,7 +1,8 @@
 from typing import Optional
+
 from pydantic import BaseModel, Field
 
-from ..models import ArtifactType, Project, User
+from ..models import ArtifactType, Project
 
 
 class ArtifactIn(BaseModel):

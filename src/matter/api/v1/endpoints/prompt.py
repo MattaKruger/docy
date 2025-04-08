@@ -2,9 +2,8 @@ from fastapi import APIRouter, Depends, Path
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from matter.db.session import get_session
-from matter.schemas import PromptIn, PromptUpdate
 from matter.repositories import PromptRepository
-
+from matter.schemas import PromptIn, PromptUpdate
 
 router = APIRouter(prefix="/prompts", tags=["prompts"])
 
@@ -30,6 +29,7 @@ async def create_prompt(prompt: PromptIn, prompt_repo: PromptRepository = Depend
 
 @router.put("/{prompt_id}")
 async def update_prompt(
-    prompt: PromptUpdate, prompt_id: int = Path(...), prompt_repo: PromptRepository = Depends(get_prompt_repo)
+    prompt_update: PromptUpdate, prompt_id: int = Path(...), prompt_repo: PromptRepository = Depends(get_prompt_repo)
 ):
-    return await prompt_repo.update(prompt_id, prompt)
+    prompt_db = await prompt_repo.get_or_404(prompt_id)
+    return await prompt_repo.update(prompt_update, prompt_db)

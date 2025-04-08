@@ -1,7 +1,8 @@
-from typing import Optional
+from typing import Optional, List, Optional
+
 from pydantic import BaseModel, Field
 
-from ..models import ProjectType, User
+from ..models import ProjectType, User, Artifact
 
 
 class ProjectIn(BaseModel):
@@ -24,6 +25,7 @@ class ProjectOut(BaseModel):
 
     # Relationships
     user: "User" = Field()
+    artifacts: Optional[List["Artifact"]] = Field()
 
 
 class ProjectUpdate(BaseModel):
