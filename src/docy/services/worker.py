@@ -23,9 +23,9 @@ gemini_model = GeminiModel(
     model_name="gemini-2.0-pro-exp-02-05",
 )
 ollama_model = OpenAIModel(
-    model_name="granite3.2:latest",
-    provider=OpenAIProvider(base_url="http://localhost:11434/v1")
+    model_name="granite3.2:latest", provider=OpenAIProvider(base_url="http://localhost:11434/v1")
 )
+
 
 class Task(BaseModel):
     id: int = Field()
@@ -68,6 +68,7 @@ ollama_coder_agent = Agent(
         "temperature": 0.2,
     },
 )
+
 
 @ollama_coder_agent.tool_plain
 def save_to_file(file_name: str, content: str):
@@ -148,13 +149,13 @@ async def main():
 
     try:
         async with ollama_coder_agent.run_stream(task) as first_result:
-            print("Streaming response:\n" + "="*20)
+            print("Streaming response:\n" + "=" * 20)
 
             async for chunk in first_result.stream():
                 print(chunk, end="", flush=True)
                 chunks.append(chunk)
 
-            print("\n" + "="*20)
+            print("\n" + "=" * 20)
 
         full_response = "".join(chunks)
 

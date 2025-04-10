@@ -6,6 +6,7 @@ from sqlmodel import Column, Field, Relationship, Text
 from .artifact import Artifact
 from .base import Base
 from .user import User
+from .task import Task
 
 
 class MessageType(str, Enum):
@@ -20,12 +21,14 @@ class Message(Base, table=True):
     content: str = Field(sa_column=Column(Text))
     message_type: MessageType = Field(default=MessageType.USER.value)
 
-    chat_id: int = Field(foreign_key="chats.id")
-    chat: "Chat" = Relationship(back_populates="messages", sa_relationship_kwargs=dict(lazy="selectin"))
+    chat_id: Optional[int] = Field(default=None, foreign_key="chats.id")
+    chat: Optional["Chat"] = Relationship(back_populates="messages", sa_relationship_kwargs=dict(lazy="selectin"))
     artifact_id: Optional[int] = Field(default=None, foreign_key="artifacts.id")
     artifact: Optional["Artifact"] = Relationship(
         back_populates="message", sa_relationship_kwargs=dict(lazy="selectin")
     )
+    task_id: Optional[int] = Field(default=None, foreign_key="tasks.id")
+    task: Optional[Task] = Relationship(back_populates="messages", sa_relationship_kwargs=dict(lazy="selectin"))
 
 
 class Chat(Base, table=True):

@@ -10,6 +10,7 @@ from .base import Base
 if TYPE_CHECKING:
     from .agent import Agent
     from .project import Project
+    from .chat import Message
 
 
 class Category(str, Enum):
@@ -43,7 +44,9 @@ class Task(Base, table=True):
     project: "Project" = Relationship(back_populates="tasks", sa_relationship_kwargs=dict(lazy="selectin"))
     agent_id: Optional[int] = Field(default=None, foreign_key="agents.id", index=True)
     agent: Optional["Agent"] = Relationship(back_populates="tasks", sa_relationship_kwargs=dict(lazy="selectin"))
-
+    messages: List["Message"] = Relationship(
+        back_populates="task", sa_relationship_kwargs=dict(lazy="selectin", cascade="all, delete-orphan")
+    )
     subtasks: List["SubTask"] = Relationship(
         back_populates="task", sa_relationship_kwargs=dict(lazy="selectin", cascade="all, delete-orphan")
     )
