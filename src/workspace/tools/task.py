@@ -1,9 +1,6 @@
-from typing import Dict, List
+from typing import List
+
 from pydantic import BaseModel, Field
-
-import logfire
-
-from config import settings
 
 
 class Task(BaseModel):
@@ -45,8 +42,5 @@ def handle_task(task: Task) -> TaskResult:
         generated=output,
     )
 
-exported_tools = {
-    "handle_task": handle_task,
-    "get_task": get_task,
-    "add_task": add_task
-}
+
+exported_tools = {"handle_task": handle_task, "get_task": get_task, "add_task": add_task}

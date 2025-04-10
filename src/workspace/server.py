@@ -1,8 +1,6 @@
 import logfire
 from mcp.server.fastmcp import FastMCP
-
-from tools import file_system, web, task
-
+from tools import file_system, task, web
 
 logfire.configure()
 

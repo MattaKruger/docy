@@ -1,14 +1,10 @@
+from config import settings
 from pydantic_ai import Agent
-
+from pydantic_ai.common_tools.duckduckgo import duckduckgo_search_tool
 from pydantic_ai.models.gemini import GeminiModel
 from pydantic_ai.models.groq import GroqModel
 from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
-
-from pydantic_ai.common_tools.duckduckgo import duckduckgo_search_tool
-
-from config import settings
-
 
 ollama_model = OpenAIModel(
     model_name=settings.OLLAMA_MODEL,
@@ -19,9 +15,7 @@ gemini_model = GeminiModel(
     model_name=settings.GEMINI_MODEL,
 )
 
-groq_model = GroqModel(
-    model_name=settings.GROQ_MODEL
-)
+groq_model = GroqModel(model_name=settings.GROQ_MODEL)
 
 search_agent = Agent(
     gemini_model,

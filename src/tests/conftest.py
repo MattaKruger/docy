@@ -8,9 +8,9 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from sqlmodel import SQLModel
 
-from matter.core import Settings
-from matter.db import get_session as get_app_session
-from matter.main import app
+from docy.core import Settings
+from docy.db import get_session as get_app_session
+from docy.main import app
 
 settings = Settings()
 
@@ -47,7 +47,7 @@ async def db_setup(event_loop: asyncio.AbstractEventLoop):
     # Ensure all your SQLModel models are imported *before* `create_all` is called.
     # This might happen implicitly if your main app or other modules import them.
     # If not, you might need to explicitly import them here, e.g.:
-    # from docy.src.matter import models # Assuming models are in __init__.py
+    # from docy.src.docy import models # Assuming models are in __init__.py
     # -----------------
 
     async with test_engine.begin() as conn:

@@ -1,10 +1,10 @@
-import httpx
-import logfire
 from typing import Any
 
-from dependencies import http_client
+import httpx
+import logfire
+from agents.common import groq_search_agent, ollama_agent, search_agent
 from config import settings
-from agents.common import search_agent, ollama_agent, groq_search_agent
+from dependencies import http_client
 from models import WebsearchResult
 
 

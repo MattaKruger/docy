@@ -18,3 +18,7 @@ volumes/*
 chroma/*
 src/agents/node_modules/*
 src/agents/data/*
+
+
+# files
+.my_interactive_cli_history

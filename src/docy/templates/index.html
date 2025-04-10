@@ -1,0 +1,34 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>My Python HTMX App</title>
+    </head>
+    <body>
+        <h1>Welcome to the App</h1>
+
+        <div id="main-content">
+            <h2>Initial Content</h2>
+
+            <button
+                hx-get="/users/"
+                hx-target="#content-area"
+                hx-swap="innerHTML"
+                hx-indicator="#loading-spinner"
+            >
+                Load More Content
+            </button>
+
+            <span id="loading-spinner" class="htmx-indicator">Loading...</span>
+
+            <div
+                id="content-area"
+                style="margin-top: 20px; border: 1px solid #ccc; padding: 10px"
+            >
+                <!-- Content loaded by HTMX will appear here -->
+                <p>Click the button above.</p>
+            </div>
+        </div>
+
+        <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    </body>
+</html>

@@ -2,9 +2,7 @@ import pathlib
 from typing import Dict, List
 
 import logfire
-
 from config import settings
-
 
 BASE_DIR = settings.BASE_DATA_DIR
 CODING_DIR = BASE_DIR / settings.CODING_SUBDIR
