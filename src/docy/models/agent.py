@@ -7,7 +7,7 @@ from .base import Base
 
 if TYPE_CHECKING:
     from .prompt import Prompt
-    from .task import Task
+    from .task import SubTask, Task
 
 
 class AgentState(str, Enum):
@@ -35,7 +35,9 @@ class Agent(Base, table=True):
     system_prompt: Optional["Prompt"] = Relationship(
         back_populates="agents", sa_relationship_kwargs=dict(lazy="selectin")
     )
+
     agent_type: AgentType = Field(default=AgentType.DEFAULT, index=True)
     agent_model: AgentLLM = Field(default=AgentLLM.GROQ_DEFAULT)
     state: AgentState = Field(default=AgentState.INACTIVE, index=True)
     tasks: List["Task"] = Relationship(back_populates="agent", sa_relationship_kwargs=dict(lazy="selectin"))
+    subtasks: List["SubTask"] = Relationship(back_populates="agent", sa_relationship_kwargs=dict(lazy="selectin"))

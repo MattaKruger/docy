@@ -1,12 +1,11 @@
 from typing import List
 
-from fastapi import APIRouter, Path, Depends
+from fastapi import APIRouter, Depends, Path
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from docy.db import get_session
 from docy.repositories import UserRepository
-from docy.schemas import UserIn, UserOut, ProjectOut
-
+from docy.schemas import ProjectOut, UserIn, UserOut
 
 router = APIRouter(prefix="/users", tags=["user"])
 

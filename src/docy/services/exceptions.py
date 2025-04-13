@@ -52,3 +52,9 @@ class NoSuitableAgentFoundError(ServiceError):
         super().__init__(f"No suitable agent found for task {task_id} based on criteria: {criteria}.")
         self.task_id = task_id
         self.criteria = criteria
+
+
+class ProjectNotFound(ServiceError):
+    def __init__(self, project_id: int) -> None:
+        super().__init__(f"No project found with ID: {project_id}")
+        self.project_id = project_id

@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Path, status
 
 from docy.db import AsyncSession, get_session
 from docy.repositories import (
@@ -9,7 +9,7 @@ from docy.repositories import (
     PromptRepository,
     TaskRepository,
 )
-from docy.schemas import AgentOut, TaskIn, TaskOut, TaskUpdate
+from docy.schemas import AgentOut, MessageIn, MessageOut, TaskIn, TaskOut, TaskUpdate
 from docy.services.exceptions import (
     AgentInactiveError,
     AgentNotFoundError,
@@ -56,10 +56,24 @@ def get_task_assignment_service(
 
 
 @router.post(
+    "/{task_id}/message",
+    summary="Add message to Task",
+    response_model=MessageOut,
+)
+async def add_message_to_task(
+    message_in: MessageIn,
+    task_id: int = Path(...),
+    task_repo: TaskRepository = Depends(get_task_repo),
+):
+    await task_repo.get_or_404(task_id)
+    return await task_repo.add_task_message(task_id, message_in)
+
+
+@router.post(
     "/",
-    response_model=int,
     status_code=status.HTTP_201_CREATED,
     summary="Create a new task",
+    response_model=int,
 )
 async def create_task(
     task_in: TaskIn,
@@ -71,6 +85,7 @@ async def create_task(
     """
     if not task_in.project_id:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Project ID not found")
+
     project_db = await project_repo.get(task_in.project_id)
     if not project_db:
         raise HTTPException(
@@ -90,11 +105,11 @@ async def create_task(
 
 @router.get(
     "/unassigned",
-    response_model=List[TaskOut],
     summary="Get all unassigned tasks",
+    response_model=List[TaskOut],
 )
 async def get_unassigned_tasks(
-    project_id: Optional[int] = None,
+    project_id: int | None = None,
     service: TaskAssignmentService = Depends(get_task_assignment_service),
 ):
     """
@@ -107,8 +122,8 @@ async def get_unassigned_tasks(
 
 @router.get(
     "/",
-    response_model=List[TaskOut],
     summary="Get all tasks with optional filters",
+    response_model=List[TaskOut],
 )
 async def get_all_tasks(
     project_id: Optional[int] = None,
@@ -132,9 +147,9 @@ async def get_all_tasks(
 
 @router.get(
     "/{task_id}",
-    response_model=TaskOut,
     summary="Get a specific task by ID",
     responses={404: {"description": "Task not found"}},
+    response_model=TaskOut,
 )
 async def get_task(
     task_id: int,
@@ -143,20 +158,15 @@ async def get_task(
     """
     Retrieves details of a specific task by its ID.
     """
-    task = await task_repo.get(task_id)
-    if not task:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Task with id {task_id} not found",
-        )
+    task = await task_repo.get_or_404(task_id)
     return TaskOut.model_validate(**task.model_dump())
 
 
 @router.patch(
     "/{task_id}",
-    response_model=TaskOut,
     summary="Update a task",
     responses={404: {"description": "Task not found"}},
+    response_model=TaskOut,
 )
 async def update_task(
     task_id: int,
@@ -207,13 +217,13 @@ async def delete_task(
 
 @router.post(
     "/{task_id}/assign/{agent_id}",
-    response_model=TaskOut,
     summary="Assign a task to an agent",
     responses={
         404: {"description": "Task or Agent not found"},
         400: {"description": "Agent is inactive"},
         409: {"description": "Task already assigned to this agent"},
     },
+    response_model=TaskOut,
 )
 async def assign_task_to_agent(
     task_id: int,
@@ -227,27 +237,27 @@ async def assign_task_to_agent(
         updated_task = await service.assign_task(task_id=task_id, agent_id=agent_id)
         return updated_task
     except TaskNotFoundError as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e
     except AgentNotFoundError as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e
     except AgentInactiveError as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from e
     except TaskAlreadyAssignedError as e:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e)) from e
     except ServiceError as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"An unexpected error occurred: {e}"
-        )
+        ) from e
 
 
 @router.post(
     "/{task_id}/unassign",
-    response_model=TaskOut,
     summary="Unassign an agent from a task",
     responses={
         404: {"description": "Task not found"},
         400: {"description": "Task is not assigned"},
     },
+    response_model=TaskOut,
 )
 async def unassign_agent_from_task(
     task_id: int,
@@ -260,20 +270,20 @@ async def unassign_agent_from_task(
         updated_task = await service.unassign_task(task_id=task_id)
         return updated_task
     except TaskNotFoundError as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e
     except TaskNotAssignedError as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from e
     except ServiceError as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"An unexpected error occurred: {e}"
-        )
+        ) from e
 
 
 @router.get(
     "/{task_id}/suitable-agents",
-    response_model=List[AgentOut],
     summary="Find suitable agents for a task",
     responses={404: {"description": "Task not found"}},
+    response_model=List[AgentOut],
 )
 async def find_suitable_agents(
     task_id: int,
@@ -286,21 +296,21 @@ async def find_suitable_agents(
         agents = await service.find_suitable_agents_for_task(task_id=task_id)
         return agents
     except TaskNotFoundError as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e
     except ServiceError as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"An unexpected error occurred: {e}"
-        )
+        ) from e
 
 
 @router.post(
     "/{task_id}/auto-assign",
-    response_model=TaskOut,
     summary="Automatically assign task to a suitable agent",
     responses={
         404: {"description": "Task not found or no suitable agent found"},
         409: {"description": "Task is already assigned"},
     },
+    response_model=TaskOut,
 )
 async def auto_assign_task_endpoint(
     task_id: int,
@@ -313,16 +323,16 @@ async def auto_assign_task_endpoint(
         updated_task = await service.auto_assign_task(task_id=task_id)
         return updated_task
     except TaskNotFoundError as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e
     except TaskAlreadyAssignedError as e:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e)) from e
     except NoSuitableAgentFoundError as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e
     except AgentNotFoundError as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Internal consistency error: {e}")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Internal consistency error: {e}") from e
     except AgentInactiveError as e:  # Should not happen if find_suitable filters correctly
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Internal consistency error: {e}")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Internal consistency error: {e}") from e
     except ServiceError as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"An unexpected error occurred: {e}"
-        )
+        ) from e

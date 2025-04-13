@@ -1,16 +1,14 @@
 from typing import List, Optional
 
-from docy.models import Agent, AgentState, AgentType, Task, Category
+from docy.models import Agent, AgentState, AgentType, Category, Task
 from docy.repositories import AgentRepository, TaskRepository
 
 from .exceptions import (
     AgentInactiveError,
-    AgentNotFoundError,
     NoSuitableAgentFoundError,
     ServiceError,
     TaskAlreadyAssignedError,
     TaskNotAssignedError,
-    TaskNotFoundError,
 )
 
 
@@ -99,11 +97,12 @@ class TaskAssignmentService:
             raise TaskNotAssignedError(task_id)
 
         task_db.agent_id = None
+        self.task_repo.session.add(task_db)
 
-        updated_task = await self.task_repo.update(task_id, task_db)
-        if updated_task is None:
-            raise ServiceError(f"Failed to update task {task_id} unassignment.")
-        return updated_task
+        await self.task_repo.session.commit()
+        await self.task_repo.session.refresh(task_db)
+
+        return task_db
 
     async def get_unassigned_tasks(self, project_id: Optional[int] = None) -> List[Task]:
         """

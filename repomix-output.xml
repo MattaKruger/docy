@@ -1,0 +1,6475 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+<additional_info>
+
+</additional_info>
+
+</file_summary>
+
+<directory_structure>
+.direnv/
+  CACHEDIR.TAG
+.zed/
+  settings.json
+alembic/
+  env.py
+  README
+  script.py.mako
+src/
+  docy/
+    api/
+      v1/
+        endpoints/
+          __init__.py
+          agent.py
+          artifact.py
+          chat.py
+          notes.py
+          project.py
+          prompt.py
+          task.py
+          user.py
+        __init__.py
+      __init__.py
+    common/
+      agents/
+        main.py
+    core/
+      __init__.py
+      config.py
+    db/
+      __init__.py
+      engine.py
+      init_db.py
+      session.py
+    models/
+      __init__.py
+      agent.py
+      artifact.py
+      base.py
+      chat.py
+      document.py
+      message.py
+      project.py
+      prompt.py
+      task.py
+      user.py
+    repositories/
+      __init__.py
+      agent.py
+      artifact.py
+      base.py
+      chat.py
+      message.py
+      project.py
+      prompt.py
+      task.py
+      user.py
+    schemas/
+      __init__.py
+      agent.py
+      artifact.py
+      chat.py
+      message.py
+      project.py
+      prompt.py
+      task.py
+      user.py
+    services/
+      data/
+        coding/
+          test_house.py
+      __init__.py
+      chroma_service.py
+      exceptions.py
+      github_service.py
+      note_service.py
+      project.py
+      task.py
+      vectordb.py
+      worker.py
+    templates/
+      index.html
+    utils/
+      get_logger.py
+      system_prompts.py
+    workflows/
+      agent.py
+      base.py
+      cli.py
+      interactive.py
+    auth.py
+    main.py
+    task_cli.py
+  tests/
+    conftest.py
+  workspace/
+    agents/
+      common.py
+    data/
+      coding/
+        office.txt
+    models/
+      __init__.py
+      results.py
+      validation.py
+    tools/
+      file_system.py
+      task.py
+      web.py
+    config.py
+    dependencies.py
+    interactive_cli.py
+    mcp_client.py
+    server.py
+.envrc
+.gitignore
+.python-version
+alembic.ini
+docker-compose.yml
+pyproject.toml
+README.md
+requirements.txt
+test.txt
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".direnv/CACHEDIR.TAG">
+Signature: 8a477f597d28d172789f06886806bc55
+# This file is a cache directory tag created by direnv.
+# For information about cache directory tags, see:
+#	http://www.brynosaurus.com/cachedir/
+</file>
+
+<file path="alembic/env.py">
+from logging.config import fileConfig
+
+from sqlalchemy import engine_from_config
+from sqlalchemy import pool
+
+from alembic import context
+
+# this is the Alembic Config object, which provides
+# access to the values within the .ini file in use.
+config = context.config
+
+# Interpret the config file for Python logging.
+# This line sets up loggers basically.
+if config.config_file_name is not None:
+    fileConfig(config.config_file_name)
+
+# add your model's MetaData object here
+# for 'autogenerate' support
+# from myapp import mymodel
+# target_metadata = mymodel.Base.metadata
+target_metadata = None
+
+# other values from the config, defined by the needs of env.py,
+# can be acquired:
+# my_important_option = config.get_main_option("my_important_option")
+# ... etc.
+
+
+def run_migrations_offline() -> None:
+    """Run migrations in 'offline' mode.
+
+    This configures the context with just a URL
+    and not an Engine, though an Engine is acceptable
+    here as well.  By skipping the Engine creation
+    we don't even need a DBAPI to be available.
+
+    Calls to context.execute() here emit the given string to the
+    script output.
+
+    """
+    url = config.get_main_option("sqlalchemy.url")
+    context.configure(
+        url=url,
+        target_metadata=target_metadata,
+        literal_binds=True,
+        dialect_opts={"paramstyle": "named"},
+    )
+
+    with context.begin_transaction():
+        context.run_migrations()
+
+
+def run_migrations_online() -> None:
+    """Run migrations in 'online' mode.
+
+    In this scenario we need to create an Engine
+    and associate a connection with the context.
+
+    """
+    connectable = engine_from_config(
+        config.get_section(config.config_ini_section, {}),
+        prefix="sqlalchemy.",
+        poolclass=pool.NullPool,
+    )
+
+    with connectable.connect() as connection:
+        context.configure(connection=connection, target_metadata=target_metadata)
+
+        with context.begin_transaction():
+            context.run_migrations()
+
+
+if context.is_offline_mode():
+    run_migrations_offline()
+else:
+    run_migrations_online()
+</file>
+
+<file path="alembic/README">
+Generic single-database configuration.
+</file>
+
+<file path="alembic/script.py.mako">
+"""${message}
+
+Revision ID: ${up_revision}
+Revises: ${down_revision | comma,n}
+Create Date: ${create_date}
+
+"""
+from typing import Sequence, Union
+
+from alembic import op
+import sqlalchemy as sa
+${imports if imports else ""}
+
+# revision identifiers, used by Alembic.
+revision: str = ${repr(up_revision)}
+down_revision: Union[str, None] = ${repr(down_revision)}
+branch_labels: Union[str, Sequence[str], None] = ${repr(branch_labels)}
+depends_on: Union[str, Sequence[str], None] = ${repr(depends_on)}
+
+
+def upgrade() -> None:
+    """Upgrade schema."""
+    ${upgrades if upgrades else "pass"}
+
+
+def downgrade() -> None:
+    """Downgrade schema."""
+    ${downgrades if downgrades else "pass"}
+</file>
+
+<file path="src/docy/common/agents/main.py">
+import asyncio
+from dataclasses import dataclass
+
+import logfire
+from devtools import debug
+from httpx import AsyncClient
+from pydantic_ai import Agent
+from pydantic_ai.models.gemini import GeminiModel
+from pydantic_ai.models.groq import GroqModel
+from pydantic_ai.models.openai import OpenAIModel
+from pydantic_ai.providers.openai import OpenAIProvider
+from pydantic_ai.tools import RunContext
+
+# from models.task import Task
+# from schemas.task import TaskIn, TaskOut
+logfire.configure()
+
+
+# TODO ADD AUTH, maybe jwt, cookie, w/e
+
+Agent.instrument_all()
+
+BASE_URL = "http://localhost:8000"
+TASKS_URL = BASE_URL + "/api/v1/tasks"
+
+
+@dataclass
+class TaskAgentDeps:
+    http_client: AsyncClient
+
+
+groq_model = GroqModel("qwen-2.5-coder-32b")
+gemini_model = GeminiModel(
+    model_name="gemini-2.0-pro-exp-02-05",
+)
+ollama_model = OpenAIModel(model_name="phi4:latest", provider=OpenAIProvider(base_url="http://localhost:11434/v1"))
+ollama_coder_agent = Agent(
+    ollama_model,
+    system_prompt="You are a python expert, you write clean and maintainable code.",
+    retries=5,
+    model_settings={
+        "max_tokens": 2048,
+        "temperature": 0.2,
+    },
+)
+
+
+task_agent = Agent(
+    groq_model,
+    system_prompt=("Use the `get_task` tool to get the task content."),
+    deps_type=TaskAgentDeps,
+    retries=2,
+    instrument=True,
+)
+
+
+@task_agent.tool
+async def get_task(ctx: RunContext[TaskAgentDeps], task_id: int):
+    response = await ctx.deps.http_client.get(f"{TASKS_URL}/", params={"task_id": task_id})
+    response.raise_for_status()
+    return response.text
+
+
+async def main():
+    async with AsyncClient() as client:
+        deps = TaskAgentDeps(http_client=client)
+        result = await task_agent.run("Get the task with ID: `1`", deps=deps)
+        debug(result)
+        print("Response:", result.data)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+</file>
+
+<file path="src/docy/models/message.py">
+from enum import Enum
+from typing import TYPE_CHECKING, Optional
+
+from sqlmodel import Column, Field, Relationship, Text
+
+from .base import Base
+from .task import Task
+
+if TYPE_CHECKING:
+    from .artifact import Artifact
+    from .chat import Chat
+
+
+# Rethink Mesagetype, Not sure if we want this in message or even at all.
+class MessageType(str, Enum):
+    USER = "user"
+    AGENT = "agent"
+    SYSTEM = "system"
+    DEFAULT = "default"
+
+
+class Message(Base, table=True):
+    __table__name = "messages"  # type: ignore
+
+    content: str = Field(sa_column=Column(Text))
+    message_type: MessageType = Field(default=MessageType.DEFAULT.value)
+
+    chat_id: Optional[int] = Field(default=None, foreign_key="chats.id")
+    chat: Optional["Chat"] = Relationship(back_populates="messages", sa_relationship_kwargs=dict(lazy="selectin"))
+    artifact_id: Optional[int] = Field(default=None, foreign_key="artifacts.id")
+    artifact: Optional["Artifact"] = Relationship(
+        back_populates="message", sa_relationship_kwargs=dict(lazy="selectin")
+    )
+    task_id: Optional[int] = Field(default=None, foreign_key="tasks.id")
+    task: Optional[Task] = Relationship(back_populates="messages", sa_relationship_kwargs=dict(lazy="selectin"))
+</file>
+
+<file path="src/docy/schemas/message.py">
+from typing import Optional
+
+from pydantic import BaseModel, Field
+
+from ..models import Artifact, Chat, MessageType
+
+
+class MessageIn(BaseModel):
+    content: str = Field()
+    message_type: MessageType = Field(default=MessageType.USER)
+
+    chat_id: int = Field()
+    artifact_id: Optional[int] = Field(default=None)
+
+
+class MessageUpdate(BaseModel):
+    content: Optional[str] = Field(default=None)
+    message_type: Optional[MessageType] = Field(default=None)
+    artifact_id: Optional[int] = Field(default=None)
+
+
+class MessageOut(BaseModel):
+    id: int = Field()
+    content: str = Field()
+    message_type: MessageType = Field()
+    chat: "Chat" = Field()
+    artifact: Optional["Artifact"] = Field()
+</file>
+
+<file path="src/docy/services/project.py">
+from typing import List, Dict, Any
+from pathlib import Path
+
+from pydantic import BaseModel, Field
+from pydantic_ai.agent import Agent
+
+from repositories import ProjectRepository
+from .github_service import GithubService
+
+from models import ProjectMetadata, Project, ProjectType
+from schemas import ProjectMetadataIn
+
+
+example_generator = Agent(
+    "google-gla:gemini-2.5-pro-exp-03-25",
+)
+
+project_agent = Agent(
+    "google-gla:gemini-2.5-pro-exp-03-25"
+)
+
+
+class ProjectService:
+    def __init__(self, project_repository: ProjectRepository):
+        self.project_repo = project_repository
+        self.github_service = GithubService()
+        self.project_creator = project_agent
+        self.example_generator = example_generator
+
+    async def _generate_example_files(self, project: Project):
+        pass
+
+    async def _get_project_docs(self, doc_path: str):
+        pass
+
+    async def _generate_developer_spec(self,):
+        pass
+
+    async def create_python_project(
+        self,
+        name: str,
+        description: str,
+        project_type: ProjectType,
+        frameworks: List[str],
+        languages=["Python"],
+    ):
+        project_metadata = ProjectMetadata(frameworks=frameworks, languages=languages)
+        project = Project(
+            name=name, description=description, project_type=project_type, project_metadata=project_metadata
+        )
+        project_db = await self.project_repo.create_project_with_metadata(project)
+        if not project_db:
+            return None
+
+        example_files = self._generate_example_files(project_db)
+
+        # find_docs = self.get_docs(create_metadata.frameworks, create_metadata.languages)
+        # create_metadata.docs.update(find_docs)
+
+        # self.project_repo.create_project(create_metadata)
+
+
+class LLMCodegenWorkflow:
+    def __init__(self, project_name, model="gpt-4o"):
+        self.project_name = project_name
+        self.model = model
+        self.spec = None
+        self.prompt_plan = None
+        self.todo_list = None
+        self.output_dir = f"projects/{project_name}"
+        self.conversation_history: Dict[str, Any]
+
+    # Step 1: Idea Honing Methods
+    def brainstorm_idea(self, idea_description, model=""):
+        """Start the iterative brainstorming process with an initial idea description"""
+        prompt = f"""
+        Ask me one question at a time so we can develop a thorough, step-by-step spec for this idea. Each question should build on my previous answers, and our end goal is to have a detailed specification I can hand off to a developer. Let’s do this iteratively and dig into every relevant detail. Remember, only one question at a time.
+
+        Here’s the idea:
+        {idea_description}
+        """
+        # TODO fix loop
+        while True:
+            brainstorm_result = project_agent.run(prompt)
+
+
+    async def generate_spec(self):
+        """Generate a comprehensive spec from the brainstorming conversation"""
+        # Maybe we overwrite .system_prompt, not sure yet.
+        prompt = f"""
+        Now that we’ve wrapped up the brainstorming process, can you compile our findings into a comprehensive, developer-ready specification? Include all relevant requirements, architecture choices, data handling details, error handling strategies, and a testing plan so a developer can immediately begin implementation.
+        {self.conversation_history}
+        """
+        response = await project_agent.run(
+            prompt,
+            message_history=self.conversation_history,
+        )
+        print(f"Usage: {response.usage()}")
+        developer_spec = response.data
+        return developer_spec
+
+    def save_spec(self):
+        """Save the generated spec to spec.md"""
+
+
+    # Step 2: Planning Methods
+    def generate_tdd_plan(self, spec):
+        """Generate a test-driven development plan with iterative steps"""
+        pass
+
+    def generate_non_tdd_plan(self, spec):
+        """Generate a standard development plan with iterative steps"""
+        pass
+
+    def generate_todo_list(self, prompt_plan):
+        """Generate a todo list from the prompt plan"""
+        pass
+
+    def save_planning_artifacts(self):
+        """Save the prompt plan and todo list"""
+        pass
+
+    # Step 3: Execution Methods
+    def setup_project_boilerplate(self, tech_stack):
+        """Set up initial project structure and boilerplate"""
+        pass
+
+    def execute_prompt_step(self, step_number):
+        """Execute a specific step from the prompt plan"""
+        pass
+
+    def run_tests_for_step(self, step_number):
+        """Run tests for the current implementation step"""
+        pass
+
+    def update_todo_status(self, step_number, status):
+        """Update the status of a todo item"""
+        pass
+
+    # Non-greenfield Methods
+    def analyze_existing_codebase(self, repo_path, ignore_patterns=None):
+        """Generate context from an existing codebase"""
+        pass
+
+    def generate_code_review(self, code_context):
+        """Generate a code review from the codebase context"""
+        pass
+
+    def generate_github_issues(self, code_context):
+        """Generate GitHub issues from the codebase context"""
+        pass
+
+    def generate_missing_tests(self, code_context):
+        """Identify missing tests in the codebase"""
+        pass
+
+    def generate_readme(self, code_context):
+        """Generate a README.md from the codebase context"""
+        pass
+
+    # Utility Methods
+    def export_to_aider(self, step_number=None):
+        """Export current context to aider for interactive implementation"""
+        pass
+
+    def export_to_claude(self, step_number=None):
+        """Export current context to Claude for interactive implementation"""
+        pass
+
+    def check_progress(self):
+        """Check overall project progress based on todo list"""
+        pass
+
+    def load_prompt_templates(self):
+        """Load prompt templates for various tasks"""
+        pass
+</file>
+
+<file path=".envrc">
+layout python
+source .venv/bin/activate
+</file>
+
+<file path="alembic.ini">
+# A generic, single database configuration.
+
+[alembic]
+# path to migration scripts
+# Use forward slashes (/) also on windows to provide an os agnostic path
+script_location = alembic
+
+# template used to generate migration file names; The default value is %%(rev)s_%%(slug)s
+# Uncomment the line below if you want the files to be prepended with date and time
+# see https://alembic.sqlalchemy.org/en/latest/tutorial.html#editing-the-ini-file
+# for all available tokens
+# file_template = %%(year)d_%%(month).2d_%%(day).2d_%%(hour).2d%%(minute).2d-%%(rev)s_%%(slug)s
+
+# sys.path path, will be prepended to sys.path if present.
+# defaults to the current working directory.
+prepend_sys_path = .
+
+# timezone to use when rendering the date within the migration file
+# as well as the filename.
+# If specified, requires the python>=3.9 or backports.zoneinfo library and tzdata library.
+# Any required deps can installed by adding `alembic[tz]` to the pip requirements
+# string value is passed to ZoneInfo()
+# leave blank for localtime
+# timezone =
+
+# max length of characters to apply to the "slug" field
+# truncate_slug_length = 40
+
+# set to 'true' to run the environment during
+# the 'revision' command, regardless of autogenerate
+# revision_environment = false
+
+# set to 'true' to allow .pyc and .pyo files without
+# a source .py file to be detected as revisions in the
+# versions/ directory
+# sourceless = false
+
+# version location specification; This defaults
+# to alembic/versions.  When using multiple version
+# directories, initial revisions must be specified with --version-path.
+# The path separator used here should be the separator specified by "version_path_separator" below.
+# version_locations = %(here)s/bar:%(here)s/bat:alembic/versions
+
+# version path separator; As mentioned above, this is the character used to split
+# version_locations. The default within new alembic.ini files is "os", which uses os.pathsep.
+# If this key is omitted entirely, it falls back to the legacy behavior of splitting on spaces and/or commas.
+# Valid values for version_path_separator are:
+#
+# version_path_separator = :
+# version_path_separator = ;
+# version_path_separator = space
+# version_path_separator = newline
+#
+# Use os.pathsep. Default configuration used for new projects.
+version_path_separator = os
+
+# set to 'true' to search source files recursively
+# in each "version_locations" directory
+# new in Alembic version 1.10
+# recursive_version_locations = false
+
+# the output encoding used when revision files
+# are written from script.py.mako
+# output_encoding = utf-8
+
+sqlalchemy.url = postgresql+asyncpg://docy:example@localhost/docy
+
+
+[post_write_hooks]
+# post_write_hooks defines scripts or Python functions that are run
+# on newly generated revision scripts.  See the documentation for further
+# detail and examples
+
+# format using "black" - use the console_scripts runner, against the "black" entrypoint
+# hooks = black
+# black.type = console_scripts
+# black.entrypoint = black
+# black.options = -l 79 REVISION_SCRIPT_FILENAME
+
+# lint with attempts to fix using "ruff" - use the exec runner, execute a binary
+# hooks = ruff
+# ruff.type = exec
+# ruff.executable = %(here)s/.venv/bin/ruff
+# ruff.options = check --fix REVISION_SCRIPT_FILENAME
+
+# Logging configuration
+[loggers]
+keys = root,sqlalchemy,alembic
+
+[handlers]
+keys = console
+
+[formatters]
+keys = generic
+
+[logger_root]
+level = WARNING
+handlers = console
+qualname =
+
+[logger_sqlalchemy]
+level = WARNING
+handlers =
+qualname = sqlalchemy.engine
+
+[logger_alembic]
+level = INFO
+handlers =
+qualname = alembic
+
+[handler_console]
+class = StreamHandler
+args = (sys.stderr,)
+level = NOTSET
+formatter = generic
+
+[formatter_generic]
+format = %(levelname)-5.5s [%(name)s] %(message)s
+datefmt = %H:%M:%S
+</file>
+
+<file path="test.txt">
+TEST
+</file>
+
+<file path=".zed/settings.json">
+// Folder-specific settings
+//
+// For a full list of overridable settings, and general information on folder-specific settings,
+// see the documentation: https://zed.dev/docs/configuring-zed#settings-files
+{}
+</file>
+
+<file path="src/docy/api/v1/endpoints/__init__.py">
+from .agent import router as agent_router
+from .artifact import router as artifact_router
+from .chat import router as chat_router
+from .notes import router as notes_router
+from .project import router as project_router
+from .prompt import router as prompt_router
+from .task import router as task_router
+from .user import router as user_router
+
+__all__ = [
+    "user_router",
+    "project_router",
+    "artifact_router",
+    "agent_router",
+    "notes_router",
+    "task_router",
+    "prompt_router",
+    "chat_router",
+]
+</file>
+
+<file path="src/docy/api/v1/endpoints/agent.py">
+from typing import List
+
+from fastapi import APIRouter, Depends, Path
+from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from docy.db import get_session
+from docy.models import AgentState
+from docy.repositories import AgentRepository, PromptRepository
+from docy.schemas import AgentIn, AgentOut, AgentUpdate
+
+router = APIRouter(prefix="/agents", tags=["agents"])
+
+
+def get_agent_repo(session: AsyncSession = Depends(get_session)) -> AgentRepository:
+    return AgentRepository(session, prompt_repo=PromptRepository(session))
+
+
+@router.get("/", response_model=List[AgentOut])
+async def get_agents(agent_repo: AgentRepository = Depends(get_agent_repo)):
+    return await agent_repo.get_multi()
+
+
+@router.post("/")
+async def create_agent(agent: AgentIn, agent_repo: AgentRepository = Depends(get_agent_repo)):
+    return await agent_repo.create(agent)
+
+
+@router.get("/{agent_id}")
+async def get_agent(agent_id: int = Path(...), agent_repo: AgentRepository = Depends(get_agent_repo)):
+    return await agent_repo.get(agent_id)
+
+
+@router.put("/{agent_id}")
+async def update_agent(
+    agent_update: AgentUpdate, agent_id: int = Path(...), agent_repo: AgentRepository = Depends(get_agent_repo)
+):
+    agent_db = await agent_repo.get_or_404(agent_id)
+    return await agent_repo.update(agent_update, agent_db)
+
+
+@router.get("/active")
+async def get_active_agents(agent_repo: AgentRepository = Depends(get_agent_repo)):
+    return await agent_repo.get_multi(filters={"state": AgentState.ACTIVE})
+</file>
+
+<file path="src/docy/api/v1/endpoints/artifact.py">
+from typing import List
+
+from fastapi import APIRouter, Depends, Path, status
+from fastapi.exceptions import HTTPException
+from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from docy.db import get_session
+from docy.repositories import ArtifactRepository
+from docy.schemas.artifact import ArtifactIn, ArtifactOut, ArtifactUpdate
+
+router = APIRouter(prefix="/artifacts", tags=["artifacts"])
+
+
+def get_artifact_repository(session: AsyncSession = Depends(get_session)):
+    return ArtifactRepository(session)
+
+
+@router.get("/", response_model=List[ArtifactOut])
+async def get_artifacts(artifact_repo: ArtifactRepository = Depends(get_artifact_repository)):
+    artifacts = await artifact_repo.get_multi()
+    return artifacts
+
+
+@router.get("/{artifact_id}", response_model=ArtifactOut)
+async def get_artifact(
+    artifact_id: int = Path(...),
+    artifact_repo: ArtifactRepository = Depends(get_artifact_repository),
+):
+    artifact = await artifact_repo.get_or_404(artifact_id)
+    return artifact
+
+
+@router.post("/", response_model=int)
+async def create_artifact(
+    project_artifact: ArtifactIn,
+    artifact_repo: ArtifactRepository = Depends(get_artifact_repository),
+):
+    artifact = await artifact_repo.create(project_artifact)
+    return artifact.id
+
+
+@router.put("/{artifact_id}")
+async def update_artifact(
+    artifact_update: ArtifactUpdate,
+    artifact_id: int = Path(...),
+    artifact_repo: ArtifactRepository = Depends(get_artifact_repository),
+):
+    artifact_db = await artifact_repo.get_or_404(artifact_id)
+
+    updated_artifact = await artifact_repo.update(artifact_update, artifact_db)
+    if updated_artifact is None:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to update artifact")
+
+    return updated_artifact
+
+
+@router.delete("/{artifact_id}")
+async def delete_artifact(
+    artifact_id: int = Path(...),
+    artifact_repo: ArtifactRepository = Depends(get_artifact_repository),
+):
+    return await artifact_repo.delete(artifact_id)
+</file>
+
+<file path="src/docy/api/v1/endpoints/chat.py">
+from typing import List, Optional
+
+from fastapi import APIRouter, Depends, Path
+from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from docy.db import get_session
+from docy.models import Chat
+from docy.repositories import ChatRepository, MessageRepository
+from docy.schemas.chat import ChatIn, ChatOut
+from docy.schemas.message import MessageIn, MessageOut, MessageUpdate
+
+router = APIRouter(prefix="/chats", tags=["chats"])
+
+
+def get_chat_repo(session: AsyncSession = Depends(get_session)):
+    return ChatRepository(session)
+
+
+def get_message_repo(session: AsyncSession = Depends(get_session)):
+    return MessageRepository(session)
+
+
+@router.get("/", response_model=List[ChatOut])
+async def get_chats(chat_repo: ChatRepository = Depends(get_chat_repo)):
+    chats = await chat_repo.get_multi()
+    return chats
+
+
+@router.get("/{chat_id}", response_model=Optional[Chat])
+async def get_chat_by_id(chat_id: int = Path(...), chat_repo: ChatRepository = Depends(get_chat_repo)):
+    chat = await chat_repo.get(chat_id)
+    return chat
+
+
+@router.get("/{chat_id}/messages", response_model=Optional[List[MessageOut]])
+async def get_messages_by_chat_id(chat_id: int = Path(...), chat_repo: ChatRepository = Depends(get_chat_repo)):
+    messages = await chat_repo.get_messages_by_chat_id(chat_id)
+    return messages
+
+
+@router.get("/{chat_id}/messages/{message_type}", response_model=Optional[List[MessageOut]])
+async def get_messages_by_message_type(
+    chat_id: int = Path(...), message_type: str = Path(...), chat_repo: ChatRepository = Depends(get_chat_repo)
+):
+    messages = await chat_repo.get_messages_by_message_type(chat_id, message_type)
+    return messages
+
+
+@router.post(
+    "/",
+    response_model=ChatOut,
+)
+async def create_chat(chat_in: ChatIn, chat_repo: ChatRepository = Depends(get_chat_repo)):
+    chat_db = await chat_repo.create(chat_in)
+    return chat_db
+
+
+@router.post("/{chat_id}/agent/{agent_id")
+async def add_agent_to_chat(
+    chat_id: int = Path(...),
+    agent_id: int = Path(...),
+    chat_repo: ChatRepository = Depends(get_chat_repo),
+):
+    pass
+
+
+@router.post("/{chat_id}/message", response_model=MessageOut)
+async def add_message_to_chat(
+    message_in: MessageIn,
+    chat_repo: ChatRepository = Depends(get_chat_repo),
+    message_repo: MessageRepository = Depends(get_message_repo),
+):
+    message_db = await message_repo.create(message_in)
+    return message_db
+
+
+@router.put("/{chat_id}/message/{message_id}", response_model=MessageOut)
+async def update_message(
+    message_update: MessageUpdate,
+    message_id: int = Path(...),
+    chat_repo: ChatRepository = Depends(get_chat_repo),
+    message_repo: MessageRepository = Depends(get_message_repo),
+):
+    message_db = await message_repo.get(message_id)
+    if not message_db:
+        return
+
+    updated_message = await message_repo.update(message_update, message_db)
+    return updated_message
+
+
+@router.delete("/{chat_id}/message/{message_id}", response_model=MessageOut)
+async def delete_message(
+    message_id: int = Path(...),
+    chat_repo: ChatRepository = Depends(get_chat_repo),
+    message_repo: MessageRepository = Depends(get_message_repo),
+):
+    message_db = await message_repo.get(message_id)
+    deleted_message = await message_repo.delete(message_db)
+    return deleted_message
+</file>
+
+<file path="src/docy/api/v1/endpoints/notes.py">
+from datetime import datetime
+from pathlib import Path
+from typing import List, Optional
+
+from fastapi import APIRouter, Depends, HTTPException, Path, Query
+from pydantic import BaseModel
+
+from docy.core import Settings
+from docy.services import NoteService
+
+settings = Settings()
+
+
+router = APIRouter(prefix="/notes", tags=["notes"])
+
+
+class NoteMetadata(BaseModel):
+    tags: Optional[List[str]] = []
+    created: Optional[datetime] = None
+    modified: Optional[datetime] = None
+    status: Optional[str] = None
+
+
+class NoteCreate(BaseModel):
+    title: str
+    content: Optional[str] = None
+    metadata: Optional[NoteMetadata] = None
+    folder: Optional[str] = None
+    template: Optional[str] = None
+
+
+class NoteUpdate(BaseModel):
+    content: Optional[str] = None
+    metadata: Optional[NoteMetadata] = None
+
+
+class NoteResponse(BaseModel):
+    title: str
+    path: str
+    content: str
+    metadata: NoteMetadata
+    created: datetime
+    modified: datetime
+
+
+def get_note_service():
+    # You might want to make this a proper dependency injection
+    # with configuration and error handling
+    return NoteService(settings.OBSIDIAN_VAULT_DIR)
+
+
+@router.get("/", response_model=List[NoteResponse])
+async def get_all_notes(
+    obsidian_service: NoteService = Depends(get_note_service),
+    limit: int = Query(10, ge=1, le=100),
+    offset: int = Query(0, ge=0),
+):
+    """Get all notes with pagination"""
+    try:
+        notes = obsidian_service.get_all_notes()
+        return notes[offset : offset + limit]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+
+@router.get("/recent", response_model=List[NoteResponse])
+async def get_recent_notes(
+    limit: int = Query(10, ge=1, le=50), obsidian_service: NoteService = Depends(get_note_service)
+):
+    """Get recent notes"""
+    try:
+        return obsidian_service.get_recent_notes(limit)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+
+@router.get("/search", response_model=List[NoteResponse])
+async def search_notes(
+    query: str = Query(..., min_length=1), obsidian_service: NoteService = Depends(get_note_service)
+):
+    """Search notes by content"""
+    try:
+        return obsidian_service.search_notes(query)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+
+@router.get("/{note_id}", response_model=NoteResponse)
+async def get_note(
+    note_id: str = Path(..., description="The note identifier or path"),
+    obsidian_service: NoteService = Depends(get_note_service),
+):
+    """Get a specific note by ID"""
+    try:
+        note = obsidian_service.read_note(note_id)
+        if not note:
+            raise HTTPException(status_code=404, detail="Note not found")
+        return note
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+
+@router.post("/", response_model=NoteResponse, status_code=201)
+async def create_note(note: NoteCreate, obsidian_service: NoteService = Depends(get_note_service)):
+    """Create a new note"""
+    try:
+        created_note = obsidian_service.create_note(
+            title=note.title,
+            content=note.content,
+            metadata=note.metadata.dict() if note.metadata else None,
+            folder=note.folder,
+            template=note.template,
+        )
+        return obsidian_service.read_note(created_note)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+
+@router.put("/{note_id}", response_model=NoteResponse)
+async def update_note(note_id: str, note_update: NoteUpdate, obsidian_service: NoteService = Depends(get_note_service)):
+    """Update an existing note"""
+    try:
+        success = obsidian_service.update_note(
+            note_id, content=note_update.content, metadata=note_update.metadata.dict() if note_update.metadata else None
+        )
+        if not success:
+            raise HTTPException(status_code=404, detail="Note not found")
+        return obsidian_service.read_note(note_id)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+
+@router.get("/{note_id}/links", response_model=List[str])
+async def get_note_links(note_id: str, obsidian_service: NoteService = Depends(get_note_service)):
+    """Get all links from a specific note"""
+    try:
+        note = obsidian_service.read_note(note_id)
+        if not note:
+            raise HTTPException(status_code=404, detail="Note not found")
+        return obsidian_service.find_links(note["content"])
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+
+@router.get("/{note_id}/tags", response_model=List[str])
+async def get_note_tags(note_id: str, obsidian_service: NoteService = Depends(get_note_service)):
+    """Get all tags from a specific note"""
+    try:
+        note = obsidian_service.read_note(note_id)
+        if not note:
+            raise HTTPException(status_code=404, detail="Note not found")
+        return obsidian_service.get_tags(note["content"])
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+</file>
+
+<file path="src/docy/api/v1/endpoints/project.py">
+from typing import List
+
+from fastapi import APIRouter, Depends, Path
+from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from docy.db import get_session
+from docy.repositories import ProjectRepository
+from docy.schemas import ProjectIn, ProjectOut, ProjectUpdate
+
+router = APIRouter(prefix="/projects", tags=["projects"])
+
+
+def get_project_repo(session: AsyncSession = Depends(get_session)) -> ProjectRepository:
+    return ProjectRepository(session)
+
+
+@router.get("/", response_model=List[ProjectOut])
+async def get_projects(project_repo: ProjectRepository = Depends(get_project_repo)):
+    return await project_repo.get_multi()
+
+
+@router.get("/{project_id}", response_model=ProjectOut)
+async def get_project(project_id: int = Path(...), project_repo: ProjectRepository = Depends(get_project_repo)):
+    return await project_repo.get(project_id)
+
+
+@router.post("/")
+async def create_project(project: ProjectIn, project_repo: ProjectRepository = Depends(get_project_repo)):
+    return await project_repo.create(project)
+
+
+@router.put("/{project_id}")
+async def update_project(
+    project_update: ProjectUpdate,
+    project_id: int = Path(...),
+    project_repo: ProjectRepository = Depends(get_project_repo),
+):
+    project_db = await project_repo.get_or_404(project_id)
+    return await project_repo.update(project_update, project_db)
+</file>
+
+<file path="src/docy/api/v1/endpoints/prompt.py">
+from fastapi import APIRouter, Depends, Path
+from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from docy.db.session import get_session
+from docy.repositories import PromptRepository
+from docy.schemas import PromptIn, PromptUpdate
+
+router = APIRouter(prefix="/prompts", tags=["prompts"])
+
+
+def get_prompt_repo(session: AsyncSession = Depends(get_session)) -> PromptRepository:
+    return PromptRepository(session)
+
+
+@router.get("/")
+async def get_prompts(repo: PromptRepository = Depends(get_prompt_repo)):
+    return await repo.get_multi()
+
+
+@router.get("/{prompt_id}")
+async def get_prompt(prompt_id: int = Path(...), prompt_repo=Depends(get_prompt_repo)):
+    return await prompt_repo.get(prompt_id)
+
+
+@router.post("/")
+async def create_prompt(prompt: PromptIn, prompt_repo: PromptRepository = Depends(get_prompt_repo)):
+    return await prompt_repo.create(prompt)
+
+
+@router.put("/{prompt_id}")
+async def update_prompt(
+    prompt_update: PromptUpdate, prompt_id: int = Path(...), prompt_repo: PromptRepository = Depends(get_prompt_repo)
+):
+    prompt_db = await prompt_repo.get_or_404(prompt_id)
+    return await prompt_repo.update(prompt_update, prompt_db)
+</file>
+
+<file path="src/docy/api/v1/endpoints/task.py">
+from typing import List, Optional
+
+from fastapi import APIRouter, Depends, HTTPException, Path, status
+
+from docy.db import AsyncSession, get_session
+from docy.repositories import (
+    AgentRepository,
+    ProjectRepository,
+    PromptRepository,
+    TaskRepository,
+)
+from docy.schemas import AgentOut, MessageIn, MessageOut, TaskIn, TaskOut, TaskUpdate
+from docy.services.exceptions import (
+    AgentInactiveError,
+    AgentNotFoundError,
+    NoSuitableAgentFoundError,
+    ServiceError,
+    TaskAlreadyAssignedError,
+    TaskNotAssignedError,
+    TaskNotFoundError,
+)
+from docy.services.task import TaskAssignmentService
+
+
+router = APIRouter(prefix="/tasks", tags=["tasks"])
+
+
+def get_prompt_repo(session: AsyncSession = Depends(get_session)) -> PromptRepository:
+    return PromptRepository(session)
+
+
+def get_agent_repo(
+    session: AsyncSession = Depends(get_session),
+    prompt_repo: PromptRepository = Depends(get_prompt_repo),
+) -> AgentRepository:
+    return AgentRepository(session=session, prompt_repo=prompt_repo)
+
+
+def get_project_repo(session: AsyncSession = Depends(get_session)) -> ProjectRepository:
+    return ProjectRepository(session)
+
+
+def get_task_repo(
+    session: AsyncSession = Depends(get_session),
+    project_repo: ProjectRepository = Depends(get_project_repo),
+    agent_repo: AgentRepository = Depends(get_agent_repo),
+) -> TaskRepository:
+    return TaskRepository(session=session, project_repo=project_repo, agent_repo=agent_repo)
+
+
+def get_task_assignment_service(
+    agent_repo: AgentRepository = Depends(get_agent_repo),
+    task_repo: TaskRepository = Depends(get_task_repo),
+) -> TaskAssignmentService:
+    return TaskAssignmentService(agent_repo=agent_repo, task_repo=task_repo)
+
+
+@router.post(
+    "/{task_id}/message",
+    summary="Add message to Task",
+    response_model=MessageOut,
+)
+async def add_message_to_task(
+    message_in: MessageIn,
+    task_id: int = Path(...),
+    task_repo: TaskRepository = Depends(get_task_repo),
+):
+    await task_repo.get_or_404(task_id)
+    return await task_repo.add_task_message(task_id, message_in)
+
+
+@router.post(
+    "/",
+    status_code=status.HTTP_201_CREATED,
+    summary="Create a new task",
+    response_model=int,
+)
+async def create_task(
+    task_in: TaskIn,
+    task_repo: TaskRepository = Depends(get_task_repo),
+    project_repo: ProjectRepository = Depends(get_project_repo),
+):
+    """
+    Creates a new task associated with a project.
+    """
+    if not task_in.project_id:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Project ID not found")
+
+    project_db = await project_repo.get(task_in.project_id)
+    if not project_db:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Project with id {task_in.project_id} not found",
+        )
+
+    task_in.project_id = project_db.id
+    task_db = await task_repo.create(task_in)
+    if not task_db:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to create task",
+        )
+    return task_db.id
+
+
+@router.get(
+    "/unassigned",
+    summary="Get all unassigned tasks",
+    response_model=List[TaskOut],
+)
+async def get_unassigned_tasks(
+    project_id: int | None = None,
+    service: TaskAssignmentService = Depends(get_task_assignment_service),
+):
+    """
+    Retrieves a list of tasks that are not currently assigned to any agent.
+    Can optionally filter by project ID.
+    """
+    tasks = await service.get_unassigned_tasks(project_id=project_id)
+    return tasks
+
+
+@router.get(
+    "/",
+    summary="Get all tasks with optional filters",
+    response_model=List[TaskOut],
+)
+async def get_all_tasks(
+    project_id: Optional[int] = None,
+    agent_id: Optional[int] = None,
+    task_repo: TaskRepository = Depends(get_task_repo),
+):
+    """
+    Retrieves a list of all tasks.
+    Can optionally filter by project_id and/or agent_id.
+    """
+    filters = {}
+    if project_id is not None:
+        filters["project_id"] = project_id
+    if agent_id is not None:
+        filters["agent_id"] = agent_id
+
+    tasks = await task_repo.get_multi(**filters)
+
+    return tasks
+
+
+@router.get(
+    "/{task_id}",
+    summary="Get a specific task by ID",
+    responses={404: {"description": "Task not found"}},
+    response_model=TaskOut,
+)
+async def get_task(
+    task_id: int,
+    task_repo: TaskRepository = Depends(get_task_repo),
+):
+    """
+    Retrieves details of a specific task by its ID.
+    """
+    task = await task_repo.get_or_404(task_id)
+    return TaskOut.model_validate(**task.model_dump())
+
+
+@router.patch(
+    "/{task_id}",
+    summary="Update a task",
+    responses={404: {"description": "Task not found"}},
+    response_model=TaskOut,
+)
+async def update_task(
+    task_id: int,
+    task_update: TaskUpdate,
+    task_repo: TaskRepository = Depends(get_task_repo),
+):
+    """
+    Updates specific fields of an existing task.
+    Note: Agent assignment is handled via dedicated endpoints.
+    """
+    task_db = await task_repo.get(task_id)
+
+    if not task_db:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Task with id {task_id} not found",
+        )
+
+    updated_task = await task_repo.update(task_update, task_db)
+    if not updated_task:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to update task",
+        )
+    return updated_task
+
+
+@router.delete(
+    "/{task_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Delete a task",
+    responses={404: {"description": "Task not found"}},
+)
+async def delete_task(
+    task_id: int,
+    task_repo: TaskRepository = Depends(get_task_repo),
+):
+    """
+    Deletes a specific task by its ID.
+    """
+    deleted_count = await task_repo.delete(id=task_id)
+    if not deleted_count:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Task with id {task_id} not found or already deleted",
+        )
+
+
+@router.post(
+    "/{task_id}/assign/{agent_id}",
+    summary="Assign a task to an agent",
+    responses={
+        404: {"description": "Task or Agent not found"},
+        400: {"description": "Agent is inactive"},
+        409: {"description": "Task already assigned to this agent"},
+    },
+    response_model=TaskOut,
+)
+async def assign_task_to_agent(
+    task_id: int,
+    agent_id: int,
+    service: TaskAssignmentService = Depends(get_task_assignment_service),
+):
+    """
+    Assigns a specific task to a specific active agent.
+    """
+    try:
+        updated_task = await service.assign_task(task_id=task_id, agent_id=agent_id)
+        return updated_task
+    except TaskNotFoundError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e
+    except AgentNotFoundError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e
+    except AgentInactiveError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from e
+    except TaskAlreadyAssignedError as e:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e)) from e
+    except ServiceError as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"An unexpected error occurred: {e}"
+        ) from e
+
+
+@router.post(
+    "/{task_id}/unassign",
+    summary="Unassign an agent from a task",
+    responses={
+        404: {"description": "Task not found"},
+        400: {"description": "Task is not assigned"},
+    },
+    response_model=TaskOut,
+)
+async def unassign_agent_from_task(
+    task_id: int,
+    service: TaskAssignmentService = Depends(get_task_assignment_service),
+):
+    """
+    Removes the agent assignment from a task.
+    """
+    try:
+        updated_task = await service.unassign_task(task_id=task_id)
+        return updated_task
+    except TaskNotFoundError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e
+    except TaskNotAssignedError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from e
+    except ServiceError as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"An unexpected error occurred: {e}"
+        ) from e
+
+
+@router.get(
+    "/{task_id}/suitable-agents",
+    summary="Find suitable agents for a task",
+    responses={404: {"description": "Task not found"}},
+    response_model=List[AgentOut],
+)
+async def find_suitable_agents(
+    task_id: int,
+    service: TaskAssignmentService = Depends(get_task_assignment_service),
+):
+    """
+    Finds active agents whose type matches the requirements of the given task.
+    """
+    try:
+        agents = await service.find_suitable_agents_for_task(task_id=task_id)
+        return agents
+    except TaskNotFoundError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e
+    except ServiceError as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"An unexpected error occurred: {e}"
+        ) from e
+
+
+@router.post(
+    "/{task_id}/auto-assign",
+    summary="Automatically assign task to a suitable agent",
+    responses={
+        404: {"description": "Task not found or no suitable agent found"},
+        409: {"description": "Task is already assigned"},
+    },
+    response_model=TaskOut,
+)
+async def auto_assign_task_endpoint(
+    task_id: int,
+    service: TaskAssignmentService = Depends(get_task_assignment_service),
+):
+    """
+    Automatically finds the first available and suitable agent and assigns the task.
+    """
+    try:
+        updated_task = await service.auto_assign_task(task_id=task_id)
+        return updated_task
+    except TaskNotFoundError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e
+    except TaskAlreadyAssignedError as e:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e)) from e
+    except NoSuitableAgentFoundError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e
+    except AgentNotFoundError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Internal consistency error: {e}") from e
+    except AgentInactiveError as e:  # Should not happen if find_suitable filters correctly
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Internal consistency error: {e}") from e
+    except ServiceError as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"An unexpected error occurred: {e}"
+        ) from e
+</file>
+
+<file path="src/docy/api/v1/endpoints/user.py">
+from typing import List
+
+from fastapi import APIRouter, Depends, Path
+from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from docy.db import get_session
+from docy.repositories import UserRepository
+from docy.schemas import ProjectOut, UserIn, UserOut
+
+router = APIRouter(prefix="/users", tags=["user"])
+
+
+def get_user_repo(session: AsyncSession = Depends(get_session)) -> UserRepository:
+    return UserRepository(session)
+
+
+@router.get("/", response_model=List[UserOut])
+async def get_users(user_repo: UserRepository = Depends(get_user_repo)):
+    return await user_repo.get_multi()
+
+
+@router.get("/{user_id}", response_model=UserOut)
+async def get_user(user_id: int, user_repo: UserRepository = Depends(get_user_repo)):
+    return await user_repo.get(user_id)
+
+
+@router.post("/", response_model=UserOut)
+async def create_user(user: UserIn, user_repo: UserRepository = Depends(get_user_repo)):
+    return await user_repo.create(user)
+
+
+@router.get("/{user_id}/projects", response_model=List[ProjectOut])
+async def get_user_projects(user_id: int = Path(...), user_repo: UserRepository = Depends(get_user_repo)):
+    pass
+    # return await user_repo.get_projects(user_id)
+</file>
+
+<file path="src/docy/api/v1/__init__.py">
+from fastapi import APIRouter
+
+from .endpoints import (
+    agent_router,
+    artifact_router,
+    chat_router,
+    notes_router,
+    project_router,
+    prompt_router,
+    task_router,
+    user_router,
+)
+
+api_v1_router = APIRouter()
+
+api_v1_router.include_router(agent_router)
+api_v1_router.include_router(artifact_router)
+api_v1_router.include_router(chat_router)
+api_v1_router.include_router(notes_router)
+api_v1_router.include_router(project_router)
+api_v1_router.include_router(prompt_router)
+api_v1_router.include_router(task_router)
+api_v1_router.include_router(user_router)
+
+
+__all__ = ["api_v1_router"]
+</file>
+
+<file path="src/docy/api/__init__.py">
+from fastapi import APIRouter
+
+from .v1 import api_v1_router
+</file>
+
+<file path="src/docy/core/__init__.py">
+from .config import Settings
+</file>
+
+<file path="src/docy/core/config.py">
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+
+    GITHUB_ACCESS_TOKEN: str = Field(default="")
+    GROQ_API_KEY: str = Field(default="")
+    OBSIDIAN_VAULT_DIR: str = Field(default="")
+    GEMINI_API_KEY: str = Field(default="")
+    GOOGLE_API_KEY: str = Field(default="")
+
+    DB_HOST: str = Field(default="")
+    DB_USER: str = Field(default="")
+    DB_PASS: str = Field(default="")
+    DB_NAME: str = Field(default="")
+    DB_PORT: str = Field(default="5432")
+
+    TEST_DB_NAME: str = Field(default="")
+</file>
+
+<file path="src/docy/db/__init__.py">
+from .engine import engine
+from .init_db import create_db_and_tables
+from .session import AsyncSession, get_session
+</file>
+
+<file path="src/docy/db/engine.py">
+from sqlalchemy.ext.asyncio import create_async_engine
+
+from ..core import Settings
+
+settings = Settings()
+
+DATABASE_URL = f"postgresql+asyncpg://{settings.DB_USER}:{settings.DB_PASS}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}"
+engine = create_async_engine(DATABASE_URL, future=True)
+</file>
+
+<file path="src/docy/db/init_db.py">
+from sqlmodel import SQLModel
+
+from .engine import engine
+
+
+async def create_db_and_tables():
+    async with engine.begin() as conn:
+        await conn.run_sync(SQLModel.metadata.create_all)
+</file>
+
+<file path="src/docy/db/session.py">
+from typing import AsyncGenerator
+
+from sqlalchemy.ext.asyncio.session import AsyncSession, async_sessionmaker
+
+from .engine import engine
+
+async_session_local = async_sessionmaker(
+    bind=engine,
+    expire_on_commit=False,
+)
+
+
+async def get_session() -> AsyncGenerator[AsyncSession, None]:
+    async with async_session_local() as session:
+        try:
+            yield session
+            await session.commit()
+        except Exception:
+            await session.rollback()
+            raise
+</file>
+
+<file path="src/docy/models/__init__.py">
+from .agent import Agent, AgentLLM, AgentState, AgentType
+from .artifact import Artifact, ArtifactType
+from .base import Base
+from .chat import Chat
+from .message import Message, MessageType
+from .project import Project, ProjectType, ProjectMetadata
+from .prompt import Prompt, PromptType
+from .task import Category, Task
+from .user import User
+
+__all__ = [
+    "Base",
+    "Chat",
+    "User",
+    "Task",
+    "Category",
+    "Prompt",
+    "PromptType",
+    "Message",
+    "MessageType",
+    "Project",
+    "ProjectType",
+    "ProjectMetadata",
+    "Artifact",
+    "ArtifactType",
+    "Agent",
+    "AgentLLM",
+    "AgentState",
+    "AgentType",
+]
+</file>
+
+<file path="src/docy/models/agent.py">
+from enum import Enum
+from typing import TYPE_CHECKING, List, Optional
+
+from sqlmodel import Field, Relationship
+
+from .base import Base
+
+if TYPE_CHECKING:
+    from .prompt import Prompt
+    from .task import SubTask, Task
+
+
+class AgentState(str, Enum):
+    ACTIVE = "active"
+    INACTIVE = "inactive"
+
+
+class AgentType(str, Enum):
+    DEFAULT = "default"
+    CODE = "code"
+    BRAINSTORM = "brainstorm"
+
+
+class AgentLLM(str, Enum):
+    GROQ_DEFAULT = "deepseek-r1-distill-qwen-32b"
+    GROQ_CODE = "groq_code"
+    GROQ_BRAINSTORM = "groq_brainstorm"
+
+
+class Agent(Base, table=True):
+    __tablename__ = "agents"  # type: ignore
+
+    name: str = Field(unique=True, index=True)
+    system_prompt_id: Optional[int] = Field(default=None, foreign_key="prompts.id")
+    system_prompt: Optional["Prompt"] = Relationship(
+        back_populates="agents", sa_relationship_kwargs=dict(lazy="selectin")
+    )
+
+    agent_type: AgentType = Field(default=AgentType.DEFAULT, index=True)
+    agent_model: AgentLLM = Field(default=AgentLLM.GROQ_DEFAULT)
+    state: AgentState = Field(default=AgentState.INACTIVE, index=True)
+    tasks: List["Task"] = Relationship(back_populates="agent", sa_relationship_kwargs=dict(lazy="selectin"))
+    subtasks: List["SubTask"] = Relationship(back_populates="agent", sa_relationship_kwargs=dict(lazy="selectin"))
+</file>
+
+<file path="src/docy/models/artifact.py">
+from enum import Enum
+from typing import TYPE_CHECKING, Optional
+
+from sqlmodel import Column, Field, Relationship, Text
+
+from .base import Base
+
+if TYPE_CHECKING:
+    from .chat import Message
+    from .project import Project
+
+
+class ArtifactType(str, Enum):
+    DEFAULT = "default"
+    CODE = "code"
+    MARKDOWN = "markdown"
+
+
+class Artifact(Base, table=True):
+    __tablename__ = "artifacts"  # type: ignore
+
+    name: str = Field(index=True)
+    description: str = Field(sa_column=Column(Text))
+    content: str = Field(sa_column=Column(Text))
+    validated: bool = Field(default=False, index=True)
+    artifact_type: ArtifactType = Field(default=ArtifactType.DEFAULT, index=True)
+
+    # Relationships
+    project_id: int = Field(foreign_key="projects.id")
+    project: "Project" = Relationship(back_populates="artifacts", sa_relationship_kwargs=dict(lazy="selectin"))
+    message: Optional["Message"] = Relationship(back_populates="artifact", sa_relationship_kwargs=dict(lazy="selectin"))
+</file>
+
+<file path="src/docy/models/base.py">
+from typing import Optional
+
+from sqlmodel import Field, SQLModel
+
+
+class Base(SQLModel, table=False):
+    id: Optional[int] = Field(default=None, primary_key=True, index=True, nullable=False)
+</file>
+
+<file path="src/docy/models/document.py">
+from typing import Optional, List
+
+from pgvector.sqlalchemy import Vector
+from sqlmodel import SQLModel, Field, Column
+
+
+VECTOR_DIMENSIONS = 1024
+
+
+class Document(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+
+    name: str = Field(index=True)
+
+    embedding: Optional[List[float]] = Field(default=None, sa_column=Column(Vector(VECTOR_DIMENSIONS)))
+</file>
+
+<file path="src/docy/models/project.py">
+from enum import Enum
+from typing import TYPE_CHECKING, List, Optional
+
+from sqlalchemy import Column, Text, String
+from sqlalchemy.dialects.postgresql import ARRAY
+from sqlmodel import Field, Relationship
+
+from .base import Base
+
+if TYPE_CHECKING:
+    from .artifact import Artifact
+    from .task import Task
+    from .user import User
+
+
+class ProjectType(str, Enum):
+    DEFAULT = "default"
+    CODE = "code"
+
+
+class Project(Base, table=True):
+    __tablename__ = "projects"  # type: ignore
+
+    name: str = Field(unique=True, index=True)
+    project_type: ProjectType = Field(default=ProjectType.DEFAULT, index=True)
+    description: str = Field(sa_column=Column(Text))
+
+    # Relationships
+    user_id: Optional[int] = Field(default=None, foreign_key="users.id", index=True)
+    user: Optional["User"] = Relationship(back_populates="projects", sa_relationship_kwargs=dict(lazy="selectin"))
+    project_metadata_id: Optional[int] = Field(default=None, foreign_key="project_metadata.id")
+    project_metadata: Optional["ProjectMetadata"] = Relationship(
+        back_populates="project", sa_relationship_kwargs=dict(lazy="selectin")
+    )
+    tasks: List["Task"] = Relationship(back_populates="project", sa_relationship_kwargs=dict(lazy="selectin"))
+    artifacts: List["Artifact"] = Relationship(back_populates="project", sa_relationship_kwargs=dict(lazy="selectin"))
+
+
+class ProjectMetadata(Base, table=True):
+    __tablename__ = "project_metadata"  # type: ignore
+
+    project_id: Optional[int] = Field(default=None, foreign_key="projects.id")
+    project: Optional[Project] = Relationship(
+        back_populates="project_metadata", sa_relationship_kwargs=dict(lazy="selectin")
+    )
+    languages: Optional[List[str]] = Field(default=None, sa_column=Column(ARRAY(String)))
+    frameworks: Optional[List[str]] = Field(default=None, sa_column=Column(ARRAY(String)))
+</file>
+
+<file path="src/docy/models/prompt.py">
+from enum import Enum
+from typing import TYPE_CHECKING, List
+
+from sqlalchemy import Text
+from sqlmodel import Column, Field, Relationship
+
+from .base import Base
+
+if TYPE_CHECKING:
+    from .agent import Agent
+
+
+class PromptType(str, Enum):
+    DEFAULT = "default"
+    CODING = "coding"
+
+
+class Prompt(Base, table=True):
+    __tablename__ = "prompts"  # type: ignore
+
+    name: str = Field(index=True, unique=True, description="Unique name for the prompt")
+    content: str = Field(sa_column=Column(Text), description="The full text content of the system prompt.")
+
+    agents: List["Agent"] = Relationship(back_populates="system_prompt", sa_relationship_kwargs=dict(lazy="selectin"))
+</file>
+
+<file path="src/docy/models/user.py">
+from typing import TYPE_CHECKING, List
+
+from sqlmodel import Field, Relationship, SQLModel
+
+from .base import Base
+
+if TYPE_CHECKING:
+    from .chat import Chat
+    from .project import Project
+
+
+class User(Base, SQLModel, table=True):
+    __tablename__ = "users"  # type: ignore
+
+    name: str = Field(index=True, unique=True)
+    projects: List["Project"] = Relationship(
+        back_populates="user", sa_relationship_kwargs=dict(lazy="selectin", cascade="all, delete-orphan")
+    )
+    chats: List["Chat"] = Relationship(
+        back_populates="user", sa_relationship_kwargs=dict(lazy="selectin", cascade="all, delete-orphan")
+    )
+</file>
+
+<file path="src/docy/repositories/__init__.py">
+from .agent import AgentRepository
+from .artifact import ArtifactRepository
+from .chat import ChatRepository
+from .message import MessageRepository
+from .project import ProjectRepository
+from .prompt import PromptRepository
+from .task import TaskRepository
+from .user import UserRepository
+
+__all__ = [
+    "UserRepository",
+    "AgentRepository",
+    "ProjectRepository",
+    "ArtifactRepository",
+    "TaskRepository",
+    "PromptRepository",
+    "ChatRepository",
+    "MessageRepository",
+]
+</file>
+
+<file path="src/docy/repositories/agent.py">
+from typing import Optional
+
+from fastapi import HTTPException, status
+from sqlalchemy.ext.asyncio.session import AsyncSession
+from sqlmodel import select
+
+from ..models import Agent, AgentState
+from ..schemas import AgentIn, AgentUpdate
+from .base import BaseRepository
+from .prompt import PromptRepository
+
+
+class AgentRepository(BaseRepository[Agent, AgentIn, AgentUpdate]):
+    """Repository for agent model operations"""
+
+    def __init__(self, session: AsyncSession, prompt_repo: PromptRepository):
+        super().__init__(Agent, session)
+        self.prompt_repo = prompt_repo
+
+    async def create(self, create_model: AgentIn) -> Agent:
+        """Creates a new agent, ensuring the associated prompt exists."""
+        print(f"Attempting to create agent: {create_model.name}")
+
+        prompt = await self.prompt_repo.get(create_model.system_prompt_id)
+        if not prompt:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"System prompt with ID {create_model.system_prompt_id} not found.",
+            )
+        agent = Agent.model_validate(create_model)
+        self.session.add(agent)
+        await self.session.commit()
+        await self.session.refresh(agent)
+        print(
+            f"Succesfully created Agent ID: {agent.id} - '{agent.name}', linked to Prompt ID: {agent.system_prompt_id}"
+        )
+
+        return agent
+
+    async def get_active_agent(self, agent_id: int) -> Optional[Agent]:
+        """Gets an agent by ID only if their state is ACTIVE"""
+        statement = select(Agent).where(Agent.id == agent_id, Agent.state == AgentState.ACTIVE)
+        agent = await self.session.execute(statement)
+        return agent.scalar_one_or_none()
+</file>
+
+<file path="src/docy/repositories/artifact.py">
+from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from ..models.artifact import Artifact
+from ..schemas.artifact import ArtifactIn, ArtifactUpdate
+from .base import BaseRepository
+
+
+class ArtifactRepository(BaseRepository[Artifact, ArtifactIn, ArtifactUpdate]):
+    """Repository for ProjectArtifact model operations."""
+
+    def __init__(self, session: AsyncSession):
+        super().__init__(Artifact, session)
+</file>
+
+<file path="src/docy/repositories/base.py">
+from typing import Any, Dict, Generic, List, Optional, Type, TypeVar
+
+import logfire
+from fastapi import HTTPException, status
+from pydantic import BaseModel
+from sqlalchemy.exc import MultipleResultsFound
+from sqlalchemy.ext.asyncio.session import AsyncSession
+from sqlalchemy.orm import Load
+from sqlmodel import SQLModel, func, select
+
+ModelType = TypeVar("ModelType", bound=SQLModel)
+CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
+UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
+
+LoadOption = Load
+
+
+class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
+    """
+    Base repository implementing common CRUD operations for SQLModel models.
+    This class provides generic database operations that can be used by all model repositories
+    """
+
+    def __init__(self, model: Type[ModelType], session: AsyncSession):
+        self.model = model
+        self.session = session
+        self.model_name = self.model.__name__
+
+    async def create(self, create_model: CreateSchemaType) -> ModelType:
+        """Creates a new record in the database."""
+        logfire.debug(f"Creating {self.model_name} instance")
+
+        model_data = create_model.model_dump()
+        db_obj = self.model(**model_data)
+
+        self.session.add(db_obj)
+
+        await self.session.commit()
+        await self.session.refresh(db_obj)
+
+        logfire.debug(f"Successfully created {self.model_name} with id {getattr(db_obj, 'id', None)}")
+        return db_obj
+
+    async def create_all(self, create_models: List[CreateSchemaType]):
+        """Creates new records in the database."""
+        logfire.debug(f"Creating {self.model_name} instances")
+
+        for model in create_models:
+            model = self.model(model.model_dump())
+
+        self.session.add_all(create_models)
+        await self.session.commit()
+
+    async def get(self, id: Any, *, load_options: Optional[List[LoadOption]] = None) -> Optional[ModelType]:
+        """
+        Gets a single record by ID, optionally applying relationship loading strategies.
+
+        Args:
+            id: The primary key of the record to fetch.
+            load_options: A list of SQLAlchemy loading options (e.g., [joinedload(Model.relationship)]).
+        """
+        logfire.debug(f"Getting {self.model_name} with id {id}, load_options={load_options}")
+
+        statement = select(self.model).where(self.model.id == id)
+        if load_options:
+            statement = statement.options(*load_options)
+
+        result = await self.session.execute(statement)
+
+        instance = result.scalar_one_or_none()
+        if instance:
+            logfire.debug(f"Successfully retrieved {self.model_name} with id {id}")
+
+        logfire.debug(f"{self.model_name} with id {id} found: {'Yes' if instance else 'No'}")
+        return instance
+
+    async def get_or_404(self, id: Any, *, load_options: Optional[List[LoadOption]] = None) -> ModelType:
+        """
+        Gets a single record by ID or raises HTTPException 404,
+        optionally applying relationship loading strategies.
+
+        Args:
+            id: The primary key of the record to fetch.
+            load_options: A list of SQLAlchemy loading options.
+        """
+        logfire.debug(f"Getting {self.model_name} with id {id} (or 404), load_options={load_options}")
+
+        obj = await self.get(id, load_options=load_options)
+        if obj is None:
+            logfire.warning(f"{self.model_name} with id {id} not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"{self.model_name} with id {id} not found",
+            )
+        return obj
+
+    async def get_multi(
+        self,
+        *,
+        skip: int = 0,
+        limit: int = 100,
+        filters: Optional[Dict[str, Any]] = None,
+        load_options: Optional[List[LoadOption]] = None,
+    ) -> List[ModelType]:
+        """
+        Gets multiple records with optional filtering, skip, limit,
+        and relationship loading strategies.
+
+        Args:
+            skip: Number of records to skip.
+            limit: Maximum number of records to return.
+            filters: A dictionary of field-value pairs for filtering.
+            load_options: A list of SQLAlchemy loading options.
+        """
+        logfire.debug(
+            f"Getting multiple {self.model_name} with skip={skip}, limit={limit}, filters={filters}, load_options={load_options}"
+        )
+        statement = select(self.model)
+
+        if filters:
+            for field, value in filters.items():
+                if hasattr(self.model, field):
+                    statement = statement.where(getattr(self.model, field) == value)
+                else:
+                    logfire.warning(f"Filter field '{field}' not found on model {self.model_name}")
+
+        # Apply loading options *before* offset and limit
+        if load_options:
+            statement = statement.options(*load_options)
+
+        statement = statement.offset(skip).limit(limit)
+        result = await self.session.execute(statement)
+        items = result.scalars().all()
+        logfire.debug(f"Found {len(items)} {self.model_name} instances")
+
+        return list(items)
+
+    async def update(self, obj_in: UpdateSchemaType, db_obj: ModelType) -> Optional[ModelType]:
+        """Updates an existing record by ID."""
+        obj_id = getattr(db_obj, "id", "<unknown_id>")
+        logfire.info(f"Updating {self.model_name} with id {obj_id}")
+
+        update_data = obj_in.model_dump(exclude_unset=True)
+        if not update_data:
+            return db_obj
+
+        for field, value in update_data.items():
+            setattr(db_obj, field, value)
+        logfire.debug(f"Update data for {self.model_name} {obj_id}: {update_data}")
+
+        self.session.add(db_obj)
+        try:
+            await self.session.commit()
+        except Exception as e:
+            logfire.error(f"Failed to update {self.model_name} {obj_id}: {e}")
+            await self.session.rollback()
+            return None
+
+        await self.session.refresh(db_obj)
+        logfire.debug(f"Successfully updated and refreshed {self.model_name} {obj_id}")
+        return db_obj
+
+    async def delete(self, id: Any) -> ModelType:
+        """Deletes a record by ID."""
+        logfire.debug(f"Deleting {self.model_name} with id {id}")
+        db_obj = await self.get_or_404(id)
+
+        await self.session.delete(db_obj)
+        await self.session.commit()
+        logfire.info(f"Successfully deleted {self.model_name} with id {id}")
+        return db_obj
+
+    async def count(self, filters: Optional[Dict[str, Any]] = None) -> int:
+        """Counts records with optional filtering."""
+        logfire.debug(f"Counting {self.model_name} with filters={filters}")
+
+        statement = select(func.count()).select_from(self.model)
+
+        if filters:
+            for field, value in filters.items():
+                if hasattr(self.model, field):
+                    statement = statement.where(getattr(self.model, field) == value)
+                else:
+                    logfire.warning(f"Filter field '{field}' not found on model {self.model_name} during count")
+
+        result = await self.session.execute(statement)
+        count = result.scalar_one()  # count should always return one row
+        logfire.debug(f"Count result for {self.model_name}: {count}")
+
+        return count
+
+    async def _get_one_by_field(
+        self, field_name: str, value: Any, *, load_options: Optional[List[LoadOption]] = None
+    ) -> Optional[ModelType]:
+        """
+        Helper to get a single record by an arbitrary field, optionally applying
+        relationship loading strategies.
+
+        Returns None if no record is found. Logs an error and returns None
+        if multiple records are found.
+        Raises ValueError if the field_name does not exist on the model.
+
+        Args:
+            field_name: The name of the attribute/column to filter by.
+            value: The value to match for the given field.
+            load_options: A list of SQLAlchemy loading options.
+        """
+        logfire.debug(f"Getting one {self.model_name} by {field_name}={value}, load_options={load_options}")
+
+        if not hasattr(self.model, field_name):
+            logfire.error(f"Field '{field_name}' does not exist on model {self.model_name}")
+            raise ValueError(f"Field '{field_name}' does not exist on model {self.model_name}")
+
+        statement = select(self.model).where(getattr(self.model, field_name) == value)
+
+        if load_options:
+            statement = statement.options(*load_options)
+
+        result = await self.session.execute(statement)
+        try:
+            instance = result.scalar_one_or_none()
+            if instance:
+                logfire.debug(f"Found one {self.model_name} for {field_name}={value}")
+            else:
+                logfire.debug(f"No {self.model_name} found for {field_name}={value}")
+            return instance
+        except MultipleResultsFound:
+            logfire.error(
+                f"Multiple results found unexpectedly for {self.model_name} with {field_name}={value}. Returning None."
+            )
+            return None
+</file>
+
+<file path="src/docy/repositories/chat.py">
+from sqlalchemy.ext.asyncio.session import AsyncSession
+from sqlmodel import select
+
+from ..models.chat import Chat, Message
+from ..schemas.chat import ChatIn, ChatUpdate
+from .base import BaseRepository
+
+
+class ChatRepository(BaseRepository[Chat, ChatIn, ChatUpdate]):
+    """Repository for Chat model operations"""
+
+    def __init__(self, session: AsyncSession):
+        super().__init__(Chat, session)
+
+    async def get_messages_by_chat_id(self, chat_id: int):
+        return await self.session.execute(select(Message).where(Message.chat_id == chat_id))
+
+    async def get_messages_by_message_type(self, chat_id: int, message_type: str):
+        return await self.session.execute(
+            select(Message).where(Message.chat_id == chat_id).where(Message.message_type == message_type)
+        )
+</file>
+
+<file path="src/docy/repositories/message.py">
+from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from ..models.chat import Message
+from ..schemas.message import MessageIn, MessageUpdate
+from .base import BaseRepository
+
+
+class MessageRepository(BaseRepository[Message, MessageIn, MessageUpdate]):
+    """Repository for Message model operations"""
+
+    def __init__(self, session: AsyncSession):
+        super().__init__(Message, session)
+</file>
+
+<file path="src/docy/repositories/project.py">
+from typing import Optional, List
+
+
+from sqlmodel import select, any_
+from sqlalchemy.ext.asyncio.session import AsyncSession
+
+
+from ..models.project import Project, ProjectMetadata
+from ..schemas.project import ProjectIn, ProjectUpdate, ProjectMetadataIn
+from .base import BaseRepository
+
+
+class ProjectRepository(BaseRepository[Project, ProjectIn, ProjectUpdate]):
+    """Repository for project model operations"""
+
+    def __init__(self, session: AsyncSession):
+        super().__init__(Project, session)
+
+    async def create_project_with_metadata(self, project: Project) -> Optional[Project]:
+        """Create a project based on metadata"""
+        self.session.add(project)
+        await self.session.commit()
+        await self.session.refresh(project)
+        return project
+
+    async def get_all_by_id(self, project_id: int) -> Optional[List[Project]]:
+        """Gets a project by its unique id"""
+        statement = select(Project).where(Project.id == project_id)
+        results = await self.session.execute(statement)
+        return list(results.scalars().all())
+
+    async def get_all_by_name(self, name: str) -> Optional[List[Project]]:
+        """Gets a project by its unique name"""
+        statement = select(Project).where(Project.name == name)
+        results = await self.session.execute(statement)
+        return list(results.scalars().all())
+
+    async def get_all_by_language(self, language: str) -> Optional[List[Project]]:
+        """Gets all projects associated with a programming language"""
+        statement = select(Project).where(any_(Project.project_metadata.languages) == language)
+        results = await self.session.execute(statement)
+        return list(results.scalars().all())
+
+    async def get_all_by_framework(self, framework: str) -> Optional[List[Project]]:
+        """Gets all projects associated with a framework"""
+        statement = select(Project).where(any_(Project.project_metadata.frameworks) == framework)
+        results = await self.session.execute(statement)
+        return list(results.scalars().all())
+
+    async def get_all_by_user(self, user_id: int) -> Optional[List[Project]]:
+        """Gets a project by its user"""
+        statement = select(Project).where(Project.user_id == user_id)
+        results = await self.session.execute(statement)
+        return list(results.scalars().all())
+</file>
+
+<file path="src/docy/repositories/prompt.py">
+from typing import Optional
+
+from sqlalchemy.ext.asyncio.session import AsyncSession
+from sqlmodel import select
+
+from ..models.prompt import Prompt
+from ..schemas.prompt import PromptIn, PromptUpdate
+from .base import BaseRepository
+
+
+class PromptRepository(BaseRepository[Prompt, PromptIn, PromptUpdate]):
+    def __init__(self, session: AsyncSession):
+        super().__init__(Prompt, session)
+
+    async def get_by_name(self, name: str) -> Optional[Prompt]:
+        """Gets a prompt by its name"""
+        statement = select(Prompt).where(Prompt.name == name)
+        result = await self.session.execute(statement)
+        return result.scalars().first()
+
+    async def get_or_create(self, name: str, content: str) -> Prompt:
+        """Gets a prompt by name, creating it if it doesnt exist"""
+        prompt = await self.get_by_name(name)
+        if not prompt:
+            prompt_in = PromptIn(name=name, content=content)
+            prompt = await self.create(prompt_in)
+            print(f"Created prompt ID: {prompt.id}")
+        return prompt
+</file>
+
+<file path="src/docy/repositories/task.py">
+from typing import Any, Dict, List, Optional
+
+import logfire
+from fastapi import HTTPException, status
+from sqlalchemy.ext.asyncio.session import AsyncSession
+from sqlmodel import select
+
+from ..models.message import Message
+from ..models.task import SubTask, Task
+from ..schemas.message import MessageIn
+from ..schemas.task import SubTaskIn, TaskIn, TaskUpdate
+
+from .agent import AgentRepository
+from .base import BaseRepository
+from .project import ProjectRepository
+
+
+class TaskRepository(BaseRepository[Task, TaskIn, TaskUpdate]):
+    """Repository for handling task model operations"""
+
+    def __init__(
+        self,
+        session: AsyncSession,
+        agent_repo: AgentRepository,
+        project_repo: ProjectRepository,
+    ):
+        super().__init__(Task, session)
+        self.agent_repo = agent_repo
+        self.project_repo = project_repo
+
+    async def get_all_by_project_id(self, project_id: int) -> List[Task]:
+        """Get all tasks associated with a project"""
+        if project_id is None:
+            raise ValueError("Project ID cannot be None")
+
+        statement = select(Task).where(Task.project_id == project_id)
+        result = await self.session.execute(statement)
+        tasks = list(result.scalars().all())
+        return tasks
+
+    async def create_subtask(self, task_id: int, create_model: SubTaskIn) -> SubTask:
+        """Create Subtask associated with Task"""
+        logfire.info(f"Attempting to create task: {create_model.name} for Task ID: {create_model.task_id}")
+        subtask_db = SubTask(**create_model.model_dump(exclude_unset=True))
+
+        self.session.add(subtask_db)
+        await self.session.commit()
+        await self.session.refresh(subtask_db)
+        return subtask_db
+
+    async def add_task_message(self, task_id: int, message_in: MessageIn) -> Message:
+        """Add message to a task"""
+        statement = select(Task).where(Task.id == task_id)
+        result = await self.session.execute(statement)
+        task = result.scalar_one_or_none()
+        if not task:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
+
+        message = Message(**message_in.model_dump(exclude_unset=True))
+
+        self.session.add(message)
+        await self.session.commit()
+        await self.session.refresh(message)
+        return message
+
+    async def get_task_messages(self, task_id: int, filters: Optional[Dict[str, Any]] = None):
+        if not filters:
+            filters = {}
+
+        statement = select(Message).where(Message.task_id == task_id)
+        messages = await self.session.execute(statement)
+        result = list(messages.scalars().all())
+
+        return result
+
+    async def create(self, create_model: TaskIn) -> Task:
+        """Creates a new task, ensuring project exists and agent_id is initially None."""
+        logfire.info(f"Attempting to create task: {create_model.name} for Project ID: {create_model.project_id}")
+
+        if not create_model.project_id:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Task requires a project id.")
+
+        await self.project_repo.get_or_404(create_model.project_id)
+
+        task_data = create_model.model_dump(exclude_unset=True)
+
+        task = Task(**task_data)
+        task.agent_id = None  # Unassigned
+
+        self.session.add(task)
+        await self.session.commit()
+        await self.session.refresh(task)
+
+        logfire.info(f"Successfully created Task ID:  {task.id} - '{task.name}' for Project ID: {task.project_id}")
+        return task
+
+    async def find_unassigned_by_project(self, project_id: int) -> List[Task]:
+        """Finds tasks for a project that dont have an agent assigned."""
+        statement = select(Task).where(Task.project_id == project_id).where(Task.agent_id == None)
+        tasks = await self.session.execute(statement)
+        result = list(tasks.scalars().all())
+
+        logfire.info(f"Found {len(result)} unassigned tasks for Project ID: {project_id}")
+        return result
+
+    async def assign_agent(self, task_id: int, agent_id: int) -> Optional[Task]:
+        """Assigns a specific task to a specific agent, checking existence."""
+        logfire.info(f"Attempting to assign Task ID: {task_id} to Agent ID: {agent_id}")
+        task = await self.get_or_404(task_id)
+
+        agent = await self.agent_repo.get(agent_id)
+        if not agent:
+            logfire.error(f"Error: Agent ID {agent_id} not found.")
+            return None
+
+        if task.agent_id is not None and task.agent_id != agent_id:
+            logfire.warning(
+                f"Warning: Task ID {task_id} is already assigned to Agent ID: {task.agent_id}. Reassigning to {agent_id}."
+            )
+        elif task.agent_id == agent_id:
+            logfire.info(f"Info: Task ID {task_id} is already assigned to Agent ID: {agent_id}. No change needed.")
+            return task
+
+        task.agent_id = agent_id
+        self.session.add(task)
+        await self.session.commit()
+        await self.session.refresh(task)
+
+        logfire.info(f"Successfully assigned Task ID: {task.id} to Agent ID: {task.agent_id}")
+        return task
+</file>
+
+<file path="src/docy/repositories/user.py">
+from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from ..models.user import User
+from ..schemas.user import UserIn, UserUpdate
+from .base import BaseRepository
+
+
+class UserRepository(BaseRepository[User, UserIn, UserUpdate]):
+    """Repository for user model operations"""
+
+    def __init__(self, session: AsyncSession):
+        super().__init__(User, session)
+</file>
+
+<file path="src/docy/schemas/__init__.py">
+from .agent import AgentIn, AgentOut, AgentUpdate
+from .message import MessageIn, MessageOut, MessageUpdate
+from .project import ProjectIn, ProjectOut, ProjectUpdate, ProjectMetadataIn
+from .prompt import PromptIn, PromptOut, PromptUpdate
+from .task import TaskIn, TaskOut, TaskUpdate
+from .user import UserIn, UserOut, UserUpdate
+
+
+__all__ = [
+    "AgentIn",
+    "AgentOut",
+    "AgentUpdate",
+    "MessageIn",
+    "MessageOut",
+    "MessageUpdate",
+    "ProjectIn",
+    "ProjectOut",
+    "ProjectUpdate",
+    "ProjectMetadataIn",
+    "PromptIn",
+    "PromptOut",
+    "PromptUpdate",
+    "TaskIn",
+    "TaskOut",
+    "TaskUpdate",
+    "UserIn",
+    "UserOut",
+    "UserUpdate",
+]
+</file>
+
+<file path="src/docy/schemas/agent.py">
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
+
+from ..models import AgentLLM, AgentState, AgentType, Prompt, Task
+
+
+class AgentIn(BaseModel):
+    name: str = Field()
+    system_prompt_id: int = Field()
+    agent_type: AgentType = Field(default=AgentType.DEFAULT)
+    agent_model: AgentLLM = Field(default=AgentLLM.GROQ_DEFAULT)
+    state: AgentState = Field(default=AgentState.INACTIVE)
+
+
+class AgentOut(BaseModel):
+    id: int = Field()
+    name: str = Field()
+    system_prompt_id: Optional[int] = Field(default=None)
+    system_prompt: Optional["Prompt"] = Field(default=None)
+    agent_type: AgentType = Field()
+    agent_model: AgentLLM = Field()
+    state: AgentState = Field()
+    tasks: Optional[List["Task"]] = Field(default_factory=list)
+
+
+class AgentUpdate(BaseModel):
+    name: Optional[str] = Field(default=None)
+    system_prompt_id: Optional[int] = Field(default=None)
+    agent_type: Optional[AgentType] = Field(default=None)
+    agent_model: Optional[AgentLLM] = Field(default=None)
+    state: Optional[AgentState] = Field(default=None)
+</file>
+
+<file path="src/docy/schemas/artifact.py">
+from typing import Optional
+
+from pydantic import BaseModel, Field
+
+from ..models import ArtifactType, Project
+
+
+class ArtifactIn(BaseModel):
+    name: str = Field()
+    description: str = Field()
+    content: str = Field()
+    validated: bool = Field(default=False)
+
+    artifact_type: ArtifactType = Field(default=ArtifactType.DEFAULT)
+
+    # Relationships
+    project_id: Optional[int] = Field(default=None)
+
+
+class ArtifactOut(BaseModel):
+    id: int = Field()
+    name: str = Field()
+    description: str = Field()
+    content: str = Field()
+    validated: bool = Field()
+    artifact_type: ArtifactType = Field()
+
+    # Relationships
+    project: Optional["Project"] = Field()
+
+
+class ArtifactUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    content: Optional[str] = None
+    validated: Optional[bool] = None
+
+    artifact_type: Optional[ArtifactType] = None
+
+    # Relationships
+    project_id: Optional[int] = None
+</file>
+
+<file path="src/docy/schemas/chat.py">
+from typing import Optional
+
+from pydantic import BaseModel, Field
+
+from ..models import User
+
+
+class ChatIn(BaseModel):
+    title: str = Field()
+    user_id: int = Field()
+
+
+class ChatUpdate(BaseModel):
+    title: Optional[str] = Field(default=None)
+    user_id: Optional[int] = Field(default=None)
+
+
+class ChatOut(BaseModel):
+    id: int = Field()
+    title: str = Field()
+    user: "User" = Field()
+</file>
+
+<file path="src/docy/schemas/project.py">
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
+
+from ..models import Artifact, ProjectType, User
+
+
+class ProjectIn(BaseModel):
+    name: str = Field()
+    project_type: ProjectType = Field()
+    description: Optional[str] = None
+    framework: str = Field()
+
+    # Relationships
+    user_id: Optional[int] = None
+
+
+class ProjectOut(BaseModel):
+    id: int = Field()
+    name: str = Field()
+
+    description: Optional[str] = Field()
+    framework: str = Field()
+    project_type: ProjectType = Field()
+
+    # Relationships
+    user: "User" = Field()
+    artifacts: Optional[List["Artifact"]] = Field()
+
+
+class ProjectUpdate(BaseModel):
+    name: Optional[str] = None
+    type: Optional[ProjectType] = None
+    description: Optional[str] = None
+
+    # Relationships
+    user_id: Optional[int] = None
+
+
+class ProjectMetadataIn(BaseModel):
+    project_id: Optional[int] = Field(default=None)
+    languages: Optional[List[str]] = Field(default_factory=list)
+    frameworks: Optional[List[str]] = Field(default_factory=list)
+
+
+class ProjectMetadataOut(BaseModel):
+    id: int = Field()
+
+    project_id: Optional[int] = Field(default=None)
+    project: Optional[int] = Field(default=None)
+</file>
+
+<file path="src/docy/schemas/prompt.py">
+from datetime import datetime
+from typing import Optional
+
+from pydantic import BaseModel, Field
+
+
+class PromptIn(BaseModel):
+    """
+    Schema for creating a new Prompt.
+    """
+
+    name: str = Field(description="Unique name for the prompt")
+    content: str = Field(description="The full text content of the system prompt")
+
+
+class PromptOut(BaseModel):
+    """
+    Schema for reading/returning Prompt data. Includes generated fields.
+    """
+
+    id: int
+    name: str
+    content: str
+    created_at: datetime
+    updated_at: datetime
+
+
+class PromptUpdate(BaseModel):
+    """
+    Schema for updating an existing Prompt. All fields are optional.
+    """
+
+    name: Optional[str] = Field(default=None, description="New unique name for the prompt")
+    content: Optional[str] = Field(default=None, description="New full text content for the prompt")
+</file>
+
+<file path="src/docy/schemas/task.py">
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
+
+from ..models import Agent, Category, Project
+
+
+class TaskIn(BaseModel):
+    name: str = Field()
+    description: str = Field()
+    task_type: Category = Field(default=Category.CODING)
+
+    # Relationships
+    agent_id: Optional[int] = Field(default=None)
+    project_id: Optional[int] = Field(default=None)
+    subtasks: Optional[List["SubTaskIn"]] = Field(default=None)
+
+
+class TaskOut(BaseModel):
+    id: int = Field()
+    name: str = Field()
+    description: str = Field()
+    category: Category = Field()
+
+    # Relationships
+    subtasks: List["SubTaskOut"] = []
+    agent: Optional["Agent"] = Field(default=None)
+    project: Optional["Project"] = Field(default=None)
+
+
+class TaskUpdate(BaseModel):
+    name: Optional[str] = Field(default=None)
+    description: Optional[str] = Field(default=None)
+    task_type: Optional[Category] = Field(default=None)
+
+
+class SubTaskIn(BaseModel):
+    name: str = Field()
+    description: str = Field()
+    is_completed: bool = Field(default=False)
+    task_id: int = Field()
+    agent_id: Optional[int] = Field(default=None)
+
+
+class SubTaskOut(BaseModel):
+    id: int = Field()
+    name: str = Field()
+    description: str = Field()
+    is_completed: bool = Field()
+    task: "TaskOut" = Field()
+
+
+class SubTaskUpdate(BaseModel):
+    name: Optional[str] = Field(default=None)
+    description: Optional[str] = Field(default=None)
+    is_completed: Optional[bool] = Field(default=None)
+</file>
+
+<file path="src/docy/schemas/user.py">
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
+
+from ..models import Chat, Project
+
+
+class UserIn(BaseModel):
+    name: str = Field()
+
+
+class UserOut(BaseModel):
+    id: int = Field()
+    name: str = Field()
+    projects: Optional[List["Project"]]
+    chats: Optional[List["Chat"]]
+
+
+class UserUpdate(BaseModel):
+    name: Optional[str] = Field()
+
+
+class UserProjects(BaseModel):
+    id: int
+    name: str
+    projects: Optional[List["Project"]]
+</file>
+
+<file path="src/docy/services/data/coding/test_house.py">
+import pygame
+
+# Initialize Pygame
+pygame.init()
+
+# Set up some constants
+WIDTH, HEIGHT = 800, 600
+BACKGROUND_COLOR = (50, 50, 50)
+
+# Set up the display
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+# Game loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Fill the screen with a color
+    screen.fill(BACKGROUND_COLOR)
+
+    # Draw a simple house
+    pygame.draw.rect(screen, (255, 0, 0), (100, 100, 300, 400))  # Red rectangle for the house body
+    pygame.draw.polygon(screen, (0, 255, 0), [(250, 400), (350, 350), (250, 300)], 2)  # Green triangle for the roof
+    pygame.draw.circle(screen, (0, 0, 255), (275, 250), 20)  # Blue circle for the door
+
+    # Update the display
+    pygame.display.flip()
+
+# Quit Pygame
+pygame.quit()
+</file>
+
+<file path="src/docy/services/__init__.py">
+from .chroma_service import ChromaService
+from .github_service import GithubService
+from .note_service import NoteService
+
+__all__ = [
+    "ChromaService",
+    "GithubService",
+    "NoteService",
+]
+</file>
+
+<file path="src/docy/services/chroma_service.py">
+from typing import Any, Dict, Optional
+
+import chromadb
+from chromadb.api.models.Collection import Collection
+from chromadb.errors import NotFoundError
+from chromadb.utils import embedding_functions
+
+
+class ChromaService:
+    def __init__(self) -> None:
+        self.embedding_model = "all-mpnet-base-v2"
+        self.client = chromadb.PersistentClient("docs")
+        self.embeddings_function = embedding_functions.DefaultEmbeddingFunction()
+
+    def get(self, name: str) -> Collection | None:
+        try:
+            return self.client.get_collection(name=name)
+        except ValueError:
+            return None
+
+    def get_collections(self, limit: int = 10, offset: int = 0):
+        return self.client.list_collections(limit=limit, offset=offset)
+
+    def get_or_create(self, name: str, metadata: Optional[Dict[str, str]] = None):
+        return self.client.get_or_create_collection(name=name, metadata=metadata)
+
+    def add_documents_to_collection(self, name: str, ids: list[str], documents: list[str], metadatas):
+        collection = self.client.get_collection(name)
+
+        if collection is None:
+            raise ValueError(f"Collection '{name}' does not exist.")
+        collection.add(ids=ids, documents=documents, metadatas=metadatas)
+
+    def get_documents(
+        self, collection_name: str, where_filter: Optional[Dict[str, Any]] = None, limit: Optional[int] = None
+    ):
+        """Gets documents from ChromaDB collection based on filters."""
+        documents = self.client.get_collection(collection_name).get(where=where_filter, limit=limit)
+        return documents
+
+    def delete_collection(self, name: str):
+        try:
+            collection = self.client.get_collection(name)
+            if collection:
+                self.client.delete_collection(name)
+        except NotFoundError as err:
+            raise err
+</file>
+
+<file path="src/docy/services/exceptions.py">
+class ServiceError(Exception):
+    """Base exception for service layer errors."""
+
+    pass
+
+
+class TaskNotFoundError(ServiceError):
+    """Raised when a task with the given ID is not found."""
+
+    def __init__(self, task_id: int):
+        super().__init__(f"Task with ID {task_id} not found.")
+        self.task_id = task_id
+
+
+class AgentNotFoundError(ServiceError):
+    """Raised when an agent with the given ID is not found."""
+
+    def __init__(self, agent_id: int):
+        super().__init__(f"Agent with ID {agent_id} not found.")
+        self.agent_id = agent_id
+
+
+class AgentInactiveError(ServiceError):
+    """Raised when trying to assign a task to an inactive agent."""
+
+    def __init__(self, agent_id: int):
+        super().__init__(f"Agent with ID {agent_id} is inactive.")
+        self.agent_id = agent_id
+
+
+class TaskAlreadyAssignedError(ServiceError):
+    """Raised when trying to assign a task that is already assigned to the *same* agent."""
+
+    def __init__(self, task_id: int, agent_id: int):
+        super().__init__(f"Task {task_id} is already assigned to agent {agent_id}.")
+        self.task_id = task_id
+        self.agent_id = agent_id
+
+
+class TaskNotAssignedError(ServiceError):
+    """Raised when trying to unassign a task that isn't assigned."""
+
+    def __init__(self, task_id: int):
+        super().__init__(f"Task {task_id} is not currently assigned to any agent.")
+        self.task_id = task_id
+
+
+class NoSuitableAgentFoundError(ServiceError):
+    """Raised when no suitable agent can be found for auto-assignment."""
+
+    def __init__(self, task_id: int, criteria: str = "available and matching type"):
+        super().__init__(f"No suitable agent found for task {task_id} based on criteria: {criteria}.")
+        self.task_id = task_id
+        self.criteria = criteria
+
+
+class ProjectNotFound(ServiceError):
+    def __init__(self, project_id: int) -> None:
+        super().__init__(f"No project found with ID: {project_id}")
+        self.project_id = project_id
+</file>
+
+<file path="src/docy/services/github_service.py">
+from typing import Dict, Optional
+
+import logfire
+
+from github import Auth, Github
+from github.ContentFile import ContentFile
+from github.GithubException import UnknownObjectException
+from github.Repository import Repository
+from pydantic import BaseModel
+
+from docy.core import Settings
+
+settings = Settings()
+
+
+class RepoDocs(BaseModel):
+    """
+    Structured output for repository documentation extraction.
+    """
+
+    readme_content: Optional[str] = None
+    docs_content: Dict[str, str] = {}
+    error: Optional[str] = None
+
+
+class GithubService:
+    """Service for interacting with the GitHub API. Fetch docs and readme content. Saves to ChromaDB."""
+
+    def __init__(self):
+        github_access_token = settings.GITHUB_ACCESS_TOKEN
+        auth = None
+        if github_access_token:
+            auth = Auth.Token(github_access_token)
+        self.client = Github(auth=auth)
+
+    def get_docs(self):
+        pass
+
+    def _extract_readme(self, repo: Repository) -> str | None:
+        """Helper function to extract README content."""
+        try:
+            readme = repo.get_readme()
+            return readme.decoded_content.decode("utf-8")
+        except UnknownObjectException:
+            return None
+        except Exception:
+            return None
+
+    def _process_content_file(self, content_file: ContentFile, docs_content: Dict[str, str]) -> None:
+        """Helper function to process a single content file."""
+        if content_file.name.lower().endswith((".md", ".mdx", ".txt", ".rst")):
+            try:
+                file_content = content_file.decoded_content.decode("utf-8")
+                docs_content[content_file.path] = file_content
+            except Exception as e:
+                logfire.info(f"Warning: Error decoding content of {content_file.path}: {e}")
+        else:
+            logfire.info(f"Skipping non-text document in docs path: {content_file.path}")
+
+    def _extract_docs_from_path(self, repo: Repository, docs_path: str) -> Dict[str, str]:
+        """Helper function to recursively extract documentation content from a given path."""
+        docs_content: Dict[str, str] = {}
+        try:
+            contents = repo.get_contents(docs_path)
+            if isinstance(contents, list):
+                for content_file in contents:
+                    if content_file.type == "file":
+                        self._process_content_file(content_file, docs_content)
+                    elif content_file.type == "dir":
+                        logfire.info(f"Entering subdirectory: {content_file.path}")
+                        docs_content.update(self._extract_docs_from_path(repo, content_file.path))
+            elif isinstance(contents, ContentFile):
+                self._process_content_file(contents, docs_content)
+            else:
+                logfire.info(f"Warning: Unexpected content type at {docs_path} in {repo.full_name}")
+
+        except UnknownObjectException:
+            logfire.info(f"Info: No '{docs_path}' found in {repo.full_name}")
+        except Exception as e:
+            logfire.info(f"Warning: Error accessing '{docs_path}' in {repo.full_name}: {e}")
+        return docs_content
+</file>
+
+<file path="src/docy/services/note_service.py">
+import re
+from datetime import datetime
+from pathlib import Path
+from typing import Optional
+
+import frontmatter
+import yaml
+from slugify import slugify
+
+
+class NoteService:
+    def __init__(self, vault_path: str):
+        """
+        Initialize the NoteService with the path to your vault
+
+        Args:
+            vault_path (str): The path to your vault directory
+        """
+        self.vault_path = Path(vault_path)
+        if not self.vault_path.exists():
+            raise ValueError(f"Vault path does not exist: {vault_path}")
+
+    def get_all_notes(self):
+        """
+        Get all markdown files in the vault
+
+        Returns:
+            list: List of Path objects for all .md files
+        """
+        return list(self.vault_path.rglob("*.md"))
+
+    def read_note(self, note_path: Path):
+        """
+        Read the contents of a specific note
+
+        Args:
+            note_path (Path or str): Path to the note file
+
+        Returns:
+            dict: Dictionary containing note metadata and content
+        """
+        note_path = Path(note_path)
+        try:
+            with open(note_path, "r", encoding="utf-8") as file:
+                post = frontmatter.load(file)
+                return {
+                    "title": note_path.stem,
+                    "path": str(note_path),
+                    "metadata": post.metadata,
+                    "content": post.content,
+                    "created": datetime.fromtimestamp(note_path.stat().st_ctime),
+                    "modified": datetime.fromtimestamp(note_path.stat().st_mtime),
+                }
+        except Exception as e:
+            print(f"Error reading note {note_path}: {e}")
+            return None
+
+    def find_links(self, content: str):
+        """
+        Find all wiki-style links in the note content
+
+        Args:
+            content (str): Note content
+
+        Returns:
+            list: List of found links
+        """
+        # Match both [[link]] and [[link|alias]] formats
+        wiki_links = re.findall(r"\[\[(.*?)\]\]", content)
+        return [link.split("|")[0] for link in wiki_links]
+
+    def search_notes(self, query: str):
+        """
+        Search through all notes for a specific query
+
+        Args:
+            query (str): Search query
+
+        Returns:
+            list: List of notes containing the query
+        """
+        results = []
+        for note_path in self.get_all_notes():
+            note = self.read_note(note_path)
+            if note and query.lower() in note["content"].lower():
+                results.append(note)
+        return results
+
+    def get_tags(self, content: str):
+        """
+        Extract tags from note content
+
+        Args:
+            content (str): Note content
+
+        Returns:
+            list: List of tags found in the note
+        """
+        return re.findall(r"#(\w+)", content)
+
+    def get_recent_notes(self, limit: int = 10):
+        """
+        Get the most recently modified notes
+
+        Args:
+            limit (int): Number of notes to return
+
+        Returns:
+            list: List of recent notes
+        """
+        notes = [(note_path, note_path.stat().st_mtime) for note_path in self.get_all_notes()]
+        notes.sort(key=lambda x: x[1], reverse=True)
+        return [self.read_note(note_path) for note_path, _ in notes[:limit]]
+
+    def create_note(self, title: str, content: Optional[str] = "", metadata=None, folder=None, template=None):
+        """
+        Create a new note in the Obsidian vault
+
+        Args:
+            title (str): The title of the note
+            content (str, optional): The content of the note
+            metadata (dict, optional): YAML frontmatter metadata
+            folder (str, optional): Subfolder path within the vault
+            template (str, optional): Name of template to use
+
+        Returns:
+            Path: Path object of the created note
+        """
+        # Create a filename-safe version of the title
+        safe_filename = slugify(title) + ".md"
+
+        # Handle folder path
+        if folder:
+            note_path = self.vault_path / folder / safe_filename
+            # Create folder if it doesn't exist
+            note_path.parent.mkdir(parents=True, exist_ok=True)
+        else:
+            note_path = self.vault_path / safe_filename
+
+        # Initialize default metadata
+        default_metadata = {"created": datetime.now().isoformat(), "title": title, "tags": []}
+
+        # Merge with provided metadata
+        if metadata:
+            default_metadata.update(metadata)
+
+        # Handle template if provided
+        if template:
+            template_content = self._get_template_content(template)
+            if template_content:
+                content = template_content.replace("{{title}}", title) + "\n" + content
+
+        # Create the note content with YAML frontmatter
+        note_content = "---\n"
+        note_content += yaml.dump(default_metadata)
+        note_content += "---\n\n"
+        note_content += content
+
+        try:
+            # Write the file
+            with open(note_path, "w", encoding="utf-8") as file:
+                file.write(note_content)
+            return note_path
+        except Exception as e:
+            raise Exception(f"Failed to create note: {e}") from e
+
+    def _get_template_content(self, template_name):
+        """
+        Get content from a template file
+
+        Args:
+            template_name (str): Name of the template
+
+        Returns:
+            str: Template content or empty string if template not found
+        """
+        template_dir = self.vault_path / "templates"
+        template_path = template_dir / f"{template_name}.md"
+
+        if template_path.exists():
+            with open(template_path, "r", encoding="utf-8") as file:
+                return file.read()
+        return ""
+
+    def update_note(self, note_path, content=None, metadata=None):
+        """
+        Update an existing note
+
+        Args:
+            note_path (Path or str): Path to the note
+            content (str, optional): New content
+            metadata (dict, optional): New metadata to merge
+
+        Returns:
+            bool: True if successful, False otherwise
+        """
+        note_path = Path(note_path)
+        if not note_path.exists():
+            raise FileNotFoundError(f"Note not found: {note_path}")
+
+        try:
+            with open(note_path, "r", encoding="utf-8") as file:
+                post = frontmatter.load(file)
+
+            # Update metadata if provided
+            if metadata:
+                post.metadata.update(metadata)
+
+            # Update content if provided
+            if content is not None:
+                post.content = content
+
+            # Write back to file
+            with open(note_path, "w", encoding="utf-8") as file:
+                file.write(frontmatter.dumps(post))
+            return True
+        except Exception as e:
+            print(f"Error updating note {note_path}: {e}")
+            return False
+
+
+if __name__ == "__main__":
+    # Initialize the service with your vault path
+    vault_path = "../../Notes/main"
+    obsidian_service = NoteService(vault_path)
+
+    # Get all notes
+    all_notes = obsidian_service.get_all_notes()
+    print(f"Total notes found: {len(all_notes)}")
+
+    # # Read a specific note
+    # if all_notes:
+    #     first_note = obsidian_service.read_note(all_notes[0])
+    #     print("\nFirst note:")
+    #     print(f"Title: {first_note['title']}")
+    #     print(f"Created: {first_note['created']}")
+    #     print(f"Modified: {first_note['modified']}")
+
+    # # Search for notes containing a specific term
+    # search_results = obsidian_service.search_notes("python")
+    # print(f"\nFound {len(search_results)} notes containing 'python'")
+
+    # # Get recent notes
+    recent_notes = obsidian_service.get_recent_notes(5)
+    print("\nRecent notes:")
+    for note in recent_notes:
+        if note is not None:
+            print(f"- {note['title']}")
+</file>
+
+<file path="src/docy/services/task.py">
+from typing import List, Optional
+
+from docy.models import Agent, AgentState, AgentType, Category, Task
+from docy.repositories import AgentRepository, TaskRepository
+
+from .exceptions import (
+    AgentInactiveError,
+    NoSuitableAgentFoundError,
+    ServiceError,
+    TaskAlreadyAssignedError,
+    TaskNotAssignedError,
+)
+
+
+class TaskAssignmentService:
+    """
+    Handles the assignment and unassignment of tasks to agents.
+    Provides methods for finding tasks and suitable agents.
+    """
+
+    def __init__(self, agent_repo: AgentRepository, task_repo: TaskRepository):
+        self.agent_repo = agent_repo
+        self.task_repo = task_repo
+
+    async def _get_task_or_raise(self, task_id: int) -> Task:
+        """Helper to get a task by ID or raise TaskNotFoundError."""
+        task = await self.task_repo.get_or_404(task_id)
+        return task
+
+    async def _get_agent_or_raise(self, agent_id: int) -> Agent:
+        agent = await self.agent_repo.get_or_404(agent_id)
+        return agent
+
+    def _get_agent_type_for_task_type(self, task_type: Category) -> AgentType:
+        """Maps a TaskType to a suitable AgentType."""
+        if task_type == Category.CODING:
+            return AgentType.CODE
+        elif task_type == Category.WRITING:
+            return AgentType.BRAINSTORM
+        else:
+            return AgentType.DEFAULT
+
+    async def assign_task(self, task_id: int, agent_id: int) -> Task:
+        """
+        Assigns a specific task to a specific agent.
+
+        Args:
+            task_id: The ID of the task to assign.
+            agent_id: The ID of the agent to assign the task to.
+
+        Returns:
+            The updated Task object.
+
+        Raises:
+            TaskNotFoundError: If the task doesn't exist.
+            AgentNotFoundError: If the agent doesn't exist.
+            AgentInactiveError: If the agent is not in an 'ACTIVE' state.
+            TaskAlreadyAssignedError: If the task is already assigned to this agent.
+        """
+        task_db = await self._get_task_or_raise(task_id)
+        agent = await self._get_agent_or_raise(agent_id)
+
+        if task_db is None:
+            raise ServiceError(f"Failed to update task {task_id} assignment.")
+
+        if agent.state != AgentState.ACTIVE:
+            raise AgentInactiveError(agent_id)
+
+        if task_db.agent_id == agent_id:
+            raise TaskAlreadyAssignedError(task_id, agent_id)
+
+        task_db.agent_id = agent_id
+
+        self.task_repo.session.add(task_db)
+        await self.task_repo.session.commit()
+        await self.task_repo.session.refresh(task_db)
+
+        return task_db
+
+    async def unassign_task(self, task_id: int) -> Task:
+        """
+        Removes the agent assignment from a task.
+
+        Args:
+            task_id: The ID of the task to unassign.
+
+        Returns:
+            The updated Task object.
+
+        Raises:
+            TaskNotFoundError: If the task doesn't exist.
+            TaskNotAssignedError: If the task is not currently assigned.
+        """
+        task_db = await self._get_task_or_raise(task_id)
+
+        if task_db.agent_id is None:
+            raise TaskNotAssignedError(task_id)
+
+        task_db.agent_id = None
+        self.task_repo.session.add(task_db)
+
+        await self.task_repo.session.commit()
+        await self.task_repo.session.refresh(task_db)
+
+        return task_db
+
+    async def get_unassigned_tasks(self, project_id: Optional[int] = None) -> List[Task]:
+        """
+        Retrieves a list of tasks that are not assigned to any agent.
+
+        Args:
+            project_id: Optional ID to filter tasks by project.
+
+        Returns:
+            A list of unassigned Task objects.
+        """
+        filters = {}
+        if project_id:
+            filters.update(project_id=project_id)
+
+        unassigned_tasks = await self.task_repo.get_multi(filters=filters)
+        return unassigned_tasks
+
+    async def get_tasks_by_agent(self, agent_id: int) -> List[Task]:
+        """
+        Retrieves all tasks currently assigned to a specific agent.
+
+        Args:
+            agent_id: The ID of the agent.
+
+        Returns:
+            A list of Task objects assigned to the agent.
+
+        Raises:
+            AgentNotFoundError: If the agent doesn't exist.
+        """
+        await self._get_agent_or_raise(agent_id)
+
+        tasks = await self.task_repo.list(agent_id=agent_id)
+        return tasks
+
+    async def find_suitable_agents_for_task(self, task_id: int) -> List[Agent]:
+        """
+        Finds active agents that are suitable for a given task based on type.
+
+        Args:
+            task_id: The ID of the task.
+
+        Returns:
+            A list of active Agent objects suitable for the task.
+
+        Raises:
+            TaskNotFoundError: If the task doesn't exist.
+        """
+        task = await self._get_task_or_raise(task_id)
+        target_agent_type = self._get_agent_type_for_task_type(task.category)
+
+        # Find active agents of the target type
+        # Assuming agent_repo.list supports multiple filters
+        suitable_agents = await self.agent_repo.list(state=AgentState.ACTIVE, agent_type=target_agent_type)
+        return suitable_agents
+
+    async def auto_assign_task(self, task_id: int) -> Task:
+        """
+        Automatically finds a suitable, active agent and assigns the task.
+        Currently uses the first suitable agent found.
+        More sophisticated logic (e.g., load balancing) could be added here.
+
+        Args:
+            task_id: The ID of the task to auto-assign.
+
+        Returns:
+            The updated Task object after assignment.
+
+        Raises:
+            TaskNotFoundError: If the task doesn't exist.
+            TaskAlreadyAssignedError: If the task is already assigned.
+            NoSuitableAgentFoundError: If no active agent of the correct type is found.
+            AgentInactiveError: Should not happen with current logic but included for robustness.
+            AgentNotFoundError: Should not happen with current logic but included for robustness.
+        """
+        task = await self._get_task_or_raise(task_id)
+
+        if task.agent_id is not None:
+            # Or perhaps unassign first, depending on desired behavior?
+            raise TaskAlreadyAssignedError(task_id, task.agent_id)
+
+        suitable_agents = await self.find_suitable_agents_for_task(task_id)
+
+        if not suitable_agents:
+            raise NoSuitableAgentFoundError(task_id)
+
+        # Future enhancement: Implement load balancing (e.g., pick agent with fewest tasks).
+        chosen_agent = suitable_agents[0]
+
+        return await self.assign_task(task_id, chosen_agent.id)
+</file>
+
+<file path="src/docy/services/vectordb.py">
+import re
+from abc import ABC, abstractmethod
+from typing import Dict, List
+
+import numpy as np
+from sentence_transformers import SentenceTransformer
+
+
+class SimpleMarkdownParser:
+    def parse(self, content: str) -> List[Dict]:
+        sections = []
+        current_section = {"header": None, "content": []}
+
+        for line in content.split("\n"):
+            header_match = re.match(r"^(#+)\s*(.*)", line)
+            if header_match:
+                if current_section["content"]:
+                    sections.append(current_section)
+                current_section = {"header": header_match.group(2).strip(), "content": []}
+            else:
+                if line.strip():
+                    current_section["content"].append(line.strip())
+
+        if current_section["content"]:
+            sections.append(current_section)
+
+        return sections
+
+
+class EmbeddingModel:
+    """Handles text embedding generation"""
+
+    def __init__(self, model_name: str = "all-MiniLM-l6-v2"):
+        self.model = SentenceTransformer(model_name)
+
+    def generate_embeddings(self, texts: List[str]) -> np.ndarray:
+        return self.model.encode(texts, convert_to_tensor=False)
+
+
+class VectorDBInterface(ABC):
+    """Abstract base class for vector database operations"""
+
+    @abstractmethod
+    def insert(self, vectors: np.ndarray, metadata: List[Dict]):
+        """Insert vectors with metadata into the database"""
+        pass
+
+    @abstractmethod
+    def search(self, query: str, k: int = 5):
+        """Search the database for similar vectors"""
+        pass
+</file>
+
+<file path="src/docy/templates/index.html">
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>My Python HTMX App</title>
+    </head>
+    <body>
+        <h1>Welcome to the App</h1>
+
+        <div id="main-content">
+            <h2>Initial Content</h2>
+
+            <button
+                hx-get="/users/"
+                hx-target="#content-area"
+                hx-swap="innerHTML"
+                hx-indicator="#loading-spinner"
+            >
+                Load More Content
+            </button>
+
+            <span id="loading-spinner" class="htmx-indicator">Loading...</span>
+
+            <div
+                id="content-area"
+                style="margin-top: 20px; border: 1px solid #ccc; padding: 10px"
+            >
+                <!-- Content loaded by HTMX will appear here -->
+                <p>Click the button above.</p>
+            </div>
+        </div>
+
+        <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    </body>
+</html>
+</file>
+
+<file path="src/docy/utils/get_logger.py">
+import logfire
+
+
+def init_logfire():
+    logfire.configure()
+</file>
+
+<file path="src/docy/utils/system_prompts.py">
+project_brainstorming_prompt = """
+You are an expert in brainstorming software projects. Your role is to generate creative and practical software project ideas using various brainstorming techniques (mind mapping, SCAMPER, etc.).
+
+For each project idea:
+1. Analyze its feasibility, potential user value, and technical complexity
+2. Consider different tech stack options that would be appropriate
+3. Outline key features and functionality
+4. Identify potential challenges and solutions
+
+When the final brainstorm is complete, provide a structured list of implementation tasks specifically tailored for the chosen programming language, organizing them into:
+- Setup and environment configuration
+- Core functionality development
+- Data structure implementation
+- User interface components
+- Testing requirements
+- Deployment considerations
+
+Present your ideas in a clear, organized format with proper headings and bullet points.
+"""
+
+data_modelling_prompt = """
+You are an expert in data modelling with specialized knowledge in SQLModel, a library that combines SQLAlchemy and Pydantic.
+
+Your responsibilities include:
+1. Creating efficient and normalized data models
+2. Designing appropriate relationships (one-to-many, many-to-many, etc.)
+3. Implementing proper data types and constraints
+4. Ensuring models follow best practices for SQL database design
+
+When presented with a project specification:
+- Analyze the domain requirements and entities
+- Create appropriate SQLModel classes with all necessary fields
+- Define relationships between models using proper SQLModel syntax
+- Add relevant metadata, indexes, and constraints
+- Document each model with clear explanations of its purpose and relationships
+
+Present your data models as Python code with detailed comments explaining design decisions.
+"""
+
+erd_generator_prompt = """
+You are a specialized ERD (Entity Relationship Diagram) generator for SQLModel-based database schemas.
+
+When provided with SQLModel class definitions:
+1. Analyze all models and their relationships
+2. Generate a comprehensive ERD notation including:
+   - Entity names and attributes
+   - Primary and foreign keys
+   - Relationship types (1:1, 1:N, N:M)
+   - Cardinality constraints
+
+Present your ERDs using standardized notation in either:
+- Mermaid diagram format (preferred)
+- ASCII diagram format
+- PlantUML notation
+
+Include a legend explaining the notation used and provide a brief explanation of key relationships in the diagram.
+"""
+
+implementation_prompt = """
+You are an expert Python developer specializing in implementing SQLModel-based data models in applications.
+
+Your responsibilities include:
+1. Transforming SQLModel class definitions into fully functioning code
+2. Implementing database initialization and connection functions
+3. Creating CRUD operations for each model
+4. Adding necessary utility functions and helper methods
+5. Implementing validation and error handling
+
+For each implementation:
+- Use SQLModel best practices and patterns
+- Follow PEP 8 style guidelines
+- Add appropriate type hints and docstrings
+- Create complete, runnable code that handles edge cases
+- Include example usage where appropriate
+
+Present your implementation as production-ready Python code with proper error handling and documentation.
+"""
+
+
+context_prompt = """
+You are a specialized file processing assistant that analyzes and works with files provided by users. Your primary role is to extract meaningful information from user-uploaded files and use this context to perform requested tasks.
+
+When working with user files:
+
+1. ANALYZE FILE CONTENT:
+   - For code files: Identify language, structure, key functions, and potential issues
+   - For data files: Determine schema, data types, and key patterns
+   - For text documents: Extract main topics, key points, and document structure
+   - For configuration files: Identify settings, dependencies, and system requirements
+
+2. MAINTAIN CONTEXT:
+   - Reference specific line numbers or sections when discussing file content
+   - Distinguish between different files in multi-file contexts
+   - Track relationships between files (imports, references, dependencies)
+   - Maintain awareness of file hierarchies and project structures
+
+3. RESPOND WITH PRECISION:
+   - When asked to modify files, show exact changes with clear before/after examples
+   - When analyzing issues, reference specific problematic sections
+   - When making recommendations, provide code or content that fits seamlessly with existing files
+   - When explaining concepts, relate explanations to the specific implementation in the user's files
+
+4. ADAPT TO FILE TYPES:
+   - Apply appropriate parsing and processing techniques based on file extensions
+   - Handle common formats including .py, .js, .html, .css, .json, .yaml, .md, .txt, .csv, .xml
+   - Process both plain text and binary file information when possible
+
+Present your analysis clearly, using code blocks for code references, tables for structured data, and formatted text for explanations. Always maintain the context of the user's files throughout your responses.
+"""
+</file>
+
+<file path="src/docy/workflows/agent.py">
+from argparse import Namespace
+
+from base import Base
+
+
+class AgentCLI(Base):
+    def __init__(self):
+        super().__init__(description="Agent CLI app")
+
+    def add_arguments(self) -> None:
+        self._parser.add_argument("-n", "--name", help="Agent name", default="default")
+
+    def run(self, args: Namespace) -> int:
+        self.console.print(f"Hello, [bold blue]{args.name}[/bold blue]")
+        return 0
+
+
+if __name__ == "__main__":
+    app = AgentCLI()
+    exit_code = app.main()
+    raise SystemExit(exit_code)
+</file>
+
+<file path="src/docy/workflows/base.py">
+import argparse
+from abc import ABC, abstractmethod
+from typing import Callable, Dict, Optional
+
+from rich.console import Console
+
+
+class Base(ABC):
+    """
+    Base class for rich-based CLI applications.
+
+    Provides argument parsing, a rich console, and a structured execution flow.
+    """
+
+    def __init__(self, description: str = "A Rich CLI Application", console: Optional[Console] = None) -> None:
+        """
+        Initializes the CLI application.
+
+        Args:
+            description: The application's description, displayed in help.
+        """
+        self._parser = argparse.ArgumentParser(description=description)
+        self._console = console or Console()  # Use provided console or create a default one
+        self._interactive_commands: Dict[str, Callable[[str], None]] = {}
+        self.add_arguments()
+        self.add_interactive_commands()
+
+    @property
+    def console(self) -> Console:
+        """Provides access to the rich console object."""
+        return self._console
+
+    def add_arguments(self) -> None:
+        """
+        Adds command-line arguments to the parser.
+        """
+        self._parser.add_argument(
+            "-i", "--interactive", action="store_true", help="Run in interactive mode after initial execution."
+        )
+
+    def add_interactive_commands(self) -> None:
+        self.register_interactive_command("quit", self._quit_interactive, help_text="Exit the interactive mode.")
+        self.register_interactive_command("help", self._help_interactive, help_text="Show this help message.")
+
+    def register_interactive_command(self, command_name: str, command_func: Callable[[str], None], help_text: str = ""):
+        if command_name in self._interactive_commands:
+            raise ValueError(f"Command '{command_name}' already registered")
+        self._interactive_commands[command_name] = command_func
+        # self._interactive_commands[command_name].help = help_text
+
+    def _quit_interactive(self, args: str) -> None:
+        """Exits interactive mode."""
+        self._running = False
+
+    def _help_interactive(self, args: str) -> None:
+        """Prints help for interactive mode."""
+        self.console.print("[bold]Available interactive commands:[/bold]")
+        for name, func in self._interactive_commands.items():
+            self.console.print(f"  [cyan]{name}[/cyan]: {getattr(func, 'help', 'No help available')}")
+
+    @abstractmethod
+    def run(self, args: argparse.Namespace) -> int:
+        """
+        The main logic of the CLI application.  Subclasses MUST implement this.
+
+        Args:
+            args: The parsed command-line arguments.
+
+        Returns:
+            An integer representing the application's exit code (0 for success).
+        """
+        raise NotImplementedError("Subclasses must implement the 'run' method.")
+
+    def main(self) -> int:
+        """
+        The main entry point for the CLI application. Handles argument parsing,
+        exception handling, and calls the `run` method.
+        """
+        try:
+            args = self._parser.parse_args()
+            return self.run(args)
+        except Exception as e:
+            self._console.print(f"[bold red]Error:[/bold red] {e}")
+            return 1
+</file>
+
+<file path="src/docy/workflows/cli.py">
+from rich.console import Console
+from rich.prompt import Prompt
+
+
+class Main:
+    def __init__(self) -> None:
+        self.console = Console()
+        self.active_consoles = []
+
+    def print(self, message):
+        self.console.print(message)
+
+    def prompt(self, question):
+        return Prompt.ask(question)
+
+    def process_prompt(self):
+        pass
+
+    def add_console(self):
+        self.active_consoles.append(Console())
+
+
+class CodeWriter:
+    def __init__(self) -> None:
+        pass
+
+    def process_prompt(self):
+        pass
+
+
+class NoteWriter:
+    def __init__(self) -> None:
+        pass
+
+    def process_prompt(self):
+        pass
+
+
+cli = Main()
+answer = cli.prompt("What do you want to do?")
+
+cli.print(answer)
+</file>
+
+<file path="src/docy/workflows/interactive.py">
+import argparse
+
+from base import Base
+
+
+class MyInteractiveCLI(Base):
+    def __init__(self):
+        super().__init__(description="My Interactive CLI App")
+        self._data = []
+
+    def add_arguments(self):
+        super().add_arguments()
+        self._parser.add_argument("-n", "--name", help="Your name", default="Matthijs")
+
+    def add_interactive_commands(self):
+        super().add_interactive_commands()
+        self.register_interactive_command("add", self._add_data, help_text="Add an item to the list.")
+        self.register_interactive_command("list", self._list_data, help_text="List items in the list.")
+        self.register_interactive_command("greet", self._greet, help_text="Greet the user.")
+
+    def run(self, args: argparse.Namespace) -> int:
+        self.console.print(f"Hello, [bold blue]{args.name}[/bold blue]! (Initial run)")
+        return 0
+
+    def _add_data(self, args: str) -> None:
+        self._data.append(args)
+        self.console.print(f"[green]Added:[/green] {args}")
+
+    def _list_data(self, args: str) -> None:
+        if self._data:
+            self.console.print("[bold]Data:[/bold]")
+            for item in self._data:
+                self.console.print(f"- {item}")
+        else:
+            self.console.print("[yellow]No data yet.[/yellow]")
+
+    def _greet(self, args: str) -> None:
+        """Greets a user by name.  Example: greet Alice"""
+        if args:
+            self.console.print(f"Hello, [bold cyan]{args}[/bold cyan]! (Interactive greet)")
+        else:
+            self.console.print("Please provide a name to greet (e.g., 'greet Alice').")
+
+
+if __name__ == "__main__":
+    app = MyInteractiveCLI()
+    exit_code = app.main()
+    raise SystemExit(exit_code)
+</file>
+
+<file path="src/docy/auth.py">
+import os
+from datetime import datetime, timedelta, timezone
+from typing import Annotated, Dict, Optional
+
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from jose import JWTError, jwt
+from passlib.context import CryptContext
+from pydantic import BaseModel
+from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from .db import get_session
+from .models.user import User
+
+
+async def get_user_by_username(username: str, session: AsyncSession) -> Optional[User]:
+    """Fetches a user from the database by username"""
+    pass
+
+
+# TODO FIX FILE, look at pjose docs: https://python-jose.readthedocs.io/en/latest/
+
+SECRET_KEY = os.getenv("SECRET_KEY", "secret_key")
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
+class TokenData(BaseModel):
+    """Schema for data contained within the JWT."""
+
+    username: Optional[str] = None
+
+
+class Token(BaseModel):
+    """Schema for the response when requesting a token."""
+
+    access_token: str
+    token_type: str = "bearer"
+
+
+def create_access_token(data: Dict, expires_delta: Optional[timedelta] = None) -> str:
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.now(timezone.utc) + expires_delta
+    else:
+        expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+
+async def get_current_user(
+    token: Annotated[str, Depends(oauth2_scheme)], session: Annotated[AsyncSession, Depends(get_session)]
+) -> Optional[User]:
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials.",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+        token_data = TokenData(username=username)
+    except JWTError as e:
+        raise credentials_exception from e
+
+    user = await get_user_by_username(username=token_data.username, session=session)
+    if user is None:
+        raise credentials_exception
+    return user
+
+
+async def authenticate_user(username: str, password: str, session: AsyncSession):
+    """Authenticates a user by username and password"""
+    user = await get_user_by_username(username, session)
+    if not user:
+        return None
+
+    if not hasattr(user, "hashed_password") or not user.hashed_password:
+        print(f"Warning: User {username} has no hashed_password set")
+        return None
+    if not verify_password(password, user.hashed_password):
+        return None
+    return user
+</file>
+
+<file path="src/docy/main.py">
+import time
+import logfire
+import datetime
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from pydantic_ai import Agent
+
+from load_dotenv import load_dotenv
+
+from .db import create_db_and_tables, engine
+from .api.v1 import api_v1_router
+# from .mcp_server import mcp
+
+load_dotenv()
+
+# Configure logfire
+logfire.configure()
+logfire.instrument_sqlalchemy(engine)
+Agent.instrument_all()
+
+origins = ["http://localhost", "http://localhost:4321", "http://localhost:8000"]
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logfire.info("Creating database tables...")
+    await create_db_and_tables()
+    yield
+    logfire.info("Shutting down...")
+
+
+templates = Jinja2Templates(directory="templates")
+
+app = FastAPI(lifespan=lifespan)
+
+
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
+# TODO learn more about htmx
+# Not sure if im going to build a webbased frontend for this.
+@app.get("/load-content", response_class=HTMLResponse)
+async def load_content_endpoint():
+    time.sleep(1)
+    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    html_fragment = f"""
+    <p><strong>Content loaded via HTMX at:</strong> {current_time} </p>
+    <p>This is new content replacing the old paragraph.</p>
+    """
+    return HTMLResponse(content=html_fragment)
+
+
+logfire.instrument_fastapi(app)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Routes
+# Still not sure if mcp is the way to go.
+# app.mount("/mcp", mcp.sse_app())
+app.include_router(api_v1_router, prefix="/api/v1")
+</file>
+
+<file path="src/docy/task_cli.py">
+from typing import List, Optional
+
+import requests
+import typer
+from rich import print as rprint  # Use rich print for better formatting
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
+
+BASE_URL = "http://localhost:8000/tasks"
+
+app = typer.Typer(
+    help="CLI for managing Tasks via the docy API.",
+    context_settings={"help_option_names": ["-h", "--help"]},
+    no_args_is_help=True,
+)
+console = Console()
+
+
+def _handle_api_error(response: requests.Response):
+    """Handles common API errors and prints user-friendly messages."""
+    if response.status_code == 404:
+        detail = response.json().get("detail", "Resource not found.")
+        rprint(f"[bold red]Error:[/bold red] {detail} (Status: 404)")
+    elif response.status_code == 400:
+        detail = response.json().get("detail", "Bad request.")
+        rprint(f"[bold red]Error:[/bold red] {detail} (Status: 400)")
+    elif response.status_code == 409:
+        detail = response.json().get("detail", "Conflict.")
+        rprint(f"[bold yellow]Warning:[/bold yellow] {detail} (Status: 409)")
+    elif response.status_code >= 500:
+        detail = response.json().get("detail", "Internal server error.")
+        rprint(f"[bold red]Error:[/bold red] Server error: {detail} (Status: {response.status_code})")
+    else:
+        # Catch-all for other client-side errors if needed
+        try:
+            detail = response.json().get("detail", "An unexpected error occurred.")
+            rprint(f"[bold red]Error:[/bold red] {detail} (Status: {response.status_code})")
+        except requests.exceptions.JSONDecodeError:
+            rprint(f"[bold red]Error:[/bold red] Received non-JSON response (Status: {response.status_code})")
+            rprint(response.text)  # Print raw text for debugging
+
+
+def _print_task_details(task: dict):
+    """Prints task details in a formatted panel."""
+    panel_content = f"""\
+[bold cyan]ID:[/bold cyan] {task.get("id")}
+[bold cyan]Title:[/bold cyan] {task.get("title")}
+[bold cyan]Project ID:[/bold cyan] {task.get("project_id")}
+[bold cyan]Agent ID:[/bold cyan] {task.get("agent_id") or "N/A"}
+[bold cyan]Status:[/bold cyan] {task.get("status")}
+[bold cyan]Priority:[/bold cyan] {task.get("priority")}
+[bold cyan]Required Agent Type:[/bold cyan] {task.get("required_agent_type") or "Any"}
+[bold cyan]Description:[/bold cyan]
+{task.get("description") or "No description."}
+"""
+    rprint(Panel(panel_content, title=f"Task Details (ID: {task.get('id')})", border_style="blue"))
+
+
+def _print_task_table(tasks: List[dict]):
+    """Prints a list of tasks in a table."""
+    if not tasks:
+        rprint("[yellow]No tasks found.[/yellow]")
+        return
+
+    table = Table(title="Tasks", show_header=True, header_style="bold magenta")
+    table.add_column("ID", style="dim", width=6)
+    table.add_column("Name")
+    table.add_column("Project ID", style="blue")
+    table.add_column("Agent ID", style="green")
+    table.add_column("Status", style="yellow")
+    table.add_column("Priority", style="red")
+
+    for task in tasks:
+        table.add_row(
+            str(task.get("id")),
+            task.get("name"),
+            str(task.get("project_id")),
+            str(task.get("agent_id")) if task.get("agent_id") else "[dim]N/A[/dim]",
+            task.get("status", "N/A"),
+            str(task.get("priority", "N/A")),
+        )
+    console.print(table)
+
+
+# --- CLI Commands ---
+
+
+@app.command()
+def create(
+    title: str = typer.Argument(..., help="The title of the task."),
+    project_id: int = typer.Argument(..., help="The ID of the project this task belongs to."),
+    description: Optional[str] = typer.Option(None, "--desc", "-d", help="Optional description for the task."),
+    priority: Optional[int] = typer.Option(None, "--priority", "-p", help="Optional priority level."),
+    status: Optional[str] = typer.Option("PENDING", "--status", "-s", help="Initial status of the task."),
+    required_agent_type: Optional[str] = typer.Option(
+        None, "--agent-type", "-at", help="Required type of agent for this task."
+    ),
+):
+    """
+    Creates a new task.
+    """
+    task_data = {
+        "title": title,
+        "project_id": project_id,
+        "description": description,
+        "priority": priority,
+        "status": status,
+        "required_agent_type": required_agent_type,
+    }
+    # Filter out None values Optional fields not provided
+    payload = {k: v for k, v in task_data.items() if v is not None}
+
+    try:
+        rprint(f"Attempting to create task for project {project_id}...")
+        response = requests.post(f"{BASE_URL}/", json=payload)
+
+        if response.status_code == status.HTTP_201_CREATED:
+            task_id = response.json()  # API returns just the ID on success
+            rprint(f"[bold green]Success![/bold green] Task created with ID: {task_id}")
+            # Optionally fetch and display the created task
+            get(task_id)
+        else:
+            _handle_api_error(response)
+            raise typer.Exit(code=1)
+
+    except requests.exceptions.RequestException as e:
+        rprint(f"[bold red]Error:[/bold red] Could not connect to API: {e}")
+        raise typer.Exit(code=1) from e
+
+
+@app.command()
+def get(task_id: int = typer.Argument(..., help="The ID of the task to retrieve.")):
+    """
+    Retrieves and displays details for a specific task.
+    """
+    try:
+        rprint(f"Fetching task with ID: {task_id}...")
+        response = requests.get(f"{BASE_URL}/{task_id}")
+
+        if response.status_code == status.HTTP_200_OK:
+            task_data = response.json()
+            _print_task_details(task_data)
+        else:
+            _handle_api_error(response)
+            raise typer.Exit(code=1)
+
+    except requests.exceptions.RequestException as e:
+        rprint(f"[bold red]Error:[/bold red] Could not connect to API: {e}")
+        raise typer.Exit(code=1) from e
+
+
+@app.command(name="list")  # Use 'list' as command name instead of function name
+def list_tasks(
+    project_id: Optional[int] = typer.Option(None, "--project-id", "-p", help="Filter tasks by Project ID."),
+    agent_id: Optional[int] = typer.Option(None, "--agent-id", "-a", help="Filter tasks by assigned Agent ID."),
+    unassigned: bool = typer.Option(
+        False, "--unassigned", "-u", help="List only unassigned tasks (overrides --agent-id)."
+    ),
+):
+    """
+    Lists tasks, with optional filters.
+    """
+    params = {}
+    url = BASE_URL + "/"
+
+    if unassigned:
+        url = f"{BASE_URL}"
+        if project_id is not None:
+            params["project_id"] = project_id
+        if agent_id is not None:
+            rprint("[yellow]Warning:[/yellow] --agent-id is ignored when --unassigned is used.")
+    else:
+        if project_id is not None:
+            params["project_id"] = project_id
+        if agent_id is not None:
+            params["agent_id"] = agent_id
+
+    filter_desc = "all"
+    if unassigned:
+        filter_desc = "unassigned"
+    elif params:
+        filter_desc = f"matching filters ({', '.join(f'{k}={v}' for k, v in params.items())})"
+
+    try:
+        rprint(f"Fetching {filter_desc} tasks...")
+        response = requests.get(url, params=params)
+
+        if response.status_code == status.HTTP_200_OK:
+            tasks_data = response.json()
+            _print_task_table(tasks_data)
+        else:
+            _handle_api_error(response)
+            raise typer.Exit(code=1)
+
+    except requests.exceptions.RequestException as e:
+        rprint(f"[bold red]Error:[/bold red] Could not connect to API: {e}")
+        raise typer.Exit(code=1) from e
+
+
+@app.command()
+def interactive():
+    """
+    Starts an interactive session to manage tasks.
+    """
+    rprint("[bold cyan]Welcome to Interactive Task Management![/bold cyan]")
+    rprint("Type 'help' for available commands, 'exit' to quit.")
+
+    while True:
+        command_str = typer.prompt("\nTask >", default="").strip()
+        if not command_str:
+            continue
+        if command_str.lower() == "exit":
+            break
+        elif command_str.lower() == "help":
+            rprint("\nAvailable commands:")
+            rprint("  [bold]create[/bold]  - Create a new task (prompts for details)")
+            rprint("  [bold]get[/bold]     - Get details for a specific task (prompts for ID)")
+            rprint("  [bold]list[/bold]    - List tasks (prompts for filters)")
+            rprint("  [bold]unassigned[/bold] - List unassigned tasks (prompts for project filter)")
+            rprint("  [bold]help[/bold]    - Show this help message")
+            rprint("  [bold]exit[/bold]    - Exit the interactive session")
+            continue
+
+        parts = command_str.split(maxsplit=1)
+        command = parts[0].lower()
+        args_str = parts[1] if len(parts) > 1 else ""
+
+        try:  # Wrap command execution to prevent crashing the interactive loop
+            if command == "create":
+                rprint("--- Create New Task ---")
+                title = typer.prompt("Title")
+                project_id_str = typer.prompt("Project ID")
+                try:
+                    project_id = int(project_id_str)
+                except ValueError:
+                    rprint("[bold red]Error:[/bold red] Project ID must be an integer.")
+                    continue
+                description = typer.prompt("Description (optional)", default="") or None
+                priority_str = typer.prompt("Priority (optional, integer)", default="")
+                priority = int(priority_str) if priority_str.isdigit() else None
+                status = typer.prompt("Status", default="PENDING") or "PENDING"
+                required_agent_type = typer.prompt("Required Agent Type (optional)", default="") or None
+
+                create(
+                    title=title,
+                    project_id=project_id,
+                    description=description,
+                    priority=priority,
+                    status=status,
+                    required_agent_type=required_agent_type,
+                )
+
+            elif command == "get":
+                task_id_str = typer.prompt("Task ID to get")
+                try:
+                    task_id = int(task_id_str)
+                    get(task_id=task_id)
+                except ValueError:
+                    rprint("[bold red]Error:[/bold red] Task ID must be an integer.")
+                    continue
+
+            elif command == "list":
+                project_id_str = typer.prompt("Filter by Project ID (optional, integer)", default="")
+                agent_id_str = typer.prompt("Filter by Agent ID (optional, integer)", default="")
+                project_id = int(project_id_str) if project_id_str.isdigit() else None
+                agent_id = int(agent_id_str) if agent_id_str.isdigit() else None
+                list_tasks(project_id=project_id, agent_id=agent_id)
+
+            elif command == "unassigned":
+                project_id_str = typer.prompt("Filter by Project ID (optional, integer)", default="")
+                project_id = int(project_id_str) if project_id_str.isdigit() else None
+                list_tasks(project_id=project_id, unassigned=True)
+
+            else:
+                rprint(f"[yellow]Unknown command:[/yellow] '{command}'. Type 'help' for options.")
+
+        except typer.Exit:
+            # Prevent typer.Exit from stopping the interactive loop, but signal failure
+            rprint("[yellow]Command execution failed.[/yellow]")
+        except Exception as e:
+            # Catch other unexpected errors during command processing
+            rprint(f"[bold red]An unexpected error occurred:[/bold red] {e}")
+
+
+if __name__ == "__main__":
+    from fastapi import status
+
+    app()
+</file>
+
+<file path="src/workspace/data/coding/office.txt">
+HAHAHHHAAHHARERESTSTSJFIFJSOFJIOSD
+</file>
+
+<file path="src/workspace/models/__init__.py">
+from .results import AgentContext, Result, SearchResult, TestResult, WebsearchResult
+</file>
+
+<file path="src/workspace/models/results.py">
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
+
+
+class WebsearchResult(BaseModel):
+    query: str = Field()
+    result: str = Field()
+    sources: List[str] = Field(default_factory=list)
+
+
+class TestResult(BaseModel):
+    query: str = Field()
+    response: str = Field()
+
+
+class SearchResult(BaseModel):
+    links: Optional[str] = Field(default=None)
+
+
+class Result(BaseModel):
+    query: str = Field()
+    response: str = Field()
+
+
+class AgentContext(BaseModel):
+    pass
+</file>
+
+<file path="src/workspace/models/validation.py">
+from typing import List
+
+from pydantic import BaseModel, Field
+
+
+class Validate(BaseModel):
+    trusted_sources: List[str] = Field(default_factory=list)
+</file>
+
+<file path="src/workspace/config.py">
+import pathlib
+
+from pydantic import Field, HttpUrl
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+DRIVE_ROOT_DIR = pathlib.Path(__file__).parent.resolve()
+
+
+class Config(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+
+    BASE_DATA_DIR: pathlib.Path = Field(default=DRIVE_ROOT_DIR / "data")
+    CODING_SUBDIR: str = "coding"
+
+    API_BASE_URL: str = Field(default="http://localhost:8000")
+    API_TASK_URL: str = Field(default=f"{API_BASE_URL}/tasks/")
+    DB_HOST: str = Field(default="")
+    DB_USER: str = Field(default="")
+    DB_PASS: str = Field(default="")
+    DB_NAME: str = Field(default="")
+    DB_PORT: str = Field(default="5432")
+
+    OLLAMA_BASE_URL: HttpUrl = Field(default=HttpUrl("http://localhost:11434/v1"))
+    OLLAMA_MODEL: str = Field(default="gemma3:12b")  # Make model names configurable
+    GEMINI_MODEL: str = Field(default="gemini-2.0-pro-exp-02-05")
+    GEMINI_PROVIDER: str = Field(default="google-gla")  # Check if provider needs API key env var
+    GROQ_MODEL: str = Field(default="meta-llama/llama-4-scout-17b-16e-instruct")
+
+    DEFAULT_MAX_TOKENS: int = 1024
+    DEFAULT_TEMPERATURE: float = 0.5
+
+
+settings = Config()
+</file>
+
+<file path="src/workspace/dependencies.py">
+from dataclasses import dataclass
+
+import httpx
+
+http_client = httpx.AsyncClient()
+
+
+@dataclass
+class AgentDeps:
+    http_client: httpx.AsyncClient
+</file>
+
+<file path="src/workspace/mcp_client.py">
+import asyncio
+import os
+
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
+from mcp.types import CallToolResult
+
+
+async def client():
+    server_params = StdioServerParameters(command="uv", args=["run", "mcp_server.py", "server"], env=os.environ)
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            web_result: CallToolResult = await session.call_tool(
+                "groq_web_search", {"query": "Who wrote the office US?"}
+            )
+
+            save_file = await session.call_tool(
+                "save_file",
+                {"file_name": "office", "file_content": "HAHAHHHAAHHARERESTSTSJFIFJSOFJIOSD", "extension": ".txt"},
+            )
+            read_file = await session.call_tool("read_file", {"file_name": "office.txt"})
+
+            print(read_file)
+
+
+if __name__ == "__main__":
+    asyncio.run(client())
+</file>
+
+<file path="README.md">
+TEST
+</file>
+
+<file path="src/docy/models/chat.py">
+from typing import List, Optional
+
+from sqlmodel import Field, Relationship
+
+from .base import Base
+from .message import Message
+from .user import User
+
+
+class Chat(Base, table=True):
+    __tablename__ = "chats"  # type: ignore
+
+    title: str = Field(index=True)
+    user_id: int = Field(foreign_key="users.id")
+    user: "User" = Relationship(back_populates="chats", sa_relationship_kwargs=dict(lazy="selectin"))
+    messages: Optional[List["Message"]] = Relationship(
+        back_populates="chat", sa_relationship_kwargs=dict(lazy="selectin")
+    )
+</file>
+
+<file path="src/docy/models/task.py">
+from enum import Enum
+from typing import TYPE_CHECKING, List, Optional
+
+from sqlalchemy import Column, Text
+from sqlmodel import Field, Relationship
+
+from .base import Base
+
+if TYPE_CHECKING:
+    from .agent import Agent
+    from .chat import Message
+    from .project import Project
+
+
+class Category(str, Enum):
+    CODING = "coding"
+    WRITING = "writing"
+    PLANNING = "planning"
+
+
+class TaskStatus(str, Enum):
+    PENDING = "pending"
+    IN_PROGRESS = "in_progress"
+    COMPLETED = "completed"
+    FAILED = "failed"
+    ERROR = "ERROR"
+
+
+class SubTask(Base, table=True):
+    __tablename__ = "subtasks"  # type: ignore
+
+    name: str = Field(index=True)
+    description: Optional[str] = Field(default=None, sa_column=Column(Text))
+    status: TaskStatus = Field(default=TaskStatus.PENDING, index=True)
+    is_completed: bool = Field(default=False, index=True)
+
+    task_id: int = Field(foreign_key="tasks.id", index=True)
+    task: "Task" = Relationship(back_populates="subtasks", sa_relationship_kwargs=dict(lazy="selectin"))
+    agent_id: Optional[int] = Field(default=None, foreign_key="agents.id", index=True)
+    agent: Optional["Agent"] = Relationship(back_populates="subtasks", sa_relationship_kwargs=dict(lazy="selectin"))
+
+
+class Task(Base, table=True):
+    __tablename__ = "tasks"  # type: ignore
+
+    name: str = Field(index=True)
+    description: str = Field(sa_column=Column(Text))
+    category: Category = Field(default=Category.CODING, index=True)
+    status: TaskStatus = Field(default=TaskStatus.PENDING, index=True)
+
+    agent_id: Optional[int] = Field(default=None, foreign_key="agents.id", index=True)
+    project_id: Optional[int] = Field(default=None, foreign_key="projects.id", index=True)
+    agent: Optional["Agent"] = Relationship(back_populates="tasks", sa_relationship_kwargs=dict(lazy="selectin"))
+    project: Optional["Project"] = Relationship(back_populates="tasks", sa_relationship_kwargs=dict(lazy="selectin"))
+
+    messages: List["Message"] = Relationship(
+        back_populates="task", sa_relationship_kwargs=dict(lazy="selectin", cascade="all, delete-orphan")
+    )
+    subtasks: List["SubTask"] = Relationship(
+        back_populates="task", sa_relationship_kwargs=dict(lazy="selectin", cascade="all, delete-orphan")
+    )
+
+    @property
+    def assigned(self) -> bool:
+        return self.agent_id is not None
+</file>
+
+<file path="src/docy/services/worker.py">
+import asyncio
+import pathlib
+import sys
+from typing import List
+
+from pydantic import BaseModel, Field
+from pydantic_ai import Agent
+from pydantic_ai.models.gemini import GeminiModel
+from pydantic_ai.models.groq import GroqModel
+from pydantic_ai.models.openai import OpenAIModel
+from pydantic_ai.providers.openai import OpenAIProvider
+
+ROOT_DIR = pathlib.Path(__file__).parent.resolve()
+BASE_DIR = pathlib.Path(ROOT_DIR / "data")
+CODING_DIR = BASE_DIR / "coding"
+CODING_DIR.mkdir(exist_ok=True)
+
+groq_model = GroqModel("qwen-2.5-coder-32b")
+gemini_model = GeminiModel(
+    model_name="gemini-2.0-pro-exp-02-05",
+)
+ollama_model = OpenAIModel(
+    model_name="granite3.2:latest", provider=OpenAIProvider(base_url="http://localhost:11434/v1")
+)
+
+
+class Task(BaseModel):
+    id: int = Field()
+    name: str = Field()
+    description: str = Field()
+    example: str = Field()
+
+
+class TaskResult(BaseModel):
+    code: str
+
+
+planner_agent = Agent(
+    groq_model,
+    system_prompt="""
+    Evaluate the user prompt.
+
+    Generate tasks based on descripton. Return List of Task.
+    """,
+    retries=5,
+    result_type=List[Task],
+)
+
+gemini_coder_agent = Agent(
+    groq_model,
+    system_prompt="""
+    You are an expert project feature coder.
+    Generate clean and maintainable code based on the task.
+    """,
+    retries=5,
+    # result_type=TaskResult
+)
+
+ollama_coder_agent = Agent(
+    ollama_model,
+    system_prompt="You are a python expert, you write clean and maintainable code.",
+    retries=5,
+    model_settings={
+        "max_tokens": 2048,
+        "temperature": 0.2,
+    },
+)
+
+
+@ollama_coder_agent.tool_plain
+def save_to_file(file_name: str, content: str):
+    safe_file_name = pathlib.Path(f"{file_name}").name
+    file_path = CODING_DIR / safe_file_name
+
+    try:
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.write(content)
+        return f"File saved at {file_path}"
+    except Exception as e:
+        return f"Error saving file {file_path}: {e}"
+
+
+gemini_coder_agent = Agent(
+    gemini_model,
+    system_prompt="""
+    You are an expert project feature coder.
+    Generate clean and maintainable code based on the task.
+    """,
+    retries=5,
+    # result_type=Union[str, TaskResult]
+)
+
+
+class ProjectService:
+    def __init__(self) -> None:
+        pass
+
+    def create(self, name: str):
+        pass
+
+    def list_files(self):
+        pass
+
+    def delete_file(self, file_name: str):
+        pass
+
+
+class AgentService:
+    def __init__(self) -> None:
+        # task_repo: TaskRepository
+        pass
+
+    def save_task_db(self, task: Task):
+        pass
+
+    def planner(self, description: str):
+        result = planner_agent.run_sync(description)
+        return result.data
+
+    def coder_multiple(self, tasks: List[Task]) -> List[TaskResult]:
+        results: List[TaskResult] = []
+
+        for task in tasks:
+            result = gemini_coder_agent.run_sync(task.description)
+            results.append(result.data)
+
+        print("Processed all tasks...")
+        return results
+
+    async def coder_single(self, task: str):
+        pass
+
+    async def stream_response(self, response):
+        pass
+
+
+async def main():
+    agent_service = AgentService()
+
+    task = """
+    Create a simple Python script that renders a house using pygame.
+    Save file to directory using the save_to_file tool.
+    file_name: 'test_house.py'
+    """
+    chunks: List[str] = []
+
+    try:
+        async with ollama_coder_agent.run_stream(task) as first_result:
+            print("Streaming response:\n" + "=" * 20)
+
+            async for chunk in first_result.stream():
+                print(chunk, end="", flush=True)
+                chunks.append(chunk)
+
+            print("\n" + "=" * 20)
+
+        full_response = "".join(chunks)
+
+        print("\n--- Task Streaming Complete ---", file=sys.stderr)
+        print(f"Usage: {first_result.usage()}")
+
+    except Exception as e:
+        print(f"Error occurred: {e}", file=sys.stderr)
+
+
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("\nOperation cancelled by user.", file=sys.stderr)
+</file>
+
+<file path="src/workspace/agents/common.py">
+from config import settings
+from pydantic_ai import Agent
+from pydantic_ai.common_tools.duckduckgo import duckduckgo_search_tool
+from pydantic_ai.models.gemini import GeminiModel
+from pydantic_ai.models.groq import GroqModel
+from pydantic_ai.models.openai import OpenAIModel
+from pydantic_ai.providers.openai import OpenAIProvider
+
+ollama_model = OpenAIModel(
+    model_name=settings.OLLAMA_MODEL,
+    provider=OpenAIProvider(base_url=str(settings.OLLAMA_BASE_URL)),
+)
+
+gemini_model = GeminiModel(
+    model_name=settings.GEMINI_MODEL,
+)
+
+groq_model = GroqModel(model_name=settings.GROQ_MODEL)
+
+search_agent = Agent(
+    gemini_model,
+    tools=[duckduckgo_search_tool()],
+    system_prompt="Search the DuckDuckGo search tool with provided query. Show sources.",
+)
+
+ollama_agent = Agent(
+    ollama_model,
+    tools=[duckduckgo_search_tool()],
+    system_prompt="You are a helpful assistant, help with the task at hand.",
+    retries=5,
+    model_settings={
+        "max_tokens": settings.DEFAULT_MAX_TOKENS,
+        "temperature": settings.DEFAULT_TEMPERATURE,
+    },
+)
+
+groq_search_agent = Agent(
+    groq_model,
+    tools=[duckduckgo_search_tool()],
+    system_prompt="Search the DuckDuckGo search tool with provided query. Show sources.",
+    model_settings={
+        "max_tokens": 512,
+        "temperature": 0.2,
+    },
+)
+
+groq_code_agent = Agent(
+    groq_model,
+    system_prompt="You are an expert programmer. Generate clean, efficient, and correct code based on the user's request. Only output raw code blocks unless asked otherwise.",
+    model_settings={
+        "max_tokens": 2048,
+        "temperature": 0.1,
+    },
+)
+</file>
+
+<file path="src/workspace/tools/file_system.py">
+import pathlib
+from typing import Dict, List
+
+import logfire
+from config import settings
+
+BASE_DIR = settings.BASE_DATA_DIR
+CODING_DIR = BASE_DIR / settings.CODING_SUBDIR
+
+CODING_DIR.mkdir(exist_ok=True)
+
+
+async def list_files(directory: str = settings.CODING_SUBDIR) -> List[str] | str:
+    """Lists files in a specified subdirectory within the data directory."""
+    target_dir = BASE_DIR / directory
+    if not str(target_dir.resolve()).startswith(str(BASE_DIR.resolve())):
+        return f"Error: Access denied to directory '{directory}'."
+    if not target_dir.is_dir():
+        return f"Error: Directory '{directory}' does not exist relative to {BASE_DIR}."
+    try:
+        files = [f.name for f in target_dir.iterdir() if f.is_file()]
+        return files
+    except Exception as e:
+        logfire.error(f"Error listing files in '{directory}': {e}")
+        return f"Error listing files in '{directory}': {e}"
+
+
+async def save_file(file_name: str, file_content: str, extension: str) -> str:
+    """Save file to the coding subdirectory."""
+    if not extension.startswith("."):
+        extension = "." + extension
+    safe_file_name = pathlib.Path(f"{file_name}{extension}").name
+    if not safe_file_name or safe_file_name != f"{file_name}{extension}":
+        return "Error: Invalid file name or extension provided."
+
+    file_path = CODING_DIR / safe_file_name
+    try:
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.write(file_content)
+        return f"File saved at {file_path}"
+    except Exception as e:
+        logfire.error(f"Error saving file '{file_path}': {e}")
+        return f"Error saving file '{file_path}': {e}"
+
+
+async def read_file(file_name: str) -> Dict[str, str] | str:
+    """Read file from the coding subdirectory."""
+    safe_file_name = pathlib.Path(file_name).name
+    if not safe_file_name or safe_file_name != file_name:
+        return "Error: Invalid file name provided."
+
+    file_path = CODING_DIR / safe_file_name
+    if not file_path.is_file():
+        return f"Error: File '{safe_file_name}' not found in {CODING_DIR}."
+    try:
+        read_content = file_path.read_text(encoding="utf-8")
+        return {"file_name": safe_file_name, "content": read_content}
+    except Exception as e:
+        logfire.error(f"Error reading file '{file_path}': {e}")
+        return f"Error reading file '{file_path}': {e}"
+
+
+exported_tools = {
+    "list_files": list_files,
+    "save_file": save_file,
+    "read_file": read_file,
+}
+</file>
+
+<file path="src/workspace/tools/task.py">
+from typing import List
+
+from pydantic import BaseModel, Field
+
+
+class Task(BaseModel):
+    name: str = Field(default="")
+    content: str = Field(default="")
+    agent: str = Field(default="ollama")
+
+
+class TaskResult(Task):
+    generated: str = Field(default="")
+
+
+tasks: List[Task] = []
+
+
+def get_task(task_id: int) -> Task:
+    return Task(name="Fastapi main.py", content="Create a simple fastapi application")
+
+
+def get_tasks() -> List[Task]:
+    return tasks
+
+
+def add_task(task: Task) -> Task:
+    tasks.append(task)
+    return task
+
+
+def handle_task(task: Task) -> TaskResult:
+    current_task = task
+    current_agent = task.agent
+
+    output = "TETSTST"
+
+    return TaskResult(
+        name=current_task.name,
+        content=current_task.content,
+        agent=current_agent,
+        generated=output,
+    )
+
+
+exported_tools = {"handle_task": handle_task, "get_task": get_task, "add_task": add_task}
+</file>
+
+<file path="src/workspace/tools/web.py">
+from typing import Any
+
+import httpx
+import logfire
+from agents.common import groq_search_agent, ollama_agent, search_agent
+from config import settings
+from dependencies import http_client
+from models import WebsearchResult
+
+
+async def http_get(url: str) -> str:
+    """Performs an HTTP GET request to the specified URL and returns the text content."""
+    try:
+        response = await http_client.get(url, follow_redirects=True, timeout=15.0)
+        response.raise_for_status()
+        return response.text
+    except httpx.RequestError as e:
+        logfire.warning(f"HTTP Request Error for {url}: {e}")
+        return f"HTTP Request Error: Could not reach {url}. Details: {e}"
+    except httpx.HTTPStatusError as e:
+        logfire.warning(f"HTTP Status Error {e.response.status_code} for {e.request.url}")
+        return f"HTTP Status Error: Received status {e.response.status_code} from {e.request.url}."
+    except Exception as e:
+        logfire.error(f"Unexpected error during HTTP GET for {url}: {e}")
+        return f"An unexpected error occurred: {e}"
+
+
+async def get_task_content(task_id: int) -> str:
+    """Gets content for a specific task ID from the configured task API."""
+    task_url = f"{str(settings.API_TASK_URL).rstrip('/')}/{task_id}"
+    logfire.info(f"Fetching task content for ID {task_id} from {task_url}")
+    response_text = await http_get(task_url)
+    return response_text
+
+
+async def web_search(query: str) -> str:
+    """Performs a web search using the default search agent (Gemini)."""
+    logfire.info(f"Performing web search (Gemini) for: {query}")
+    try:
+        r = await search_agent.run(f"Search DuckDuckGo for the given query: {query}", result_type=WebsearchResult)
+        if r and r.data and isinstance(r.data, WebsearchResult):
+            return r.data.result
+        else:
+            logfire.error("Web search (Gemini) returned unexpected data format.", response=r)
+            return "Error: Search completed but failed to extract result data."
+    except Exception as e:
+        logfire.error(f"Web search (Gemini) failed for query '{query}': {e}")
+        return f"Error during web search: {e}"
+
+
+async def ollama_web_search(query: str) -> str:
+    """Performs a web search using the Ollama agent."""
+    logfire.info(f"Performing web search (Ollama) for: {query}")
+    try:
+        r = await ollama_agent.run(f"Search DuckDuckGo for the given query: {query}", result_type=WebsearchResult)
+        if r and r.data and isinstance(r.data, WebsearchResult):
+            return r.data.result
+        else:
+            logfire.error("Web search (Ollama) returned unexpected data format.", response=r)
+            return "Error: Search completed but failed to extract result data."
+    except Exception as e:
+        logfire.error(f"Web search (Ollama) failed for query '{query}': {e}")
+        return f"Error during Ollama web search: {e}"
+
+
+async def groq_web_search(query: str) -> Any:  # Returns list of messages
+    """Performs a web search using the Groq agent and returns all messages."""
+    logfire.info(f"Performing web search (Groq) for: {query}")
+    try:
+        r = await groq_search_agent.run(
+            f"Search DuckDuckGo for the given query: {query}",
+            result_type=WebsearchResult,  # Still useful for potential parsing/validation within agent
+        )
+        return r.all_messages() if r else []  # Return empty list on failure
+    except Exception as e:
+        logfire.error(f"Web search (Groq) failed for query '{query}': {e}")
+        return f"Error during Groq web search: {e}"  # Return error message string
+
+
+async def ask(query: str) -> str:
+    """Asks a general question to the default agent (Gemini)."""
+    logfire.info(f"Processing 'ask' command with query: {query}")
+    try:
+        r = await search_agent.run(query)
+        return r.data if r and hasattr(r, "data") else "Error: Agent did not return data."
+    except Exception as e:
+        logfire.error(f"Ask command failed for query '{query}': {e}")
+        return f"Error processing question: {e}"
+
+
+async def sanitize_input(input_str: str) -> str:
+    """Sanitizes input string (basic example)."""
+    logfire.info("Sanitizing input (placeholder implementation)")
+    return input_str.strip()
+
+
+exported_tools = {
+    "http_get": http_get,
+    "get_task_content": get_task_content,
+    "web_search": web_search,
+    "ollama_web_search": ollama_web_search,
+    "groq_web_search": groq_web_search,
+    "ask": ask,
+    "sanitize_input": sanitize_input,
+}
+</file>
+
+<file path="src/workspace/interactive_cli.py">
+import shlex
+import sys
+from typing import Dict, List, Optional
+
+import click
+import rich
+import typer
+from prompt_toolkit import prompt
+from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+from prompt_toolkit.completion import WordCompleter
+from prompt_toolkit.history import FileHistory
+from prompt_toolkit.styles import Style
+from pydantic import BaseModel, Field
+from rich.panel import Panel
+
+
+class Settings(BaseModel):
+    theme: str = Field(default="default")
+
+
+class Process(BaseModel):
+    agent: Optional[Dict[str, str]] = Field(default_factory=dict)
+    task: Optional[Dict[str, str]] = Field(default_factory=dict)
+
+
+class State(BaseModel):
+    processes: List[Process] = Field(default_factory=list)
+    last_result: Optional[str] = Field(default=None)
+    files_processed: int = Field(default=0)
+
+
+class AppState(BaseModel):
+    state: State = Field(default_factory=State)
+    settings: Settings = Field(default_factory=Settings)
+
+
+app_state = AppState()
+
+app = typer.Typer(
+    name="my-interactive-cli", help="A sample interactive CLI combining Typer and prompt_toolkit.", add_completion=False
+)
+
+
+def themed_print(message: str, theme: str = "bold magenta"):
+    rich.print(f"[{theme}]{message}[/]", end="\n")
+
+
+@app.command()
+def hello(
+    name: str = typer.Argument(..., help="The name to say hello to."),
+    formal: bool = typer.Option(False, "--formal", "-f", help="Use a formal greeting."),
+):
+    """
+    Greets the user.
+    """
+    greeting = "Greetings" if formal else "Hello"
+    message = f"{greeting}, {name}!"
+
+    themed_print(message, theme="bold magenta")
+
+    app_state.state.last_result = message
+
+
+@app.command()
+def process_file(filename: str = typer.Argument(..., help="File to process (simulated).")):
+    """
+    Simulates processing a file and updates state. Uses Rich Panel.
+    """
+    rich.print(
+        Panel(
+            f"Simulating processing for file: '[bold green]{filename}[/]'\nStatus: [yellow]Completed[/]",
+            title="[blue]File Processing[/]",
+            border_style="blue",
+            expand=False,
+        )
+    )
+    app_state.state.files_processed += 1
+    app_state.state.last_result = f"Processed {filename}"
+
+
+@app.command()
+def get_tasks():
+    """Fetches all the tasks for a given project."""
+    pass
+
+
+@app.command()
+def select_agent(name: str = typer.Argument(..., help="Name of the agent to select")):
+    """Select an agent to use for this session"""
+    app_state.state.selected_agent = name
+    app_state.state.last_result = f"Selected agent: {name}"
+
+
+@app.command()
+def select_task(index: int = typer.Argument(..., help="Select index of task to handle")):
+    """Select a task to handle"""
+    app_state.state.selected_task = index
+    app_state.state.last_result = f"Selected task: {index}"
+
+
+@app.command()
+def goodbye(
+    name: str,
+    show_last: bool = typer.Option(False, "--show-last", help="Show the last result."),
+):
+    """
+    Says goodbye to the user.
+    """
+    message = f"Goodbye, {name}!"
+    themed_print(message)
+    if show_last and app_state.state.last_result:
+        themed_print(f"Last result was: {app_state.state.last_result}", theme="bold magenta")
+    app_state.state.last_result = message
+
+
+@app.command()
+def show_state():
+    """
+    Displays the current internal state.
+    """
+
+    themed_print(f"Current state: {app_state.state}")
+
+
+# --- prompt_toolkit REPL Setup ---
+
+cli_command = typer.main.get_command(app)
+command_names = list(cli_command.commands.keys())
+
+history = FileHistory(".my_interactive_cli_history")
+completer = WordCompleter(command_names + ["exit", "quit"], ignore_case=True)
+style = Style.from_dict(
+    {
+        "prompt": "#ansicyan bold",
+        "completion-menu.completion.current": "bg:#00aaaa #000000",
+        "completion-menu.completion": "bg:#008888 #ffffff",
+        "rprompt": "bg:#ff0066 #ffffff",
+    }
+)
+
+
+def run_repl():
+    """Runs the interactive Read-Eval-Print Loop."""
+    print("Welcome to the interactive CLI!")
+    print("Type 'exit' or 'quit' to leave.")
+
+    while True:
+        try:
+            user_input = prompt(
+                "cli> ",
+                history=history,
+                completer=completer,
+                auto_suggest=AutoSuggestFromHistory(),
+                style=style,
+                rprompt=lambda: f"Last: {str(app_state.state.last_result)[:20]}" if app_state.state.last_result else "",
+            )
+
+            input_lower = user_input.strip().lower()
+            if input_lower in ["exit", "quit"]:
+                print("Exiting.")
+                break
+
+            if not user_input.strip():
+                continue
+
+            try:
+                args = shlex.split(user_input)
+            except ValueError as e:
+                print(f"Error parsing input: {e}")
+                continue
+
+            try:
+                app(args=args, prog_name="cli", standalone_mode=False)
+            except click.exceptions.MissingParameter as e:
+                print(f"Error: Missing argument '{e.param_hint}' for command '{e.ctx.command.name}'.")
+                print(e.format_message())
+            except click.exceptions.BadParameter as e:
+                print(f"Error: Invalid value for {e.param_hint}: {e.format_message()}")
+            except click.exceptions.UsageError as e:
+                print(f"Usage Error: {e.format_message()}")
+            except click.exceptions.Abort:
+                print("Command aborted.")
+            except Exception as e:
+                print(f"An unexpected error occurred: {e}")
+                import traceback
+
+                traceback.print_exc()
+
+        except (EOFError, KeyboardInterrupt):
+            print("\nExiting.")
+            break
+
+
+# --- Entry Point ---
+
+
+@app.callback()
+def main_callback(ctx: typer.Context):
+    """
+    Main callback, useful for global options or setup if needed
+    when running non-interactively.
+    """
+    pass
+
+
+if __name__ == "__main__":
+    if len(sys.argv) <= 1:
+        run_repl()
+    else:
+        app()
+</file>
+
+<file path="src/workspace/server.py">
+import logfire
+from mcp.server.fastmcp import FastMCP
+from tools import file_system, task, web
+
+logfire.configure()
+
+server = FastMCP("PydanticAI structured server")
+
+all_tools = {}
+all_tools.update(task.exported_tools)
+all_tools.update(file_system.exported_tools)
+all_tools.update(web.exported_tools)
+
+
+# Register tools
+for name, func in all_tools.items():
+    if func:
+        server.tool(name=name)(func)
+    else:
+        logfire.warning(f"Tool '{name}' is defined but not implemented, skipping registration.")
+
+
+def main():
+    logfire.info("Starting FastMCP server...")
+    server.run()
+
+
+if __name__ == "__main__":
+    main()
+</file>
+
+<file path="docker-compose.yml">
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    shm_size: 128mb
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: docy
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+networks:
+  default:
+
+volumes:
+  postgres_data:
+</file>
+
+<file path="src/tests/conftest.py">
+import asyncio
+from typing import AsyncGenerator, Generator
+
+import pytest
+import pytest_asyncio
+from httpx import AsyncClient
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio.session import AsyncSession
+from sqlmodel import SQLModel
+
+from docy.core import Settings
+from docy.db import get_session as get_app_session
+from docy.main import app
+
+settings = Settings()
+
+TEST_DATABASE_URL = DATABASE_URL = (
+    f"postgresql+asyncpg://{settings.DB_USER}:{settings.DB_PASS}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.TEST_DB_NAME}"
+)
+
+
+test_engine = create_async_engine(
+    TEST_DATABASE_URL,
+    echo=False,
+    future=True,
+)
+
+TestingSessionLocal = async_sessionmaker(
+    autocommit=False, autoflush=False, bind=test_engine, class_=AsyncSession, expire_on_commit=False
+)
+
+
+@pytest.fixture(scope="session")
+def event_loop() -> Generator[asyncio.AbstractEventLoop, None, None]:
+    loop = asyncio.get_event_loop_policy().new_event_loop()
+    yield loop
+    loop.close()
+
+
+@pytest_asyncio.fixture(scope="session", autouse=True)
+async def db_setup(event_loop: asyncio.AbstractEventLoop):
+    """
+    Session-scoped fixture to create and drop database tables.
+    `autouse=True` ensures it runs automatically for the session.
+    """
+    # --- IMPORTANT ---
+    # Ensure all your SQLModel models are imported *before* `create_all` is called.
+    # This might happen implicitly if your main app or other modules import them.
+    # If not, you might need to explicitly import them here, e.g.:
+    # from docy.src.docy import models # Assuming models are in __init__.py
+    # -----------------
+
+    async with test_engine.begin() as conn:
+        # Use run_sync for synchronous metadata operations
+        # print("Creating test database tables...")
+        await conn.run_sync(SQLModel.metadata.create_all)
+
+    yield  # Run the tests
+
+    async with test_engine.begin() as conn:
+        # print("Dropping test database tables...")
+        await conn.run_sync(SQLModel.metadata.drop_all)
+
+    await test_engine.dispose()  # Clean up the engine connections
+
+
+@pytest_asyncio.fixture(scope="function")
+async def session() -> AsyncGenerator[AsyncSession, None]:
+    """
+    Function-scoped fixture to provide a test database session.
+    Wraps the test in a transaction and rolls back afterwards.
+    """
+    async with TestingSessionLocal() as db_session:
+        # Begin a nested transaction (if supported, otherwise a regular one)
+        await db_session.begin_nested()  # Savepoint
+
+        yield db_session
+
+        # Rollback the transaction to ensure test isolation
+        await db_session.rollback()
+        # No commit needed as we want to discard changes
+
+        # Optional: Close the session explicitly if needed, though async context manager handles it
+        # await db_session.close()
+
+
+@pytest_asyncio.fixture(scope="function")
+async def client(session: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
+    """
+    Function-scoped fixture to provide an async test client
+    for making API requests, with the database session dependency overridden.
+    """
+    if not app:
+        pytest.skip("FastAPI app not loaded, skipping client fixture.")
+
+    # Define the override function *inside* the fixture
+    # so it closes over the correct 'session' instance for this specific test
+    async def override_get_session() -> AsyncGenerator[AsyncSession, None]:
+        yield session
+
+    # Apply the dependency override
+    app.dependency_overrides[get_app_session] = override_get_session
+
+    # Create the test client
+    async with AsyncClient(app=app, base_url="http://test") as test_client:
+        yield test_client
+
+    # Clean up the override after the test
+    del app.dependency_overrides[get_app_session]
+</file>
+
+<file path=".python-version">
+3.13
+</file>
+
+<file path="requirements.txt">
+# This file was autogenerated by uv via the following command:
+#    uv pip compile pyproject.toml -o requirements.txt
+aiofiles==24.1.0
+    # via crawl4ai
+aiohappyeyeballs==2.6.1
+    # via aiohttp
+aiohttp==3.11.12
+    # via
+    #   docy (pyproject.toml)
+    #   crawl4ai
+    #   litellm
+aiosignal==1.3.2
+    # via aiohttp
+aiosqlite==0.21.0
+    # via crawl4ai
+annotated-types==0.7.0
+    # via pydantic
+anthropic==0.49.0
+    # via pydantic-ai-slim
+anyio==4.9.0
+    # via
+    #   anthropic
+    #   google-genai
+    #   groq
+    #   httpx
+    #   mcp
+    #   openai
+    #   pydantic-evals
+    #   sse-starlette
+    #   starlette
+    #   watchfiles
+argcomplete==3.6.2
+    # via pydantic-ai-slim
+asgiref==3.8.1
+    # via opentelemetry-instrumentation-asgi
+asttokens==3.0.0
+    # via stack-data
+asyncpg==0.30.0
+    # via docy (pyproject.toml)
+attrs==25.3.0
+    # via
+    #   aiohttp
+    #   jsonschema
+    #   referencing
+backoff==2.2.1
+    # via posthog
+bcrypt==4.3.0
+    # via
+    #   chromadb
+    #   passlib
+beautifulsoup4==4.13.3
+    # via crawl4ai
+boto3==1.37.29
+    # via pydantic-ai-slim
+botocore==1.37.29
+    # via
+    #   boto3
+    #   s3transfer
+build==1.2.2.post1
+    # via chromadb
+cachetools==5.5.2
+    # via google-auth
+certifi==2025.1.31
+    # via
+    #   httpcore
+    #   httpx
+    #   kubernetes
+    #   requests
+cffi==1.17.1
+    # via
+    #   cryptography
+    #   pynacl
+charset-normalizer==3.4.1
+    # via requests
+chroma-hnswlib==0.7.6
+    # via chromadb
+chromadb==0.6.3
+    # via docy (pyproject.toml)
+click==8.1.8
+    # via
+    #   crawl4ai
+    #   duckduckgo-search
+    #   litellm
+    #   nltk
+    #   rich-toolkit
+    #   typer
+    #   uvicorn
+cohere==5.14.2
+    # via pydantic-ai-slim
+colorama==0.4.6
+    # via
+    #   crawl4ai
+    #   griffe
+coloredlogs==15.0.1
+    # via onnxruntime
+comm==0.2.2
+    # via ipykernel
+crawl4ai==0.5.0.post8
+    # via docy (pyproject.toml)
+cryptography==44.0.2
+    # via
+    #   pyjwt
+    #   pyopenssl
+    #   python-jose
+cssselect==1.3.0
+    # via crawl4ai
+debugpy==1.8.13
+    # via ipykernel
+decorator==5.2.1
+    # via ipython
+deprecated==1.2.18
+    # via
+    #   opentelemetry-api
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+    #   opentelemetry-semantic-conventions
+    #   pygithub
+distro==1.9.0
+    # via
+    #   anthropic
+    #   groq
+    #   openai
+    #   posthog
+dnspython==2.7.0
+    # via email-validator
+duckduckgo-search==2025.4.4
+    # via pydantic-ai-slim
+durationpy==0.9
+    # via kubernetes
+ecdsa==0.19.1
+    # via python-jose
+email-validator==2.2.0
+    # via fastapi
+eval-type-backport==0.2.2
+    # via
+    #   mistralai
+    #   pydantic-ai-slim
+executing==2.2.0
+    # via
+    #   logfire
+    #   stack-data
+fake-http-header==0.3.5
+    # via tf-playwright-stealth
+fake-useragent==2.1.0
+    # via crawl4ai
+fastapi==0.115.12
+    # via
+    #   docy (pyproject.toml)
+    #   chromadb
+fastapi-cli==0.0.7
+    # via fastapi
+fastavro==1.10.0
+    # via cohere
+faust-cchardet==2.1.19
+    # via crawl4ai
+filelock==3.18.0
+    # via
+    #   huggingface-hub
+    #   torch
+    #   transformers
+flatbuffers==25.2.10
+    # via onnxruntime
+frozenlist==1.5.0
+    # via
+    #   aiohttp
+    #   aiosignal
+fsspec==2025.3.2
+    # via
+    #   huggingface-hub
+    #   torch
+google-auth==2.38.0
+    # via
+    #   google-genai
+    #   kubernetes
+    #   pydantic-ai-slim
+google-genai==1.9.0
+    # via docy (pyproject.toml)
+googleapis-common-protos==1.69.2
+    # via
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+greenlet==3.1.1
+    # via
+    #   playwright
+    #   sqlalchemy
+griffe==1.7.2
+    # via pydantic-ai-slim
+groq==0.22.0
+    # via pydantic-ai-slim
+grpcio==1.67.1
+    # via
+    #   chromadb
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   pymilvus
+h11==0.14.0
+    # via
+    #   httpcore
+    #   uvicorn
+httpcore==1.0.7
+    # via httpx
+httptools==0.6.4
+    # via uvicorn
+httpx==0.28.1
+    # via
+    #   docy (pyproject.toml)
+    #   anthropic
+    #   chromadb
+    #   cohere
+    #   crawl4ai
+    #   fastapi
+    #   google-genai
+    #   groq
+    #   litellm
+    #   mcp
+    #   mistralai
+    #   openai
+    #   pydantic-ai-slim
+    #   pydantic-graph
+httpx-sse==0.4.0
+    # via
+    #   cohere
+    #   mcp
+huggingface-hub==0.30.2
+    # via
+    #   sentence-transformers
+    #   tokenizers
+    #   transformers
+humanfriendly==10.0
+    # via coloredlogs
+humanize==4.12.2
+    # via crawl4ai
+idna==3.10
+    # via
+    #   anyio
+    #   email-validator
+    #   httpx
+    #   requests
+    #   yarl
+importlib-metadata==8.6.1
+    # via
+    #   litellm
+    #   opentelemetry-api
+importlib-resources==6.5.2
+    # via chromadb
+iniconfig==2.1.0
+    # via pytest
+ipykernel==6.29.5
+    # via docy (pyproject.toml)
+ipython==9.1.0
+    # via ipykernel
+ipython-pygments-lexers==1.1.1
+    # via ipython
+jedi==0.19.2
+    # via ipython
+jinja2==3.1.6
+    # via
+    #   fastapi
+    #   litellm
+    #   torch
+jiter==0.9.0
+    # via
+    #   anthropic
+    #   openai
+jmespath==1.0.1
+    # via
+    #   boto3
+    #   botocore
+joblib==1.4.2
+    # via
+    #   nltk
+    #   scikit-learn
+jsonschema==4.23.0
+    # via litellm
+jsonschema-specifications==2024.10.1
+    # via jsonschema
+jupyter-client==8.6.3
+    # via ipykernel
+jupyter-core==5.7.2
+    # via
+    #   ipykernel
+    #   jupyter-client
+kubernetes==32.0.1
+    # via chromadb
+litellm==1.65.4.post1
+    # via crawl4ai
+load-dotenv==0.1.0
+    # via docy (pyproject.toml)
+logfire==3.12.0
+    # via docy (pyproject.toml)
+logfire-api==3.12.0
+    # via
+    #   pydantic-evals
+    #   pydantic-graph
+lxml==5.3.2
+    # via
+    #   crawl4ai
+    #   duckduckgo-search
+markdown-it-py==3.0.0
+    # via rich
+markupsafe==3.0.2
+    # via jinja2
+matplotlib-inline==0.1.7
+    # via
+    #   ipykernel
+    #   ipython
+mcp==1.6.0
+    # via
+    #   docy (pyproject.toml)
+    #   pydantic-ai-slim
+mdurl==0.1.2
+    # via markdown-it-py
+milvus-lite==2.4.12
+    # via pymilvus
+mistralai==1.6.0
+    # via pydantic-ai-slim
+mmh3==5.1.0
+    # via chromadb
+monotonic==1.6
+    # via posthog
+mpmath==1.3.0
+    # via sympy
+multidict==6.3.2
+    # via
+    #   aiohttp
+    #   yarl
+nest-asyncio==1.6.0
+    # via ipykernel
+networkx==3.4.2
+    # via torch
+nltk==3.9.1
+    # via crawl4ai
+nodeenv==1.9.1
+    # via pyright
+numpy==2.2.4
+    # via
+    #   chroma-hnswlib
+    #   chromadb
+    #   crawl4ai
+    #   onnxruntime
+    #   pandas
+    #   pgvector
+    #   rank-bm25
+    #   scikit-learn
+    #   scipy
+    #   transformers
+nvidia-cublas-cu12==12.4.5.8
+    # via
+    #   nvidia-cudnn-cu12
+    #   nvidia-cusolver-cu12
+    #   torch
+nvidia-cuda-cupti-cu12==12.4.127
+    # via torch
+nvidia-cuda-nvrtc-cu12==12.4.127
+    # via torch
+nvidia-cuda-runtime-cu12==12.4.127
+    # via torch
+nvidia-cudnn-cu12==9.1.0.70
+    # via torch
+nvidia-cufft-cu12==11.2.1.3
+    # via torch
+nvidia-curand-cu12==10.3.5.147
+    # via torch
+nvidia-cusolver-cu12==11.6.1.9
+    # via torch
+nvidia-cusparse-cu12==12.3.1.170
+    # via
+    #   nvidia-cusolver-cu12
+    #   torch
+nvidia-cusparselt-cu12==0.6.2
+    # via torch
+nvidia-nccl-cu12==2.21.5
+    # via torch
+nvidia-nvjitlink-cu12==12.4.127
+    # via
+    #   nvidia-cusolver-cu12
+    #   nvidia-cusparse-cu12
+    #   torch
+nvidia-nvtx-cu12==12.4.127
+    # via torch
+oauthlib==3.2.2
+    # via
+    #   kubernetes
+    #   requests-oauthlib
+onnxruntime==1.21.0
+    # via chromadb
+openai==1.71.0
+    # via
+    #   litellm
+    #   pydantic-ai-slim
+opentelemetry-api==1.31.1
+    # via
+    #   chromadb
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+    #   opentelemetry-instrumentation
+    #   opentelemetry-instrumentation-asgi
+    #   opentelemetry-instrumentation-fastapi
+    #   opentelemetry-instrumentation-sqlalchemy
+    #   opentelemetry-sdk
+    #   opentelemetry-semantic-conventions
+    #   pydantic-ai-slim
+opentelemetry-exporter-otlp-proto-common==1.31.1
+    # via
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+opentelemetry-exporter-otlp-proto-grpc==1.31.1
+    # via chromadb
+opentelemetry-exporter-otlp-proto-http==1.31.1
+    # via logfire
+opentelemetry-instrumentation==0.52b1
+    # via
+    #   logfire
+    #   opentelemetry-instrumentation-asgi
+    #   opentelemetry-instrumentation-fastapi
+    #   opentelemetry-instrumentation-sqlalchemy
+opentelemetry-instrumentation-asgi==0.52b1
+    # via opentelemetry-instrumentation-fastapi
+opentelemetry-instrumentation-fastapi==0.52b1
+    # via chromadb
+opentelemetry-instrumentation-sqlalchemy==0.52b1
+    # via logfire
+opentelemetry-proto==1.31.1
+    # via
+    #   opentelemetry-exporter-otlp-proto-common
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+opentelemetry-sdk==1.31.1
+    # via
+    #   chromadb
+    #   logfire
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+opentelemetry-semantic-conventions==0.52b1
+    # via
+    #   opentelemetry-instrumentation
+    #   opentelemetry-instrumentation-asgi
+    #   opentelemetry-instrumentation-fastapi
+    #   opentelemetry-instrumentation-sqlalchemy
+    #   opentelemetry-sdk
+opentelemetry-util-http==0.52b1
+    # via
+    #   opentelemetry-instrumentation-asgi
+    #   opentelemetry-instrumentation-fastapi
+orjson==3.10.16
+    # via chromadb
+overrides==7.7.0
+    # via chromadb
+packaging==24.2
+    # via
+    #   build
+    #   huggingface-hub
+    #   ipykernel
+    #   onnxruntime
+    #   opentelemetry-instrumentation
+    #   opentelemetry-instrumentation-sqlalchemy
+    #   pytest
+    #   transformers
+pandas==2.2.3
+    # via pymilvus
+parso==0.8.4
+    # via jedi
+passlib==1.7.4
+    # via docy (pyproject.toml)
+pexpect==4.9.0
+    # via ipython
+pgvector==0.4.0
+    # via docy (pyproject.toml)
+pillow==10.4.0
+    # via
+    #   crawl4ai
+    #   sentence-transformers
+platformdirs==4.3.7
+    # via jupyter-core
+playwright==1.51.0
+    # via
+    #   crawl4ai
+    #   tf-playwright-stealth
+pluggy==1.5.0
+    # via pytest
+posthog==3.23.0
+    # via chromadb
+primp==0.14.0
+    # via duckduckgo-search
+prompt-toolkit==3.0.50
+    # via
+    #   ipython
+    #   pydantic-ai-slim
+propcache==0.3.1
+    # via
+    #   aiohttp
+    #   yarl
+protobuf==5.29.4
+    # via
+    #   googleapis-common-protos
+    #   logfire
+    #   onnxruntime
+    #   opentelemetry-proto
+    #   pymilvus
+psutil==7.0.0
+    # via
+    #   crawl4ai
+    #   ipykernel
+psycopg2==2.9.10
+    # via docy (pyproject.toml)
+psycopg2-binary==2.9.10
+    # via docy (pyproject.toml)
+ptyprocess==0.7.0
+    # via pexpect
+pure-eval==0.2.3
+    # via stack-data
+pyasn1==0.4.8
+    # via
+    #   pyasn1-modules
+    #   python-jose
+    #   rsa
+pyasn1-modules==0.4.1
+    # via google-auth
+pycparser==2.22
+    # via cffi
+pydantic==2.11.2
+    # via
+    #   docy (pyproject.toml)
+    #   anthropic
+    #   chromadb
+    #   cohere
+    #   crawl4ai
+    #   fastapi
+    #   google-genai
+    #   groq
+    #   litellm
+    #   mcp
+    #   mistralai
+    #   openai
+    #   pydantic-ai-slim
+    #   pydantic-evals
+    #   pydantic-graph
+    #   pydantic-settings
+    #   sqlmodel
+pydantic-ai==0.0.53
+    # via docy (pyproject.toml)
+pydantic-ai-slim==0.0.53
+    # via
+    #   docy (pyproject.toml)
+    #   pydantic-ai
+    #   pydantic-evals
+pydantic-core==2.33.1
+    # via
+    #   cohere
+    #   pydantic
+pydantic-evals==0.0.53
+    # via pydantic-ai-slim
+pydantic-graph==0.0.53
+    # via pydantic-ai-slim
+pydantic-settings==2.8.1
+    # via
+    #   docy (pyproject.toml)
+    #   mcp
+pyee==12.1.1
+    # via playwright
+pygithub==2.6.1
+    # via docy (pyproject.toml)
+pygments==2.19.1
+    # via
+    #   ipython
+    #   ipython-pygments-lexers
+    #   rich
+pyjwt==2.10.1
+    # via pygithub
+pymilvus==2.5.6
+    # via docy (pyproject.toml)
+pynacl==1.5.0
+    # via pygithub
+pyopenssl==25.0.0
+    # via crawl4ai
+pyperclip==1.9.0
+    # via crawl4ai
+pypika==0.48.9
+    # via chromadb
+pyproject-hooks==1.2.0
+    # via build
+pyright==1.1.398
+    # via docy (pyproject.toml)
+pytest==8.3.5
+    # via
+    #   docy (pyproject.toml)
+    #   pytest-asyncio
+pytest-asyncio==0.26.0
+    # via docy (pyproject.toml)
+python-dateutil==2.9.0.post0
+    # via
+    #   botocore
+    #   jupyter-client
+    #   kubernetes
+    #   mistralai
+    #   pandas
+    #   posthog
+python-dotenv==1.1.0
+    # via
+    #   docy (pyproject.toml)
+    #   crawl4ai
+    #   litellm
+    #   load-dotenv
+    #   mcp
+    #   pydantic-settings
+    #   pymilvus
+    #   uvicorn
+python-frontmatter==1.1.0
+    # via docy (pyproject.toml)
+python-jose==3.4.0
+    # via docy (pyproject.toml)
+python-multipart==0.0.20
+    # via
+    #   docy (pyproject.toml)
+    #   fastapi
+python-slugify==8.0.4
+    # via docy (pyproject.toml)
+pytz==2025.2
+    # via pandas
+pyyaml==6.0.2
+    # via
+    #   docy (pyproject.toml)
+    #   chromadb
+    #   huggingface-hub
+    #   kubernetes
+    #   pydantic-evals
+    #   python-frontmatter
+    #   transformers
+    #   uvicorn
+pyzmq==26.4.0
+    # via
+    #   ipykernel
+    #   jupyter-client
+rank-bm25==0.2.2
+    # via crawl4ai
+referencing==0.36.2
+    # via
+    #   jsonschema
+    #   jsonschema-specifications
+regex==2024.11.6
+    # via
+    #   nltk
+    #   tiktoken
+    #   transformers
+requests==2.32.3
+    # via
+    #   cohere
+    #   crawl4ai
+    #   google-genai
+    #   huggingface-hub
+    #   kubernetes
+    #   opentelemetry-exporter-otlp-proto-http
+    #   posthog
+    #   pydantic-ai-slim
+    #   pygithub
+    #   requests-oauthlib
+    #   tiktoken
+    #   transformers
+requests-oauthlib==2.0.0
+    # via kubernetes
+rich==14.0.0
+    # via
+    #   chromadb
+    #   crawl4ai
+    #   logfire
+    #   pydantic-ai-slim
+    #   pydantic-evals
+    #   rich-toolkit
+    #   typer
+rich-toolkit==0.14.1
+    # via fastapi-cli
+rpds-py==0.24.0
+    # via
+    #   jsonschema
+    #   referencing
+rsa==4.9
+    # via
+    #   google-auth
+    #   python-jose
+ruff==0.11.4
+    # via docy (pyproject.toml)
+s3transfer==0.11.4
+    # via boto3
+safetensors==0.5.3
+    # via transformers
+scikit-learn==1.6.1
+    # via sentence-transformers
+scipy==1.15.2
+    # via
+    #   scikit-learn
+    #   sentence-transformers
+sentence-transformers==4.0.2
+    # via docy (pyproject.toml)
+setuptools==78.1.0
+    # via
+    #   pymilvus
+    #   torch
+shellingham==1.5.4
+    # via typer
+six==1.17.0
+    # via
+    #   ecdsa
+    #   kubernetes
+    #   posthog
+    #   python-dateutil
+sniffio==1.3.1
+    # via
+    #   anthropic
+    #   anyio
+    #   groq
+    #   openai
+snowballstemmer==2.2.0
+    # via crawl4ai
+soupsieve==2.6
+    # via beautifulsoup4
+sqlalchemy==2.0.40
+    # via sqlmodel
+sqlmodel==0.0.24
+    # via docy (pyproject.toml)
+sse-starlette==2.2.1
+    # via mcp
+stack-data==0.6.3
+    # via ipython
+starlette==0.46.1
+    # via
+    #   fastapi
+    #   mcp
+    #   sse-starlette
+sympy==1.13.1
+    # via
+    #   onnxruntime
+    #   torch
+tenacity==9.1.2
+    # via chromadb
+text-unidecode==1.3
+    # via python-slugify
+tf-playwright-stealth==1.1.2
+    # via crawl4ai
+threadpoolctl==3.6.0
+    # via scikit-learn
+tiktoken==0.9.0
+    # via litellm
+tokenizers==0.21.1
+    # via
+    #   chromadb
+    #   cohere
+    #   litellm
+    #   transformers
+torch==2.6.0
+    # via sentence-transformers
+tornado==6.4.2
+    # via
+    #   ipykernel
+    #   jupyter-client
+tqdm==4.67.1
+    # via
+    #   chromadb
+    #   huggingface-hub
+    #   milvus-lite
+    #   nltk
+    #   openai
+    #   sentence-transformers
+    #   transformers
+traitlets==5.14.3
+    # via
+    #   comm
+    #   ipykernel
+    #   ipython
+    #   jupyter-client
+    #   jupyter-core
+    #   matplotlib-inline
+transformers==4.51.1
+    # via
+    #   docy (pyproject.toml)
+    #   sentence-transformers
+triton==3.2.0
+    # via torch
+typer==0.15.2
+    # via
+    #   docy (pyproject.toml)
+    #   chromadb
+    #   fastapi-cli
+    #   mcp
+types-requests==2.32.0.20250328
+    # via cohere
+typing-extensions==4.13.1
+    # via
+    #   aiosqlite
+    #   anthropic
+    #   beautifulsoup4
+    #   chromadb
+    #   cohere
+    #   fastapi
+    #   google-genai
+    #   groq
+    #   huggingface-hub
+    #   logfire
+    #   openai
+    #   opentelemetry-sdk
+    #   pydantic
+    #   pydantic-core
+    #   pyee
+    #   pygithub
+    #   pyright
+    #   rich-toolkit
+    #   sentence-transformers
+    #   sqlalchemy
+    #   torch
+    #   typer
+    #   typing-inspection
+typing-inspection==0.4.0
+    # via
+    #   mistralai
+    #   pydantic
+    #   pydantic-ai-slim
+    #   pydantic-graph
+tzdata==2025.2
+    # via pandas
+ujson==5.10.0
+    # via pymilvus
+urllib3==2.3.0
+    # via
+    #   botocore
+    #   kubernetes
+    #   pygithub
+    #   requests
+    #   types-requests
+uvicorn==0.34.0
+    # via
+    #   docy (pyproject.toml)
+    #   chromadb
+    #   fastapi
+    #   fastapi-cli
+    #   mcp
+uvloop==0.21.0
+    # via uvicorn
+watchfiles==1.0.5
+    # via uvicorn
+wcwidth==0.2.13
+    # via prompt-toolkit
+websocket-client==1.8.0
+    # via kubernetes
+websockets==15.0.1
+    # via
+    #   google-genai
+    #   uvicorn
+wrapt==1.17.2
+    # via
+    #   deprecated
+    #   opentelemetry-instrumentation
+    #   opentelemetry-instrumentation-sqlalchemy
+xxhash==3.5.0
+    # via crawl4ai
+yarl==1.19.0
+    # via aiohttp
+zipp==3.21.0
+    # via importlib-metadata
+</file>
+
+<file path=".gitignore">
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# virtual .envs
+.venv/*
+.env
+
+logs/*
+
+# docker
+volumes/*
+# chromadb
+chroma/*
+src/agents/node_modules/*
+src/agents/data/*
+
+
+# files
+.my_interactive_cli_history
+</file>
+
+<file path="pyproject.toml">
+[project]
+name = "docy"
+version = "0.1.0"
+description = "Docy"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "aiohttp==3.11.12",
+    "alembic>=1.15.2",
+    "asyncpg>=0.30.0",
+    "autogen-agentchat>=0.2.40",
+    "chromadb>=0.6.3",
+    "crawl4ai>=0.5.0.post4",
+    "devtools>=0.12.2",
+    "fastapi-users[sqlalchemy]>=14.0.1",
+    "fastapi[standard]>=0.115.11",
+    "google-genai>=1.9.0",
+    "httpx>=0.28.1",
+    "ipdb>=0.13.13",
+    "ipykernel>=6.29.5",
+    "load-dotenv>=0.1.0",
+    "logfire[sqlalchemy]>=3.7.1",
+    "mcp[cli]>=1.5.0",
+    "passlib[bcrypt]>=1.7.4",
+    "pgvector>=0.3.6",
+    "poethepoet>=0.33.1",
+    "prompt-toolkit>=3.0.50",
+    "psycopg2>=2.9.10",
+    "psycopg2-binary>=2.9.10",
+    "pudb>=2024.1.3",
+    "pydantic>=2.10.6",
+    "pydantic-ai>=0.0.52",
+    "pydantic-ai-slim[duckduckgo]>=0.0.52",
+    "pydantic-settings>=2.8.1",
+    "pygame>=2.6.1",
+    "pygithub>=2.6.1",
+    "pymilvus>=2.5.5",
+    "pyright>=1.1.398",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.26.0",
+    "python-dotenv>=1.0.1",
+    "python-frontmatter>=1.1.0",
+    "python-jose[cryptography]>=3.4.0",
+    "python-multipart>=0.0.20",
+    "python-slugify>=8.0.4",
+    "pyyaml>=6.0.2",
+    "ruff>=0.11.2",
+    "sentence-transformers>=3.4.1",
+    "sqlmodel>=0.0.24",
+    "transformers>=4.49.0",
+    "typer[all]>=0.15.2",
+    "uvicorn>=0.34.0",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+extend-select = ["E", "F", "W", "I", "N", "B"]
+ignore = ["E501", "F401", "E711", "B008"]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+include = ["src"]
+pythonVersion = "3.13"
+exlude = ["**/node_modules"]
+typeCheckingMode = "standard"
+
+[tool.ruff.format]
+quote-style = "double"
+docstring-code-format = true
+
+[tool.poe.tasks]
+run_dev = "fastapi dev src/docy/main.py"
+run_agent = "uv run src/docy/common/agents/main.py"
+</file>
+
+</files>

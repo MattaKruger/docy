@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from ..models.chat import Message
-from ..schemas.chat import MessageIn, MessageUpdate
+from ..schemas.message import MessageIn, MessageUpdate
 from .base import BaseRepository
 
 

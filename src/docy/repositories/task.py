@@ -1,13 +1,14 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import logfire
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 
-from ..models.project import Project
-from ..models.task import Task, SubTask
-from ..schemas.task import TaskIn, TaskUpdate, SubTaskIn
+from ..models.message import Message
+from ..models.task import SubTask, Task
+from ..schemas.message import MessageIn
+from ..schemas.task import SubTaskIn, TaskIn, TaskUpdate
 
 from .agent import AgentRepository
 from .base import BaseRepository
@@ -17,20 +18,60 @@ from .project import ProjectRepository
 class TaskRepository(BaseRepository[Task, TaskIn, TaskUpdate]):
     """Repository for handling task model operations"""
 
-    def __init__(self, session: AsyncSession, project_repo: ProjectRepository, agent_repo: AgentRepository):
+    def __init__(
+        self,
+        session: AsyncSession,
+        agent_repo: AgentRepository,
+        project_repo: ProjectRepository,
+    ):
         super().__init__(Task, session)
-        self.project_repo = project_repo
         self.agent_repo = agent_repo
+        self.project_repo = project_repo
 
     async def get_all_by_project_id(self, project_id: int) -> List[Task]:
+        """Get all tasks associated with a project"""
+        if project_id is None:
+            raise ValueError("Project ID cannot be None")
+
         statement = select(Task).where(Task.project_id == project_id)
         result = await self.session.execute(statement)
         tasks = list(result.scalars().all())
         return tasks
 
-    async def add_subtask(self, task_id: int, create_model: SubTaskIn) -> SubTask:
-        """Add subtask to a task"""
-        pass
+    async def create_subtask(self, task_id: int, create_model: SubTaskIn) -> SubTask:
+        """Create Subtask associated with Task"""
+        logfire.info(f"Attempting to create task: {create_model.name} for Task ID: {create_model.task_id}")
+        subtask_db = SubTask(**create_model.model_dump(exclude_unset=True))
+
+        self.session.add(subtask_db)
+        await self.session.commit()
+        await self.session.refresh(subtask_db)
+        return subtask_db
+
+    async def add_task_message(self, task_id: int, message_in: MessageIn) -> Message:
+        """Add message to a task"""
+        statement = select(Task).where(Task.id == task_id)
+        result = await self.session.execute(statement)
+        task = result.scalar_one_or_none()
+        if not task:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
+
+        message = Message(**message_in.model_dump(exclude_unset=True))
+
+        self.session.add(message)
+        await self.session.commit()
+        await self.session.refresh(message)
+        return message
+
+    async def get_task_messages(self, task_id: int, filters: Optional[Dict[str, Any]] = None):
+        if not filters:
+            filters = {}
+
+        statement = select(Message).where(Message.task_id == task_id)
+        messages = await self.session.execute(statement)
+        result = list(messages.scalars().all())
+
+        return result
 
     async def create(self, create_model: TaskIn) -> Task:
         """Creates a new task, ensuring project exists and agent_id is initially None."""
@@ -39,7 +80,7 @@ class TaskRepository(BaseRepository[Task, TaskIn, TaskUpdate]):
         if not create_model.project_id:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Task requires a project id.")
 
-        project = await self.project_repo.get_or_404(create_model.project_id)
+        await self.project_repo.get_or_404(create_model.project_id)
 
         task_data = create_model.model_dump(exclude_unset=True)
 

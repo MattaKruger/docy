@@ -168,7 +168,6 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         await self.session.delete(db_obj)
         await self.session.commit()
         logfire.info(f"Successfully deleted {self.model_name} with id {id}")
-        # Return the object that was deleted (now detached from session)
         return db_obj
 
     async def count(self, filters: Optional[Dict[str, Any]] = None) -> int:

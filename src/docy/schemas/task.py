@@ -1,7 +1,8 @@
-from typing import Optional, List
+from typing import List, Optional
+
 from pydantic import BaseModel, Field
 
-from ..models import Agent, Project, Category
+from ..models import Agent, Category, Project
 
 
 class TaskIn(BaseModel):
@@ -19,12 +20,12 @@ class TaskOut(BaseModel):
     id: int = Field()
     name: str = Field()
     description: str = Field()
-    task_type: Category = Field()
+    category: Category = Field()
 
     # Relationships
+    subtasks: List["SubTaskOut"] = []
     agent: Optional["Agent"] = Field(default=None)
     project: Optional["Project"] = Field(default=None)
-    subtasks: List["SubTaskOut"] = []
 
 
 class TaskUpdate(BaseModel):
@@ -38,6 +39,7 @@ class SubTaskIn(BaseModel):
     description: str = Field()
     is_completed: bool = Field(default=False)
     task_id: int = Field()
+    agent_id: Optional[int] = Field(default=None)
 
 
 class SubTaskOut(BaseModel):

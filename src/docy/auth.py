@@ -1,5 +1,4 @@
 import os
-
 from datetime import datetime, timedelta, timezone
 from typing import Annotated, Dict, Optional
 
@@ -68,8 +67,8 @@ async def get_current_user(
         if username is None:
             raise credentials_exception
         token_data = TokenData(username=username)
-    except JWTError:
-        raise credentials_exception
+    except JWTError as e:
+        raise credentials_exception from e
 
     user = await get_user_by_username(username=token_data.username, session=session)
     if user is None:

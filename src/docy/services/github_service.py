@@ -1,6 +1,7 @@
 from typing import Dict, Optional
 
 import logfire
+
 from github import Auth, Github
 from github.ContentFile import ContentFile
 from github.GithubException import UnknownObjectException
@@ -32,11 +33,13 @@ class GithubService:
             auth = Auth.Token(github_access_token)
         self.client = Github(auth=auth)
 
+    def get_docs(self):
+        pass
+
     def _extract_readme(self, repo: Repository) -> str | None:
         """Helper function to extract README content."""
         try:
             readme = repo.get_readme()
-            # latest_release = repo.get_latest_release()
             return readme.decoded_content.decode("utf-8")
         except UnknownObjectException:
             return None
@@ -45,10 +48,9 @@ class GithubService:
 
     def _process_content_file(self, content_file: ContentFile, docs_content: Dict[str, str]) -> None:
         """Helper function to process a single content file."""
-        if content_file.name.lower().endswith((".md", ".mdx", ".txt", ".rst", ".py")):
+        if content_file.name.lower().endswith((".md", ".mdx", ".txt", ".rst")):
             try:
                 file_content = content_file.decoded_content.decode("utf-8")
-
                 docs_content[content_file.path] = file_content
             except Exception as e:
                 logfire.info(f"Warning: Error decoding content of {content_file.path}: {e}")

@@ -1,8 +1,7 @@
 import re
-from typing import Optional
-
 from datetime import datetime
 from pathlib import Path
+from typing import Optional
 
 import frontmatter
 import yaml

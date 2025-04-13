@@ -1,21 +1,16 @@
-from typing import Dict, Optional, List
-
-import typer
-
-from prompt_toolkit import prompt
-from prompt_toolkit.history import FileHistory
-from prompt_toolkit.completion import WordCompleter
-from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
-from prompt_toolkit.styles import Style
-
-from pydantic import BaseModel, Field
-
 import shlex
 import sys
+from typing import Dict, List, Optional
+
 import click
-
 import rich
-
+import typer
+from prompt_toolkit import prompt
+from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+from prompt_toolkit.completion import WordCompleter
+from prompt_toolkit.history import FileHistory
+from prompt_toolkit.styles import Style
+from pydantic import BaseModel, Field
 from rich.panel import Panel
 
 

@@ -1,4 +1,5 @@
 from datetime import datetime
+from pathlib import Path
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Query
@@ -59,7 +60,7 @@ async def get_all_notes(
         notes = obsidian_service.get_all_notes()
         return notes[offset : offset + limit]
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @router.get("/recent", response_model=List[NoteResponse])
@@ -70,7 +71,7 @@ async def get_recent_notes(
     try:
         return obsidian_service.get_recent_notes(limit)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @router.get("/search", response_model=List[NoteResponse])
@@ -81,7 +82,7 @@ async def search_notes(
     try:
         return obsidian_service.search_notes(query)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @router.get("/{note_id}", response_model=NoteResponse)
@@ -96,7 +97,7 @@ async def get_note(
             raise HTTPException(status_code=404, detail="Note not found")
         return note
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @router.post("/", response_model=NoteResponse, status_code=201)
@@ -112,7 +113,7 @@ async def create_note(note: NoteCreate, obsidian_service: NoteService = Depends(
         )
         return obsidian_service.read_note(created_note)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @router.put("/{note_id}", response_model=NoteResponse)
@@ -126,7 +127,7 @@ async def update_note(note_id: str, note_update: NoteUpdate, obsidian_service: N
             raise HTTPException(status_code=404, detail="Note not found")
         return obsidian_service.read_note(note_id)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @router.get("/{note_id}/links", response_model=List[str])
@@ -138,7 +139,7 @@ async def get_note_links(note_id: str, obsidian_service: NoteService = Depends(g
             raise HTTPException(status_code=404, detail="Note not found")
         return obsidian_service.find_links(note["content"])
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @router.get("/{note_id}/tags", response_model=List[str])
@@ -150,4 +151,4 @@ async def get_note_tags(note_id: str, obsidian_service: NoteService = Depends(ge
             raise HTTPException(status_code=404, detail="Note not found")
         return obsidian_service.get_tags(note["content"])
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e

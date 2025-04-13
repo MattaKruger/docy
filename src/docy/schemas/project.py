@@ -35,3 +35,16 @@ class ProjectUpdate(BaseModel):
 
     # Relationships
     user_id: Optional[int] = None
+
+
+class ProjectMetadataIn(BaseModel):
+    project_id: Optional[int] = Field(default=None)
+    languages: Optional[List[str]] = Field(default_factory=list)
+    frameworks: Optional[List[str]] = Field(default_factory=list)
+
+
+class ProjectMetadataOut(BaseModel):
+    id: int = Field()
+
+    project_id: Optional[int] = Field(default=None)
+    project: Optional[int] = Field(default=None)

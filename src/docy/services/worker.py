@@ -1,15 +1,12 @@
-import sys
-import pathlib
 import asyncio
-
-from typing import List, Dict, Union
-from httpx import Response
+import pathlib
+import sys
+from typing import List
 
 from pydantic import BaseModel, Field
-
 from pydantic_ai import Agent
-from pydantic_ai.models.groq import GroqModel
 from pydantic_ai.models.gemini import GeminiModel
+from pydantic_ai.models.groq import GroqModel
 from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
 

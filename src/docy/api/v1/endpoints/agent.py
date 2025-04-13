@@ -8,7 +8,6 @@ from docy.models import AgentState
 from docy.repositories import AgentRepository, PromptRepository
 from docy.schemas import AgentIn, AgentOut, AgentUpdate
 
-
 router = APIRouter(prefix="/agents", tags=["agents"])
 
 

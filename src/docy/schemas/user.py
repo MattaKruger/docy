@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
-from ..models import Project, Chat
+from ..models import Chat, Project
 
 
 class UserIn(BaseModel):
