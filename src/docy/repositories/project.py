@@ -1,12 +1,10 @@
-from typing import Optional, List
+from typing import List, Optional
 
-
-from sqlmodel import select, any_
 from sqlalchemy.ext.asyncio.session import AsyncSession
-
+from sqlmodel import any_, select
 
 from ..models.project import Project, ProjectMetadata
-from ..schemas.project import ProjectIn, ProjectUpdate, ProjectMetadataIn
+from ..schemas.project import ProjectIn, ProjectMetadataIn, ProjectUpdate
 from .base import BaseRepository
 
 
@@ -23,7 +21,7 @@ class ProjectRepository(BaseRepository[Project, ProjectIn, ProjectUpdate]):
         await self.session.refresh(project)
         return project
 
-    async def get_all_by_id(self, project_id: int) -> Optional[List[Project]]:
+    async def get_all_by_project_id(self, project_id: int) -> Optional[List[Project]]:
         """Gets a project by its unique id"""
         statement = select(Project).where(Project.id == project_id)
         results = await self.session.execute(statement)

@@ -65,7 +65,6 @@ class NoteService:
         Returns:
             list: List of found links
         """
-        # Match both [[link]] and [[link|alias]] formats
         wiki_links = re.findall(r"\[\[(.*?)\]\]", content)
         return [link.split("|")[0] for link in wiki_links]
 

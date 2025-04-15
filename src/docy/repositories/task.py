@@ -9,7 +9,6 @@ from ..models.message import Message
 from ..models.task import SubTask, Task
 from ..schemas.message import MessageIn
 from ..schemas.task import SubTaskIn, TaskIn, TaskUpdate
-
 from .agent import AgentRepository
 from .base import BaseRepository
 from .project import ProjectRepository

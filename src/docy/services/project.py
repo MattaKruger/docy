@@ -1,11 +1,9 @@
-import logfire
-
-from typing import List, Dict, Any
 from dataclasses import dataclass
-from httpx import AsyncClient
-
 from pathlib import Path
+from typing import Any, Dict, List
 
+import logfire
+from httpx import AsyncClient
 from pydantic import BaseModel, Field
 from pydantic_ai import RunContext
 from pydantic_ai.agent import Agent
@@ -195,7 +193,7 @@ class SpecResult(BaseModel):
 
 
 brainstorm_agent = Agent(
-    'groq:llama-3.3-70b-versatile',
+    "groq:llama-3.3-70b-versatile",
     deps_type=BrainstormContext,
     result_type=SpecResult,
     system_prompt="""
@@ -210,7 +208,7 @@ brainstorm_agent = Agent(
     6. When you have gathered enough information, summarize everything into a final specification
 
     Remember: Only ask ONE question per interaction. Build knowledge iteratively.
-    """
+    """,
 )
 
 # @brainstorm_agent.tool
@@ -221,6 +219,7 @@ brainstorm_agent = Agent(
 #     """
 #     return len(ctx.deps.previous_answers) >= 10
 
+
 def run_brainstorm_loop(idea_description: str):
     """Run the brainstorm loop with a user until a complete spec is created."""
     context = BrainstormContext(idea_description=idea_description, previous_answers=[])
@@ -230,8 +229,8 @@ def run_brainstorm_loop(idea_description: str):
 
     while True:
         result = brainstorm_agent.run_sync(
-            f"Based on what we've discussed so far, ask me your next question to develop this spec further.",
-            deps=context
+            "Based on what we've discussed so far, ask me your next question to develop this spec further.",
+            deps=context,
         )
         question = result.data
         print(f"\nAgent: {question}")
@@ -245,6 +244,7 @@ def run_brainstorm_loop(idea_description: str):
         context.previous_answers.append(f"Q: {question}\nA: {user_answer}")
 
         print(f"[Progress: {len(context.previous_answers)} questions answered]")
+
 
 if __name__ == "__main__":
     idea = input("Describe your idea:")

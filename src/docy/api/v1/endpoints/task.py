@@ -21,7 +21,6 @@ from docy.services.exceptions import (
 )
 from docy.services.task import TaskAssignmentService
 
-
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 
 

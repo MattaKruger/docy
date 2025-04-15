@@ -135,7 +135,7 @@ class AgentService:
 
 
 async def main():
-    agent_service = AgentService()
+    AgentService()
 
     task = """
     Create a simple Python script that renders a house using pygame.
@@ -154,7 +154,7 @@ async def main():
 
             print("\n" + "=" * 20)
 
-        full_response = "".join(chunks)
+        "".join(chunks)
 
         print("\n--- Task Streaming Complete ---", file=sys.stderr)
         print(f"Usage: {first_result.usage()}")

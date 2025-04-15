@@ -24,7 +24,6 @@ test_engine = create_async_engine(
     echo=False,
     future=True,
 )
-
 TestingSessionLocal = async_sessionmaker(
     autocommit=False, autoflush=False, bind=test_engine, class_=AsyncSession, expire_on_commit=False
 )

@@ -224,7 +224,7 @@ def interactive():
 
         parts = command_str.split(maxsplit=1)
         command = parts[0].lower()
-        args_str = parts[1] if len(parts) > 1 else ""
+        parts[1] if len(parts) > 1 else ""
 
         try:  # Wrap command execution to prevent crashing the interactive loop
             if command == "create":

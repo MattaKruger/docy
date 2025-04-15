@@ -1,18 +1,17 @@
-import time
-import logfire
 import datetime
 from contextlib import asynccontextmanager
 
+import logfire
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from load_dotenv import load_dotenv
 from pydantic_ai import Agent
 
-from load_dotenv import load_dotenv
-
-from .db import create_db_and_tables, engine
 from .api.v1 import api_v1_router
+from .db import create_db_and_tables, engine
+
 # from .mcp_server import mcp
 
 load_dotenv()
@@ -22,7 +21,7 @@ logfire.configure()
 logfire.instrument_sqlalchemy(engine)
 Agent.instrument_all()
 
-origins = ["http://localhost", "http://localhost:4321", "http://localhost:8000"]
+origins = ["http://localhost", "http://localhost:4321", "http://localhost:8000", "localhost:5173"]
 
 
 @asynccontextmanager
@@ -47,7 +46,6 @@ async def read_root(request: Request):
 # Not sure if im going to build a webbased frontend for this.
 @app.get("/load-content", response_class=HTMLResponse)
 async def load_content_endpoint():
-    time.sleep(1)
     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     html_fragment = f"""
     <p><strong>Content loaded via HTMX at:</strong> {current_time} </p>

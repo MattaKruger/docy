@@ -11,11 +11,11 @@ async def client():
     async with stdio_client(server_params) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
-            web_result: CallToolResult = await session.call_tool(
+            await session.call_tool(
                 "groq_web_search", {"query": "Who wrote the office US?"}
             )
 
-            save_file = await session.call_tool(
+            await session.call_tool(
                 "save_file",
                 {"file_name": "office", "file_content": "HAHAHHHAAHHARERESTSTSJFIFJSOFJIOSD", "extension": ".txt"},
             )

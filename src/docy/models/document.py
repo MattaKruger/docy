@@ -1,10 +1,13 @@
-from typing import Optional, List
+import os
+from typing import List, Optional
 
+import numpy as np
 from pgvector.sqlalchemy import Vector
-from sqlmodel import SQLModel, Field, Column
+from sentence_transformers import SentenceTransformer
+from sqlmodel import Column, Field, SQLModel
 
-
-VECTOR_DIMENSIONS = 1024
+MODEL_NAME = "all-MiniLM-L6-v2"
+VECTOR_DIMENSIONS = 384
 
 
 class Document(SQLModel, table=True):

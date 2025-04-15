@@ -3,7 +3,7 @@ from .artifact import Artifact, ArtifactType
 from .base import Base
 from .chat import Chat
 from .message import Message, MessageType
-from .project import Project, ProjectType, ProjectMetadata
+from .project import Project, ProjectMetadata, ProjectType
 from .prompt import Prompt, PromptType
 from .task import Category, Task
 from .user import User
