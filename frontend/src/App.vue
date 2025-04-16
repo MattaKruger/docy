@@ -1,7 +1,11 @@
 <script setup lang="ts"></script>
 
 <template>
-  <RouterView />
+  <RouterView v-slot="{ Component, route }">
+    <transition :name="route.meta.transition || 'fade'" mode="out-in">
+      <component :is="Component" />
+    </transition>
+  </RouterView>
 </template>
 
 <style scoped>
@@ -65,5 +69,18 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
+}
+
+/* Slide Right Transition */
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: transform 0.3s ease-out;
+}
+
+.slide-right-enter-from {
+  transform: translateX(-100%);
+}
+.slide-right-leave-to {
+  transform: translateX(100%);
 }
 </style>

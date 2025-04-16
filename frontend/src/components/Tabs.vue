@@ -41,9 +41,7 @@
                 {{ post.title }}
               </h3>
 
-              <ul
-                class="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500"
-              >
+              <ul class="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
                 <li>{{ post.date }}</li>
                 <li>&middot;</li>
                 <li>{{ post.commentCount }} comments</li>

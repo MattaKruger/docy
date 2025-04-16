@@ -53,9 +53,9 @@ class Task(Base, table=True):
     agent: Optional["Agent"] = Relationship(back_populates="tasks", sa_relationship_kwargs=dict(lazy="selectin"))
     project: Optional["Project"] = Relationship(back_populates="tasks", sa_relationship_kwargs=dict(lazy="selectin"))
 
-    messages: List["Message"] = Relationship(
-        back_populates="task", sa_relationship_kwargs=dict(lazy="selectin", cascade="all, delete-orphan")
-    )
+    # messages: List["Message"] = Relationship(
+    #     back_populates="task", sa_relationship_kwargs=dict(lazy="selectin", cascade="all, delete-orphan")
+    # )
     subtasks: List["SubTask"] = Relationship(
         back_populates="task", sa_relationship_kwargs=dict(lazy="selectin", cascade="all, delete-orphan")
     )

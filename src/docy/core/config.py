@@ -18,3 +18,4 @@ class Settings(BaseSettings):
     DB_PORT: str = Field(default="5432")
 
     TEST_DB_NAME: str = Field(default="")
+    DOCY_DATA_DIR: str = Field(default="")

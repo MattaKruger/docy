@@ -1,100 +1,118 @@
-from typing import List, Optional
+# main.py (or wherever your FastAPI app/router is)
+from typing import List
 
-from fastapi import APIRouter, Depends, Path
-from sqlalchemy.ext.asyncio.session import AsyncSession
+import sqlalchemy
+from fastapi import APIRouter, Depends, HTTPException, Query, status
+from sqlalchemy.future import select
+from sqlalchemy.orm import selectinload # For eager loading
+from sqlmodel.ext.asyncio.session import AsyncSession
 
-from docy.db import get_session
-from docy.models import Chat
-from docy.repositories import ChatRepository, MessageRepository
-from docy.schemas.chat import ChatIn, ChatOut
-from docy.schemas.message import MessageIn, MessageOut, MessageUpdate
+from docy.models.chat import (
+    Chat, ChatCreate, ChatRead, ChatReadWithMessages,
+    Message, MessageCreate, MessageRead
+)
+from docy.db.session import get_session # Assuming get_session is in dependencies.py
 
-router = APIRouter(prefix="/chats", tags=["chats"])
+router = APIRouter(prefix="/chat_v2", tags=["chat_v2"])
 
+# == Chat Endpoints ==
 
-def get_chat_repo(session: AsyncSession = Depends(get_session)):
-    return ChatRepository(session)
+@router.post("/chats/", response_model=ChatRead, status_code=status.HTTP_201_CREATED)
+async def create_chat(
+    *,
+    session: AsyncSession = Depends(get_session),
+    chat_in: ChatCreate
+) -> Chat:
+    """
+    Create a new chat.
+    """
+    # Create a Chat instance from the input schema
+    db_chat = Chat.from_orm(chat_in)
+    session.add(db_chat)
+    await session.commit()
+    await session.refresh(db_chat)
+    return db_chat
 
-
-def get_message_repo(session: AsyncSession = Depends(get_session)):
-    return MessageRepository(session)
-
-
-@router.get("/", response_model=List[ChatOut])
-async def get_chats(chat_repo: ChatRepository = Depends(get_chat_repo)):
-    chats = await chat_repo.get_multi()
+@router.get("/chats/", response_model=List[ChatRead])
+async def read_chats(
+    *,
+    session: AsyncSession = Depends(get_session),
+    skip: int = Query(0, ge=0),
+    limit: int = Query(100, ge=1, le=200)
+) -> List[Chat]:
+    """
+    Retrieve a list of chats with pagination.
+    """
+    statement = select(Chat).offset(skip).limit(limit).order_by(Chat.id)
+    result = await session.execute(statement)
+    chats = list(result.scalars().all())
     return chats
 
+@router.get("/chats/{chat_id}", response_model=ChatReadWithMessages)
+async def read_chat(
+    *,
+    session: AsyncSession = Depends(get_session),
+    chat_id: int
+) -> Chat:
+    """
+    Retrieve a specific chat by ID, including its messages.
+    """
+    # Use selectinload to efficiently load related messages in the same query
+    statement = select(Chat).where(Chat.id == chat_id).options(selectinload(Chat.messages))
+    result = await session.execute(statement)
+    db_chat = result.scalars().one_or_none() # Use one_or_none() for clarity
 
-@router.get("/{chat_id}", response_model=Optional[Chat])
-async def get_chat_by_id(chat_id: int = Path(...), chat_repo: ChatRepository = Depends(get_chat_repo)):
-    chat = await chat_repo.get(chat_id)
-    return chat
+    if db_chat is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Chat not found")
+    return db_chat
 
+# == Message Endpoints ==
 
-@router.get("/{chat_id}/messages", response_model=Optional[List[MessageOut]])
-async def get_messages_by_chat_id(chat_id: int = Path(...), chat_repo: ChatRepository = Depends(get_chat_repo)):
-    messages = await chat_repo.get_messages_by_chat_id(chat_id)
+@router.post("/chats/{chat_id}/messages/", response_model=MessageRead, status_code=status.HTTP_201_CREATED)
+async def create_message_for_chat(
+    *,
+    session: AsyncSession = Depends(get_session),
+    chat_id: int,
+    message_in: MessageCreate # Note: message_in doesn't need chat_id here
+) -> Message:
+    """
+    Create a new message within a specific chat.
+    """
+    # Optional: Check if chat exists first (good practice)
+    chat = await session.get(Chat, chat_id)
+    if not chat:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Chat with id {chat_id} not found")
+
+    db_message = Message.from_orm(message_in, update={'chat_id': chat_id})
+
+    session.add(db_message)
+    await session.commit()
+    await session.refresh(db_message)
+    return db_message
+
+@router.get("/chats/{chat_id}/messages/", response_model=List[MessageRead])
+async def read_messages_for_chat(
+    *,
+    session: AsyncSession = Depends(get_session),
+    chat_id: int,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(100, ge=1, le=500) # Allow fetching more messages
+) -> List[Message]:
+    """
+    Retrieve messages for a specific chat with pagination.
+    """
+    # Optional: Check if chat exists first
+    chat = await session.get(Chat, chat_id)
+    if not chat:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Chat with id {chat_id} not found")
+
+    statement = (
+        select(Message)
+        .where(Message.chat_id == chat_id)
+        .order_by(Message.created_at) # Order messages chronologically
+        .offset(skip)
+        .limit(limit)
+    )
+    result = await session.execute(statement)
+    messages = list(result.scalars().all())
     return messages
-
-
-@router.get("/{chat_id}/messages/{message_type}", response_model=Optional[List[MessageOut]])
-async def get_messages_by_message_type(
-    chat_id: int = Path(...), message_type: str = Path(...), chat_repo: ChatRepository = Depends(get_chat_repo)
-):
-    messages = await chat_repo.get_messages_by_message_type(chat_id, message_type)
-    return messages
-
-
-@router.post(
-    "/",
-    response_model=ChatOut,
-)
-async def create_chat(chat_in: ChatIn, chat_repo: ChatRepository = Depends(get_chat_repo)):
-    chat_db = await chat_repo.create(chat_in)
-    return chat_db
-
-
-@router.post("/{chat_id}/agent/{agent_id")
-async def add_agent_to_chat(
-    chat_id: int = Path(...),
-    agent_id: int = Path(...),
-    chat_repo: ChatRepository = Depends(get_chat_repo),
-):
-    pass
-
-
-@router.post("/{chat_id}/message", response_model=MessageOut)
-async def add_message_to_chat(
-    message_in: MessageIn,
-    chat_repo: ChatRepository = Depends(get_chat_repo),
-    message_repo: MessageRepository = Depends(get_message_repo),
-):
-    message_db = await message_repo.create(message_in)
-    return message_db
-
-
-@router.put("/{chat_id}/message/{message_id}", response_model=MessageOut)
-async def update_message(
-    message_update: MessageUpdate,
-    message_id: int = Path(...),
-    chat_repo: ChatRepository = Depends(get_chat_repo),
-    message_repo: MessageRepository = Depends(get_message_repo),
-):
-    message_db = await message_repo.get(message_id)
-    if not message_db:
-        return
-
-    updated_message = await message_repo.update(message_update, message_db)
-    return updated_message
-
-
-@router.delete("/{chat_id}/message/{message_id}", response_model=MessageOut)
-async def delete_message(
-    message_id: int = Path(...),
-    chat_repo: ChatRepository = Depends(get_chat_repo),
-    message_repo: MessageRepository = Depends(get_message_repo),
-):
-    message_db = await message_repo.get(message_id)
-    deleted_message = await message_repo.delete(message_db)
-    return deleted_message

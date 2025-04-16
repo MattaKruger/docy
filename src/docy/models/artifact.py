@@ -6,7 +6,7 @@ from sqlmodel import Column, Field, Relationship, Text
 from .base import Base
 
 if TYPE_CHECKING:
-    from .chat import Message
+    # from .chat import Message
     from .project import Project
 
 
@@ -28,4 +28,4 @@ class Artifact(Base, table=True):
     # Relationships
     project_id: int = Field(foreign_key="projects.id")
     project: "Project" = Relationship(back_populates="artifacts", sa_relationship_kwargs=dict(lazy="selectin"))
-    message: Optional["Message"] = Relationship(back_populates="artifact", sa_relationship_kwargs=dict(lazy="selectin"))
+    # message: Optional["Message"] = Relationship(back_populates="artifact", sa_relationship_kwargs=dict(lazy="selectin"))

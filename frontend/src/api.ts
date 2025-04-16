@@ -4,2816 +4,2916 @@
  */
 
 export interface paths {
-  '/': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Read Root */
-    get: operations['read_root__get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/load-content': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Load Content Endpoint */
-    get: operations['load_content_endpoint_load_content_get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/agents/': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Agents */
-    get: operations['get_agents_api_v1_agents__get']
-    put?: never
-    /** Create Agent */
-    post: operations['create_agent_api_v1_agents__post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/agents/{agent_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Agent */
-    get: operations['get_agent_api_v1_agents__agent_id__get']
-    /** Update Agent */
-    put: operations['update_agent_api_v1_agents__agent_id__put']
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/agents/active': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Active Agents */
-    get: operations['get_active_agents_api_v1_agents_active_get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/artifacts/': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Artifacts */
-    get: operations['get_artifacts_api_v1_artifacts__get']
-    put?: never
-    /** Create Artifact */
-    post: operations['create_artifact_api_v1_artifacts__post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/artifacts/{artifact_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Artifact */
-    get: operations['get_artifact_api_v1_artifacts__artifact_id__get']
-    /** Update Artifact */
-    put: operations['update_artifact_api_v1_artifacts__artifact_id__put']
-    post?: never
-    /** Delete Artifact */
-    delete: operations['delete_artifact_api_v1_artifacts__artifact_id__delete']
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/chats/': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Chats */
-    get: operations['get_chats_api_v1_chats__get']
-    put?: never
-    /** Create Chat */
-    post: operations['create_chat_api_v1_chats__post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/chats/{chat_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Chat By Id */
-    get: operations['get_chat_by_id_api_v1_chats__chat_id__get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/chats/{chat_id}/messages': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Messages By Chat Id */
-    get: operations['get_messages_by_chat_id_api_v1_chats__chat_id__messages_get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/chats/{chat_id}/messages/{message_type}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Messages By Message Type */
-    get: operations['get_messages_by_message_type_api_v1_chats__chat_id__messages__message_type__get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/chats/{chat_id}/agent/{agent_id': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Add Agent To Chat */
-    post: operations['add_agent_to_chat_api_v1_chats__chat_id__agent__agent_id_post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/chats/{chat_id}/message': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Add Message To Chat */
-    post: operations['add_message_to_chat_api_v1_chats__chat_id__message_post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/chats/{chat_id}/message/{message_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    /** Update Message */
-    put: operations['update_message_api_v1_chats__chat_id__message__message_id__put']
-    post?: never
-    /** Delete Message */
-    delete: operations['delete_message_api_v1_chats__chat_id__message__message_id__delete']
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/notes/': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Get All Notes
-     * @description Get all notes with pagination
-     */
-    get: operations['get_all_notes_api_v1_notes__get']
-    put?: never
-    /**
-     * Create Note
-     * @description Create a new note
-     */
-    post: operations['create_note_api_v1_notes__post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/notes/recent': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Get Recent Notes
-     * @description Get recent notes
-     */
-    get: operations['get_recent_notes_api_v1_notes_recent_get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/notes/search': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Search Notes
-     * @description Search notes by content
-     */
-    get: operations['search_notes_api_v1_notes_search_get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/notes/{note_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Get Note
-     * @description Get a specific note by ID
-     */
-    get: operations['get_note_api_v1_notes__note_id__get']
-    /**
-     * Update Note
-     * @description Update an existing note
-     */
-    put: operations['update_note_api_v1_notes__note_id__put']
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/notes/{note_id}/links': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Get Note Links
-     * @description Get all links from a specific note
-     */
-    get: operations['get_note_links_api_v1_notes__note_id__links_get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/notes/{note_id}/tags': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Get Note Tags
-     * @description Get all tags from a specific note
-     */
-    get: operations['get_note_tags_api_v1_notes__note_id__tags_get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/projects/': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Projects */
-    get: operations['get_projects_api_v1_projects__get']
-    put?: never
-    /** Create Project */
-    post: operations['create_project_api_v1_projects__post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/projects/{project_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Project */
-    get: operations['get_project_api_v1_projects__project_id__get']
-    /** Update Project */
-    put: operations['update_project_api_v1_projects__project_id__put']
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/prompts/': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Prompts */
-    get: operations['get_prompts_api_v1_prompts__get']
-    put?: never
-    /** Create Prompt */
-    post: operations['create_prompt_api_v1_prompts__post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/prompts/{prompt_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Prompt */
-    get: operations['get_prompt_api_v1_prompts__prompt_id__get']
-    /** Update Prompt */
-    put: operations['update_prompt_api_v1_prompts__prompt_id__put']
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/tasks/{task_id}/message': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Add message to Task */
-    post: operations['add_message_to_task_api_v1_tasks__task_id__message_post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/tasks/': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Get all tasks with optional filters
-     * @description Retrieves a list of all tasks.
-     *     Can optionally filter by project_id and/or agent_id.
-     */
-    get: operations['get_all_tasks_api_v1_tasks__get']
-    put?: never
-    /**
-     * Create a new task
-     * @description Creates a new task associated with a project.
-     */
-    post: operations['create_task_api_v1_tasks__post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/tasks/unassigned': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Get all unassigned tasks
-     * @description Retrieves a list of tasks that are not currently assigned to any agent.
-     *     Can optionally filter by project ID.
-     */
-    get: operations['get_unassigned_tasks_api_v1_tasks_unassigned_get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/tasks/{task_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Get a specific task by ID
-     * @description Retrieves details of a specific task by its ID.
-     */
-    get: operations['get_task_api_v1_tasks__task_id__get']
-    put?: never
-    post?: never
-    /**
-     * Delete a task
-     * @description Deletes a specific task by its ID.
-     */
-    delete: operations['delete_task_api_v1_tasks__task_id__delete']
-    options?: never
-    head?: never
-    /**
-     * Update a task
-     * @description Updates specific fields of an existing task.
-     *     Note: Agent assignment is handled via dedicated endpoints.
-     */
-    patch: operations['update_task_api_v1_tasks__task_id__patch']
-    trace?: never
-  }
-  '/api/v1/tasks/{task_id}/assign/{agent_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /**
-     * Assign a task to an agent
-     * @description Assigns a specific task to a specific active agent.
-     */
-    post: operations['assign_task_to_agent_api_v1_tasks__task_id__assign__agent_id__post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/tasks/{task_id}/unassign': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /**
-     * Unassign an agent from a task
-     * @description Removes the agent assignment from a task.
-     */
-    post: operations['unassign_agent_from_task_api_v1_tasks__task_id__unassign_post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/tasks/{task_id}/suitable-agents': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /**
-     * Find suitable agents for a task
-     * @description Finds active agents whose type matches the requirements of the given task.
-     */
-    get: operations['find_suitable_agents_api_v1_tasks__task_id__suitable_agents_get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/tasks/{task_id}/auto-assign': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /**
-     * Automatically assign task to a suitable agent
-     * @description Automatically finds the first available and suitable agent and assigns the task.
-     */
-    post: operations['auto_assign_task_endpoint_api_v1_tasks__task_id__auto_assign_post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/users/': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get Users */
-    get: operations['get_users_api_v1_users__get']
-    put?: never
-    /** Create User */
-    post: operations['create_user_api_v1_users__post']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/users/{user_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get User */
-    get: operations['get_user_api_v1_users__user_id__get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v1/users/{user_id}/projects': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get User Projects */
-    get: operations['get_user_projects_api_v1_users__user_id__projects_get']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
+    "/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read Root */
+        get: operations["read_root__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/load-content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Load Content Endpoint */
+        get: operations["load_content_endpoint_load_content_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Agents */
+        get: operations["get_agents_api_v1_agents__get"];
+        put?: never;
+        /** Create Agent */
+        post: operations["create_agent_api_v1_agents__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/{agent_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Agent */
+        get: operations["get_agent_api_v1_agents__agent_id__get"];
+        /** Update Agent */
+        put: operations["update_agent_api_v1_agents__agent_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Active Agents */
+        get: operations["get_active_agents_api_v1_agents_active_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/artifacts/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Artifacts */
+        get: operations["get_artifacts_api_v1_artifacts__get"];
+        put?: never;
+        /** Create Artifact */
+        post: operations["create_artifact_api_v1_artifacts__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/artifacts/{artifact_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Artifact */
+        get: operations["get_artifact_api_v1_artifacts__artifact_id__get"];
+        /** Update Artifact */
+        put: operations["update_artifact_api_v1_artifacts__artifact_id__put"];
+        post?: never;
+        /** Delete Artifact */
+        delete: operations["delete_artifact_api_v1_artifacts__artifact_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat_v2/chats/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read Chats
+         * @description Retrieve a list of chats with pagination.
+         */
+        get: operations["read_chats_api_v1_chat_v2_chats__get"];
+        put?: never;
+        /**
+         * Create Chat
+         * @description Create a new chat.
+         */
+        post: operations["create_chat_api_v1_chat_v2_chats__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat_v2/chats/{chat_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read Chat
+         * @description Retrieve a specific chat by ID, including its messages.
+         */
+        get: operations["read_chat_api_v1_chat_v2_chats__chat_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat_v2/chats/{chat_id}/messages/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read Messages For Chat
+         * @description Retrieve messages for a specific chat with pagination.
+         */
+        get: operations["read_messages_for_chat_api_v1_chat_v2_chats__chat_id__messages__get"];
+        put?: never;
+        /**
+         * Create Message For Chat
+         * @description Create a new message within a specific chat.
+         */
+        post: operations["create_message_for_chat_api_v1_chat_v2_chats__chat_id__messages__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notes/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get All Notes
+         * @description Get all notes with pagination
+         */
+        get: operations["get_all_notes_api_v1_notes__get"];
+        put?: never;
+        /**
+         * Create Note
+         * @description Create a new note
+         */
+        post: operations["create_note_api_v1_notes__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notes/recent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Recent Notes
+         * @description Get recent notes
+         */
+        get: operations["get_recent_notes_api_v1_notes_recent_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notes/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Notes
+         * @description Search notes by content
+         */
+        get: operations["search_notes_api_v1_notes_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notes/{note_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Note
+         * @description Get a specific note by ID
+         */
+        get: operations["get_note_api_v1_notes__note_id__get"];
+        /**
+         * Update Note
+         * @description Update an existing note
+         */
+        put: operations["update_note_api_v1_notes__note_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notes/{note_id}/links": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Note Links
+         * @description Get all links from a specific note
+         */
+        get: operations["get_note_links_api_v1_notes__note_id__links_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notes/{note_id}/tags": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Note Tags
+         * @description Get all tags from a specific note
+         */
+        get: operations["get_note_tags_api_v1_notes__note_id__tags_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/projects/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Projects */
+        get: operations["get_projects_api_v1_projects__get"];
+        put?: never;
+        /** Create Project */
+        post: operations["create_project_api_v1_projects__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/projects/{project_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Project */
+        get: operations["get_project_api_v1_projects__project_id__get"];
+        /** Update Project */
+        put: operations["update_project_api_v1_projects__project_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/prompts/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Prompts */
+        get: operations["get_prompts_api_v1_prompts__get"];
+        put?: never;
+        /** Create Prompt */
+        post: operations["create_prompt_api_v1_prompts__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/prompts/{prompt_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Prompt */
+        get: operations["get_prompt_api_v1_prompts__prompt_id__get"];
+        /** Update Prompt */
+        put: operations["update_prompt_api_v1_prompts__prompt_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/tasks/{task_id}/message": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add message to Task */
+        post: operations["add_message_to_task_api_v1_tasks__task_id__message_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/tasks/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get all tasks with optional filters
+         * @description Retrieves a list of all tasks.
+         *     Can optionally filter by project_id and/or agent_id.
+         */
+        get: operations["get_all_tasks_api_v1_tasks__get"];
+        put?: never;
+        /**
+         * Create a new task
+         * @description Creates a new task associated with a project.
+         */
+        post: operations["create_task_api_v1_tasks__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/tasks/unassigned": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get all unassigned tasks
+         * @description Retrieves a list of tasks that are not currently assigned to any agent.
+         *     Can optionally filter by project ID.
+         */
+        get: operations["get_unassigned_tasks_api_v1_tasks_unassigned_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/tasks/{task_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a specific task by ID
+         * @description Retrieves details of a specific task by its ID.
+         */
+        get: operations["get_task_api_v1_tasks__task_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a task
+         * @description Deletes a specific task by its ID.
+         */
+        delete: operations["delete_task_api_v1_tasks__task_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a task
+         * @description Updates specific fields of an existing task.
+         *     Note: Agent assignment is handled via dedicated endpoints.
+         */
+        patch: operations["update_task_api_v1_tasks__task_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/tasks/{task_id}/assign/{agent_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Assign a task to an agent
+         * @description Assigns a specific task to a specific active agent.
+         */
+        post: operations["assign_task_to_agent_api_v1_tasks__task_id__assign__agent_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/tasks/{task_id}/unassign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Unassign an agent from a task
+         * @description Removes the agent assignment from a task.
+         */
+        post: operations["unassign_agent_from_task_api_v1_tasks__task_id__unassign_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/tasks/{task_id}/suitable-agents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Find suitable agents for a task
+         * @description Finds active agents whose type matches the requirements of the given task.
+         */
+        get: operations["find_suitable_agents_api_v1_tasks__task_id__suitable_agents_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/tasks/{task_id}/auto-assign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Automatically assign task to a suitable agent
+         * @description Automatically finds the first available and suitable agent and assigns the task.
+         */
+        post: operations["auto_assign_task_endpoint_api_v1_tasks__task_id__auto_assign_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/users/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Users */
+        get: operations["get_users_api_v1_users__get"];
+        put?: never;
+        /** Create User */
+        post: operations["create_user_api_v1_users__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/users/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get User */
+        get: operations["get_user_api_v1_users__user_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/users/{user_id}/projects": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get User Projects */
+        get: operations["get_user_projects_api_v1_users__user_id__projects_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/files/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Files */
+        get: operations["get_files_api_v1_files__get"];
+        put?: never;
+        /**
+         * Create File
+         * @description Create a new file or update an existing file.
+         */
+        post: operations["create_file_api_v1_files__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/files/{file_name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get File
+         * @description Get a specific file by name.
+         *     Can return file content as JSON or serve the file directly depending on the query parameter.
+         */
+        get: operations["get_file_api_v1_files__file_name__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete File
+         * @description Delete a file by name.
+         */
+        delete: operations["delete_file_api_v1_files__file_name__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/files/{file_name}/content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get File Content
+         * @description Get a specific file's content as JSON.
+         */
+        get: operations["get_file_content_api_v1_files__file_name__content_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
-export type webhooks = Record<string, never>
+export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    /** Agent */
-    Agent: {
-      /** Id */
-      id?: number | null
-      /** Name */
-      name: string
-      /** System Prompt Id */
-      system_prompt_id?: number | null
-      /** @default default */
-      agent_type: components['schemas']['AgentType']
-      /** @default deepseek-r1-distill-qwen-32b */
-      agent_model: components['schemas']['AgentLLM']
-      /** @default inactive */
-      state: components['schemas']['AgentState']
-    }
-    /** AgentIn */
-    AgentIn: {
-      /** Name */
-      name: string
-      /** System Prompt Id */
-      system_prompt_id: number
-      /** @default default */
-      agent_type: components['schemas']['AgentType']
-      /** @default deepseek-r1-distill-qwen-32b */
-      agent_model: components['schemas']['AgentLLM']
-      /** @default inactive */
-      state: components['schemas']['AgentState']
-    }
-    /**
-     * AgentLLM
-     * @enum {string}
-     */
-    AgentLLM: 'deepseek-r1-distill-qwen-32b' | 'groq_code' | 'groq_brainstorm'
-    /** AgentOut */
-    AgentOut: {
-      /** Id */
-      id: number
-      /** Name */
-      name: string
-      /** System Prompt Id */
-      system_prompt_id?: number | null
-      system_prompt?: components['schemas']['Prompt'] | null
-      agent_type: components['schemas']['AgentType']
-      agent_model: components['schemas']['AgentLLM']
-      state: components['schemas']['AgentState']
-      /** Tasks */
-      tasks?: components['schemas']['Task'][] | null
-    }
-    /**
-     * AgentState
-     * @enum {string}
-     */
-    AgentState: 'active' | 'inactive'
-    /**
-     * AgentType
-     * @enum {string}
-     */
-    AgentType: 'default' | 'code' | 'brainstorm'
-    /** AgentUpdate */
-    AgentUpdate: {
-      /** Name */
-      name?: string | null
-      /** System Prompt Id */
-      system_prompt_id?: number | null
-      agent_type?: components['schemas']['AgentType'] | null
-      agent_model?: components['schemas']['AgentLLM'] | null
-      state?: components['schemas']['AgentState'] | null
-    }
-    /** Artifact */
-    Artifact: {
-      /** Id */
-      id?: number | null
-      /** Name */
-      name: string
-      /** Description */
-      description: string
-      /** Content */
-      content: string
-      /**
-       * Validated
-       * @default false
-       */
-      validated: boolean
-      /** @default default */
-      artifact_type: components['schemas']['ArtifactType']
-      /** Project Id */
-      project_id: number
-    }
-    /** ArtifactIn */
-    ArtifactIn: {
-      /** Name */
-      name: string
-      /** Description */
-      description: string
-      /** Content */
-      content: string
-      /**
-       * Validated
-       * @default false
-       */
-      validated: boolean
-      /** @default default */
-      artifact_type: components['schemas']['ArtifactType']
-      /** Project Id */
-      project_id?: number | null
-    }
-    /** ArtifactOut */
-    ArtifactOut: {
-      /** Id */
-      id: number
-      /** Name */
-      name: string
-      /** Description */
-      description: string
-      /** Content */
-      content: string
-      /** Validated */
-      validated: boolean
-      artifact_type: components['schemas']['ArtifactType']
-      project: components['schemas']['Project'] | null
-    }
-    /**
-     * ArtifactType
-     * @enum {string}
-     */
-    ArtifactType: 'default' | 'code' | 'markdown'
-    /** ArtifactUpdate */
-    ArtifactUpdate: {
-      /** Name */
-      name?: string | null
-      /** Description */
-      description?: string | null
-      /** Content */
-      content?: string | null
-      /** Validated */
-      validated?: boolean | null
-      artifact_type?: components['schemas']['ArtifactType'] | null
-      /** Project Id */
-      project_id?: number | null
-    }
-    /**
-     * Category
-     * @enum {string}
-     */
-    Category: 'coding' | 'writing' | 'planning'
-    /** Chat */
-    Chat: {
-      /** Id */
-      id?: number | null
-      /** Title */
-      title: string
-      /** User Id */
-      user_id: number
-    }
-    /** ChatIn */
-    ChatIn: {
-      /** Title */
-      title: string
-      /** User Id */
-      user_id: number
-    }
-    /** ChatOut */
-    ChatOut: {
-      /** Id */
-      id: number
-      /** Title */
-      title: string
-      user: components['schemas']['User']
-    }
-    /** HTTPValidationError */
-    HTTPValidationError: {
-      /** Detail */
-      detail?: components['schemas']['ValidationError'][]
-    }
-    /** MessageIn */
-    MessageIn: {
-      /** Content */
-      content: string
-      /** @default user */
-      message_type: components['schemas']['MessageType']
-      /** Chat Id */
-      chat_id: number
-      /** Artifact Id */
-      artifact_id?: number | null
-    }
-    /** MessageOut */
-    MessageOut: {
-      /** Id */
-      id: number
-      /** Content */
-      content: string
-      message_type: components['schemas']['MessageType']
-      chat: components['schemas']['Chat']
-      artifact: components['schemas']['Artifact'] | null
-    }
-    /**
-     * MessageType
-     * @enum {string}
-     */
-    MessageType: 'user' | 'agent' | 'system' | 'default'
-    /** MessageUpdate */
-    MessageUpdate: {
-      /** Content */
-      content?: string | null
-      message_type?: components['schemas']['MessageType'] | null
-      /** Artifact Id */
-      artifact_id?: number | null
-    }
-    /** NoteCreate */
-    NoteCreate: {
-      /** Title */
-      title: string
-      /** Content */
-      content?: string | null
-      metadata?: components['schemas']['NoteMetadata'] | null
-      /** Folder */
-      folder?: string | null
-      /** Template */
-      template?: string | null
-    }
-    /** NoteMetadata */
-    NoteMetadata: {
-      /**
-       * Tags
-       * @default []
-       */
-      tags: string[] | null
-      /** Created */
-      created?: string | null
-      /** Modified */
-      modified?: string | null
-      /** Status */
-      status?: string | null
-    }
-    /** NoteResponse */
-    NoteResponse: {
-      /** Title */
-      title: string
-      /** Path */
-      path: string
-      /** Content */
-      content: string
-      metadata: components['schemas']['NoteMetadata']
-      /**
-       * Created
-       * Format: date-time
-       */
-      created: string
-      /**
-       * Modified
-       * Format: date-time
-       */
-      modified: string
-    }
-    /** NoteUpdate */
-    NoteUpdate: {
-      /** Content */
-      content?: string | null
-      metadata?: components['schemas']['NoteMetadata'] | null
-    }
-    /** Project */
-    Project: {
-      /** Id */
-      id?: number | null
-      /** Name */
-      name: string
-      /** @default default */
-      project_type: components['schemas']['ProjectType']
-      /** Description */
-      description: string
-      /** Framework */
-      framework: string
-      /** User Id */
-      user_id?: number | null
-    }
-    /** ProjectIn */
-    ProjectIn: {
-      /** Name */
-      name: string
-      project_type: components['schemas']['ProjectType']
-      /** Description */
-      description?: string | null
-      /** Framework */
-      framework: string
-      /** User Id */
-      user_id?: number | null
-    }
-    /** ProjectOut */
-    ProjectOut: {
-      /** Id */
-      id: number
-      /** Name */
-      name: string
-      /** Description */
-      description: string | null
-      /** Framework */
-      framework: string
-      project_type: components['schemas']['ProjectType']
-      user: components['schemas']['User']
-      /** Artifacts */
-      artifacts: components['schemas']['Artifact'][] | null
-    }
-    /**
-     * ProjectType
-     * @enum {string}
-     */
-    ProjectType: 'default' | 'code'
-    /** ProjectUpdate */
-    ProjectUpdate: {
-      /** Name */
-      name?: string | null
-      type?: components['schemas']['ProjectType'] | null
-      /** Description */
-      description?: string | null
-      /** User Id */
-      user_id?: number | null
-    }
-    /** Prompt */
-    Prompt: {
-      /** Id */
-      id?: number | null
-      /**
-       * Name
-       * @description Unique name for the prompt
-       */
-      name: string
-      /**
-       * Content
-       * @description The full text content of the system prompt.
-       */
-      content: string
-    }
-    /**
-     * PromptIn
-     * @description Schema for creating a new Prompt.
-     */
-    PromptIn: {
-      /**
-       * Name
-       * @description Unique name for the prompt
-       */
-      name: string
-      /**
-       * Content
-       * @description The full text content of the system prompt
-       */
-      content: string
-    }
-    /**
-     * PromptUpdate
-     * @description Schema for updating an existing Prompt. All fields are optional.
-     */
-    PromptUpdate: {
-      /**
-       * Name
-       * @description New unique name for the prompt
-       */
-      name?: string | null
-      /**
-       * Content
-       * @description New full text content for the prompt
-       */
-      content?: string | null
-    }
-    /** SubTaskIn */
-    SubTaskIn: {
-      /** Name */
-      name: string
-      /** Description */
-      description: string
-      /**
-       * Is Completed
-       * @default false
-       */
-      is_completed: boolean
-      /** Task Id */
-      task_id: number
-      /** Agent Id */
-      agent_id?: number | null
-    }
-    /** SubTaskOut */
-    SubTaskOut: {
-      /** Id */
-      id: number
-      /** Name */
-      name: string
-      /** Description */
-      description: string
-      /** Is Completed */
-      is_completed: boolean
-      task: components['schemas']['TaskOut']
-    }
-    /** Task */
-    Task: {
-      /** Id */
-      id?: number | null
-      /** Name */
-      name: string
-      /** Description */
-      description: string
-      /** @default coding */
-      category: components['schemas']['Category']
-      /** @default pending */
-      status: components['schemas']['TaskStatus']
-      /** Agent Id */
-      agent_id?: number | null
-      /** Project Id */
-      project_id?: number | null
-    }
-    /** TaskIn */
-    TaskIn: {
-      /** Name */
-      name: string
-      /** Description */
-      description: string
-      /** @default coding */
-      task_type: components['schemas']['Category']
-      /** Agent Id */
-      agent_id?: number | null
-      /** Project Id */
-      project_id?: number | null
-      /** Subtasks */
-      subtasks?: components['schemas']['SubTaskIn'][] | null
-    }
-    /** TaskOut */
-    TaskOut: {
-      /** Id */
-      id: number
-      /** Name */
-      name: string
-      /** Description */
-      description: string
-      category: components['schemas']['Category']
-      /**
-       * Subtasks
-       * @default []
-       */
-      subtasks: components['schemas']['SubTaskOut'][]
-      agent?: components['schemas']['Agent'] | null
-      project?: components['schemas']['Project'] | null
-    }
-    /**
-     * TaskStatus
-     * @enum {string}
-     */
-    TaskStatus: 'pending' | 'in_progress' | 'completed' | 'failed' | 'ERROR'
-    /** TaskUpdate */
-    TaskUpdate: {
-      /** Name */
-      name?: string | null
-      /** Description */
-      description?: string | null
-      task_type?: components['schemas']['Category'] | null
-    }
-    /** User */
-    User: {
-      /** Id */
-      id?: number | null
-      /** Name */
-      name: string
-    }
-    /** UserIn */
-    UserIn: {
-      /** Name */
-      name: string
-    }
-    /** UserOut */
-    UserOut: {
-      /** Id */
-      id: number
-      /** Name */
-      name: string
-      /** Projects */
-      projects: components['schemas']['Project'][] | null
-      /** Chats */
-      chats: components['schemas']['Chat'][] | null
-    }
-    /** ValidationError */
-    ValidationError: {
-      /** Location */
-      loc: (string | number)[]
-      /** Message */
-      msg: string
-      /** Error Type */
-      type: string
-    }
-  }
-  responses: never
-  parameters: never
-  requestBodies: never
-  headers: never
-  pathItems: never
+    schemas: {
+        /** Agent */
+        Agent: {
+            /** Id */
+            id?: number | null;
+            /** Name */
+            name: string;
+            /** System Prompt Id */
+            system_prompt_id?: number | null;
+            /** @default default */
+            agent_type: components["schemas"]["AgentType"];
+            /** @default deepseek-r1-distill-qwen-32b */
+            agent_model: components["schemas"]["AgentLLM"];
+            /** @default inactive */
+            state: components["schemas"]["AgentState"];
+        };
+        /** AgentIn */
+        AgentIn: {
+            /** Name */
+            name: string;
+            /** System Prompt Id */
+            system_prompt_id: number;
+            /** @default default */
+            agent_type: components["schemas"]["AgentType"];
+            /** @default deepseek-r1-distill-qwen-32b */
+            agent_model: components["schemas"]["AgentLLM"];
+            /** @default inactive */
+            state: components["schemas"]["AgentState"];
+        };
+        /**
+         * AgentLLM
+         * @enum {string}
+         */
+        AgentLLM: "deepseek-r1-distill-qwen-32b" | "groq_code" | "groq_brainstorm";
+        /** AgentOut */
+        AgentOut: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            /** System Prompt Id */
+            system_prompt_id?: number | null;
+            system_prompt?: components["schemas"]["Prompt"] | null;
+            agent_type: components["schemas"]["AgentType"];
+            agent_model: components["schemas"]["AgentLLM"];
+            state: components["schemas"]["AgentState"];
+            /** Tasks */
+            tasks?: components["schemas"]["Task"][] | null;
+        };
+        /**
+         * AgentState
+         * @enum {string}
+         */
+        AgentState: "active" | "inactive";
+        /**
+         * AgentType
+         * @enum {string}
+         */
+        AgentType: "default" | "code" | "brainstorm";
+        /** AgentUpdate */
+        AgentUpdate: {
+            /** Name */
+            name?: string | null;
+            /** System Prompt Id */
+            system_prompt_id?: number | null;
+            agent_type?: components["schemas"]["AgentType"] | null;
+            agent_model?: components["schemas"]["AgentLLM"] | null;
+            state?: components["schemas"]["AgentState"] | null;
+        };
+        /** Artifact */
+        Artifact: {
+            /** Id */
+            id?: number | null;
+            /** Name */
+            name: string;
+            /** Description */
+            description: string;
+            /** Content */
+            content: string;
+            /**
+             * Validated
+             * @default false
+             */
+            validated: boolean;
+            /** @default default */
+            artifact_type: components["schemas"]["ArtifactType"];
+            /** Project Id */
+            project_id: number;
+        };
+        /** ArtifactIn */
+        ArtifactIn: {
+            /** Name */
+            name: string;
+            /** Description */
+            description: string;
+            /** Content */
+            content: string;
+            /**
+             * Validated
+             * @default false
+             */
+            validated: boolean;
+            /** @default default */
+            artifact_type: components["schemas"]["ArtifactType"];
+            /** Project Id */
+            project_id?: number | null;
+        };
+        /** ArtifactOut */
+        ArtifactOut: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            /** Description */
+            description: string;
+            /** Content */
+            content: string;
+            /** Validated */
+            validated: boolean;
+            artifact_type: components["schemas"]["ArtifactType"];
+            project: components["schemas"]["Project"] | null;
+        };
+        /**
+         * ArtifactType
+         * @enum {string}
+         */
+        ArtifactType: "default" | "code" | "markdown";
+        /** ArtifactUpdate */
+        ArtifactUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Content */
+            content?: string | null;
+            /** Validated */
+            validated?: boolean | null;
+            artifact_type?: components["schemas"]["ArtifactType"] | null;
+            /** Project Id */
+            project_id?: number | null;
+        };
+        /**
+         * Category
+         * @enum {string}
+         */
+        Category: "coding" | "writing" | "planning";
+        /** Chat */
+        Chat: {
+            /** Name */
+            name?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at?: string;
+            /** Id */
+            id?: number | null;
+        };
+        /** ChatCreate */
+        ChatCreate: {
+            /** Name */
+            name?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at?: string;
+        };
+        /** ChatRead */
+        ChatRead: {
+            /** Name */
+            name?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at?: string;
+            /** Id */
+            id: number;
+        };
+        /** ChatReadWithMessages */
+        ChatReadWithMessages: {
+            /** Name */
+            name?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at?: string;
+            /** Id */
+            id: number;
+            /**
+             * Messages
+             * @default []
+             */
+            messages: components["schemas"]["MessageRead"][];
+        };
+        /** File */
+        File: {
+            /** Name */
+            name: string;
+            /** Content */
+            content: string;
+        };
+        /** FileInfo */
+        FileInfo: {
+            /** Name */
+            name: string;
+            /** Size */
+            size: number;
+            /** Modified */
+            modified: string;
+        };
+        /** HTTPValidationError */
+        HTTPValidationError: {
+            /** Detail */
+            detail?: components["schemas"]["ValidationError"][];
+        };
+        /** MessageCreate */
+        MessageCreate: {
+            /** Content */
+            content: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at?: string;
+            /** Chat Id */
+            chat_id: number;
+        };
+        /** MessageIn */
+        MessageIn: {
+            /** Content */
+            content: string;
+            /** Chat Id */
+            chat_id: number;
+            /** Artifact Id */
+            artifact_id?: number | null;
+        };
+        /** MessageOut */
+        MessageOut: {
+            /** Id */
+            id: number;
+            /** Content */
+            content: string;
+            chat: components["schemas"]["Chat"];
+            artifact: components["schemas"]["Artifact"] | null;
+        };
+        /** MessageRead */
+        MessageRead: {
+            /** Content */
+            content: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at?: string;
+            /** Chat Id */
+            chat_id: number;
+            /** Id */
+            id: number;
+        };
+        /** NoteCreate */
+        NoteCreate: {
+            /** Title */
+            title: string;
+            /** Content */
+            content?: string | null;
+            metadata?: components["schemas"]["NoteMetadata"] | null;
+            /** Folder */
+            folder?: string | null;
+            /** Template */
+            template?: string | null;
+        };
+        /** NoteMetadata */
+        NoteMetadata: {
+            /**
+             * Tags
+             * @default []
+             */
+            tags: string[] | null;
+            /** Created */
+            created?: string | null;
+            /** Modified */
+            modified?: string | null;
+            /** Status */
+            status?: string | null;
+        };
+        /** NoteResponse */
+        NoteResponse: {
+            /** Title */
+            title: string;
+            /** Path */
+            path: string;
+            /** Content */
+            content: string;
+            metadata: components["schemas"]["NoteMetadata"];
+            /**
+             * Created
+             * Format: date-time
+             */
+            created: string;
+            /**
+             * Modified
+             * Format: date-time
+             */
+            modified: string;
+        };
+        /** NoteUpdate */
+        NoteUpdate: {
+            /** Content */
+            content?: string | null;
+            metadata?: components["schemas"]["NoteMetadata"] | null;
+        };
+        /** Project */
+        Project: {
+            /** Id */
+            id?: number | null;
+            /** Name */
+            name: string;
+            /** @default default */
+            project_type: components["schemas"]["ProjectType"];
+            /** Description */
+            description: string;
+            /** Framework */
+            framework: string;
+            /** User Id */
+            user_id?: number | null;
+        };
+        /** ProjectIn */
+        ProjectIn: {
+            /** Name */
+            name: string;
+            project_type: components["schemas"]["ProjectType"];
+            /** Description */
+            description?: string | null;
+            /** Framework */
+            framework: string;
+            /** User Id */
+            user_id?: number | null;
+        };
+        /** ProjectOut */
+        ProjectOut: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            /** Description */
+            description: string | null;
+            /** Framework */
+            framework: string;
+            project_type: components["schemas"]["ProjectType"];
+            user: components["schemas"]["User"];
+            /** Artifacts */
+            artifacts: components["schemas"]["Artifact"][] | null;
+        };
+        /**
+         * ProjectType
+         * @enum {string}
+         */
+        ProjectType: "default" | "code";
+        /** ProjectUpdate */
+        ProjectUpdate: {
+            /** Name */
+            name?: string | null;
+            type?: components["schemas"]["ProjectType"] | null;
+            /** Description */
+            description?: string | null;
+            /** User Id */
+            user_id?: number | null;
+        };
+        /** Prompt */
+        Prompt: {
+            /** Id */
+            id?: number | null;
+            /**
+             * Name
+             * @description Unique name for the prompt
+             */
+            name: string;
+            /**
+             * Content
+             * @description The full text content of the system prompt.
+             */
+            content: string;
+        };
+        /**
+         * PromptIn
+         * @description Schema for creating a new Prompt.
+         */
+        PromptIn: {
+            /**
+             * Name
+             * @description Unique name for the prompt
+             */
+            name: string;
+            /**
+             * Content
+             * @description The full text content of the system prompt
+             */
+            content: string;
+        };
+        /**
+         * PromptUpdate
+         * @description Schema for updating an existing Prompt. All fields are optional.
+         */
+        PromptUpdate: {
+            /**
+             * Name
+             * @description New unique name for the prompt
+             */
+            name?: string | null;
+            /**
+             * Content
+             * @description New full text content for the prompt
+             */
+            content?: string | null;
+        };
+        /** SubTaskIn */
+        SubTaskIn: {
+            /** Name */
+            name: string;
+            /** Description */
+            description: string;
+            /**
+             * Is Completed
+             * @default false
+             */
+            is_completed: boolean;
+            /** Task Id */
+            task_id: number;
+            /** Agent Id */
+            agent_id?: number | null;
+        };
+        /** SubTaskOut */
+        SubTaskOut: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            /** Description */
+            description: string;
+            /** Is Completed */
+            is_completed: boolean;
+            task: components["schemas"]["TaskOut"];
+        };
+        /** Task */
+        Task: {
+            /** Id */
+            id?: number | null;
+            /** Name */
+            name: string;
+            /** Description */
+            description: string;
+            /** @default coding */
+            category: components["schemas"]["Category"];
+            /** @default pending */
+            status: components["schemas"]["TaskStatus"];
+            /** Agent Id */
+            agent_id?: number | null;
+            /** Project Id */
+            project_id?: number | null;
+        };
+        /** TaskIn */
+        TaskIn: {
+            /** Name */
+            name: string;
+            /** Description */
+            description: string;
+            /** @default coding */
+            task_type: components["schemas"]["Category"];
+            /** Agent Id */
+            agent_id?: number | null;
+            /** Project Id */
+            project_id?: number | null;
+            /** Subtasks */
+            subtasks?: components["schemas"]["SubTaskIn"][] | null;
+        };
+        /** TaskOut */
+        TaskOut: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            /** Description */
+            description: string;
+            category: components["schemas"]["Category"];
+            /**
+             * Subtasks
+             * @default []
+             */
+            subtasks: components["schemas"]["SubTaskOut"][];
+            agent?: components["schemas"]["Agent"] | null;
+            project?: components["schemas"]["Project"] | null;
+        };
+        /**
+         * TaskStatus
+         * @enum {string}
+         */
+        TaskStatus: "pending" | "in_progress" | "completed" | "failed" | "ERROR";
+        /** TaskUpdate */
+        TaskUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Description */
+            description?: string | null;
+            task_type?: components["schemas"]["Category"] | null;
+        };
+        /** User */
+        User: {
+            /** Id */
+            id?: number | null;
+            /** Name */
+            name: string;
+        };
+        /** UserIn */
+        UserIn: {
+            /** Name */
+            name: string;
+        };
+        /** UserOut */
+        UserOut: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            /** Projects */
+            projects: components["schemas"]["Project"][] | null;
+            /** Chats */
+            chats: components["schemas"]["Chat"][] | null;
+        };
+        /** ValidationError */
+        ValidationError: {
+            /** Location */
+            loc: (string | number)[];
+            /** Message */
+            msg: string;
+            /** Error Type */
+            type: string;
+        };
+    };
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
-export type $defs = Record<string, never>
+export type $defs = Record<string, never>;
 export interface operations {
-  read_root__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'text/html': string
-        }
-      }
-    }
-  }
-  load_content_endpoint_load_content_get: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'text/html': string
-        }
-      }
-    }
-  }
-  get_agents_api_v1_agents__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['AgentOut'][]
-        }
-      }
-    }
-  }
-  create_agent_api_v1_agents__post: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['AgentIn']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_agent_api_v1_agents__agent_id__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        agent_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  update_agent_api_v1_agents__agent_id__put: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        agent_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['AgentUpdate']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_active_agents_api_v1_agents_active_get: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  get_artifacts_api_v1_artifacts__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['ArtifactOut'][]
-        }
-      }
-    }
-  }
-  create_artifact_api_v1_artifacts__post: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['ArtifactIn']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': number
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_artifact_api_v1_artifacts__artifact_id__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        artifact_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['ArtifactOut']
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  update_artifact_api_v1_artifacts__artifact_id__put: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        artifact_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['ArtifactUpdate']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  delete_artifact_api_v1_artifacts__artifact_id__delete: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        artifact_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_chats_api_v1_chats__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['ChatOut'][]
-        }
-      }
-    }
-  }
-  create_chat_api_v1_chats__post: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['ChatIn']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['ChatOut']
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_chat_by_id_api_v1_chats__chat_id__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        chat_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['Chat'] | null
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_messages_by_chat_id_api_v1_chats__chat_id__messages_get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        chat_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['MessageOut'][] | null
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_messages_by_message_type_api_v1_chats__chat_id__messages__message_type__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        chat_id: number
-        message_type: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['MessageOut'][] | null
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  add_agent_to_chat_api_v1_chats__chat_id__agent__agent_id_post: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        chat_id: number
-        agent_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  add_message_to_chat_api_v1_chats__chat_id__message_post: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['MessageIn']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['MessageOut']
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  update_message_api_v1_chats__chat_id__message__message_id__put: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        message_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['MessageUpdate']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['MessageOut']
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  delete_message_api_v1_chats__chat_id__message__message_id__delete: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        message_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['MessageOut']
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_all_notes_api_v1_notes__get: {
-    parameters: {
-      query?: {
-        limit?: number
-        offset?: number
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['NoteResponse'][]
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  create_note_api_v1_notes__post: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['NoteCreate']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['NoteResponse']
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_recent_notes_api_v1_notes_recent_get: {
-    parameters: {
-      query?: {
-        limit?: number
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['NoteResponse'][]
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  search_notes_api_v1_notes_search_get: {
-    parameters: {
-      query: {
-        query: string
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['NoteResponse'][]
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_note_api_v1_notes__note_id__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        /** @description The note identifier or path */
-        note_id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['NoteResponse']
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  update_note_api_v1_notes__note_id__put: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        note_id: string
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['NoteUpdate']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['NoteResponse']
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_note_links_api_v1_notes__note_id__links_get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        note_id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': string[]
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_note_tags_api_v1_notes__note_id__tags_get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        note_id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': string[]
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_projects_api_v1_projects__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['ProjectOut'][]
-        }
-      }
-    }
-  }
-  create_project_api_v1_projects__post: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['ProjectIn']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_project_api_v1_projects__project_id__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        project_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['ProjectOut']
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  update_project_api_v1_projects__project_id__put: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        project_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['ProjectUpdate']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_prompts_api_v1_prompts__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  create_prompt_api_v1_prompts__post: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['PromptIn']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_prompt_api_v1_prompts__prompt_id__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        prompt_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  update_prompt_api_v1_prompts__prompt_id__put: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        prompt_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['PromptUpdate']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  add_message_to_task_api_v1_tasks__task_id__message_post: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        task_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['MessageIn']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['MessageOut']
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_all_tasks_api_v1_tasks__get: {
-    parameters: {
-      query?: {
-        project_id?: number | null
-        agent_id?: number | null
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['TaskOut'][]
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  create_task_api_v1_tasks__post: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['TaskIn']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': number
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_unassigned_tasks_api_v1_tasks_unassigned_get: {
-    parameters: {
-      query?: {
-        project_id?: number | null
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['TaskOut'][]
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_task_api_v1_tasks__task_id__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        task_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['TaskOut']
-        }
-      }
-      /** @description Task not found */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  delete_task_api_v1_tasks__task_id__delete: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        task_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Task not found */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  update_task_api_v1_tasks__task_id__patch: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        task_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['TaskUpdate']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['TaskOut']
-        }
-      }
-      /** @description Task not found */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  assign_task_to_agent_api_v1_tasks__task_id__assign__agent_id__post: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        task_id: number
-        agent_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['TaskOut']
-        }
-      }
-      /** @description Agent is inactive */
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Task or Agent not found */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Task already assigned to this agent */
-      409: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  unassign_agent_from_task_api_v1_tasks__task_id__unassign_post: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        task_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['TaskOut']
-        }
-      }
-      /** @description Task is not assigned */
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Task not found */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  find_suitable_agents_api_v1_tasks__task_id__suitable_agents_get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        task_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['AgentOut'][]
-        }
-      }
-      /** @description Task not found */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  auto_assign_task_endpoint_api_v1_tasks__task_id__auto_assign_post: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        task_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['TaskOut']
-        }
-      }
-      /** @description Task not found or no suitable agent found */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Task is already assigned */
-      409: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_users_api_v1_users__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['UserOut'][]
-        }
-      }
-    }
-  }
-  create_user_api_v1_users__post: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['UserIn']
-      }
-    }
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['UserOut']
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_user_api_v1_users__user_id__get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        user_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['UserOut']
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
-  get_user_projects_api_v1_users__user_id__projects_get: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        user_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['ProjectOut'][]
-        }
-      }
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['HTTPValidationError']
-        }
-      }
-    }
-  }
+    read_root__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/html": string;
+                };
+            };
+        };
+    };
+    load_content_endpoint_load_content_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/html": string;
+                };
+            };
+        };
+    };
+    get_agents_api_v1_agents__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgentOut"][];
+                };
+            };
+        };
+    };
+    create_agent_api_v1_agents__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AgentIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_agent_api_v1_agents__agent_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                agent_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_agent_api_v1_agents__agent_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                agent_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AgentUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_active_agents_api_v1_agents_active_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    get_artifacts_api_v1_artifacts__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArtifactOut"][];
+                };
+            };
+        };
+    };
+    create_artifact_api_v1_artifacts__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ArtifactIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": number;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_artifact_api_v1_artifacts__artifact_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                artifact_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArtifactOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_artifact_api_v1_artifacts__artifact_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                artifact_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ArtifactUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_artifact_api_v1_artifacts__artifact_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                artifact_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_chats_api_v1_chat_v2_chats__get: {
+        parameters: {
+            query?: {
+                skip?: number;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_chat_api_v1_chat_v2_chats__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChatCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_chat_api_v1_chat_v2_chats__chat_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                chat_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatReadWithMessages"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_messages_for_chat_api_v1_chat_v2_chats__chat_id__messages__get: {
+        parameters: {
+            query?: {
+                skip?: number;
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                chat_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_message_for_chat_api_v1_chat_v2_chats__chat_id__messages__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                chat_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MessageCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_all_notes_api_v1_notes__get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NoteResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_note_api_v1_notes__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NoteCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NoteResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_recent_notes_api_v1_notes_recent_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NoteResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_notes_api_v1_notes_search_get: {
+        parameters: {
+            query: {
+                query: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NoteResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_note_api_v1_notes__note_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The note identifier or path */
+                note_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NoteResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_note_api_v1_notes__note_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                note_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NoteUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NoteResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_note_links_api_v1_notes__note_id__links_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                note_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string[];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_note_tags_api_v1_notes__note_id__tags_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                note_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string[];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_projects_api_v1_projects__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectOut"][];
+                };
+            };
+        };
+    };
+    create_project_api_v1_projects__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProjectIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_project_api_v1_projects__project_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_project_api_v1_projects__project_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProjectUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_prompts_api_v1_prompts__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Prompt"][];
+                };
+            };
+        };
+    };
+    create_prompt_api_v1_prompts__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PromptIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_prompt_api_v1_prompts__prompt_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                prompt_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_prompt_api_v1_prompts__prompt_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                prompt_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PromptUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_message_to_task_api_v1_tasks__task_id__message_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MessageIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_all_tasks_api_v1_tasks__get: {
+        parameters: {
+            query?: {
+                project_id?: number | null;
+                agent_id?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_task_api_v1_tasks__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": number;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_unassigned_tasks_api_v1_tasks_unassigned_get: {
+        parameters: {
+            query?: {
+                project_id?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_task_api_v1_tasks__task_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskOut"];
+                };
+            };
+            /** @description Task not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_task_api_v1_tasks__task_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Task not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_task_api_v1_tasks__task_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskOut"];
+                };
+            };
+            /** @description Task not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_task_to_agent_api_v1_tasks__task_id__assign__agent_id__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: number;
+                agent_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskOut"];
+                };
+            };
+            /** @description Agent is inactive */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Task or Agent not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Task already assigned to this agent */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    unassign_agent_from_task_api_v1_tasks__task_id__unassign_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskOut"];
+                };
+            };
+            /** @description Task is not assigned */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Task not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    find_suitable_agents_api_v1_tasks__task_id__suitable_agents_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgentOut"][];
+                };
+            };
+            /** @description Task not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    auto_assign_task_endpoint_api_v1_tasks__task_id__auto_assign_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskOut"];
+                };
+            };
+            /** @description Task not found or no suitable agent found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Task is already assigned */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_users_api_v1_users__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserOut"][];
+                };
+            };
+        };
+    };
+    create_user_api_v1_users__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_user_api_v1_users__user_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_user_projects_api_v1_users__user_id__projects_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_files_api_v1_files__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FileInfo"][];
+                };
+            };
+        };
+    };
+    create_file_api_v1_files__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["File"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_file_api_v1_files__file_name__get: {
+        parameters: {
+            query?: {
+                /** @description Set to true to download the file instead of viewing it */
+                as_download?: boolean;
+            };
+            header?: never;
+            path: {
+                file_name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_file_api_v1_files__file_name__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                file_name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_file_content_api_v1_files__file_name__content_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                file_name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["File"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
 }

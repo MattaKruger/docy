@@ -21,10 +21,10 @@ const props = defineProps({
   headerLinks: {
     type: Array,
     default: () => [
-      { text: 'Home', href: '#' },
-      { text: 'Projects', href: '#' },
-      { text: 'Agents', href: '#' },
-      { text: 'Files', href: '#' },
+      { text: 'Home', href: '/' },
+      { text: 'Projects', href: '/projects' },
+      { text: 'Agents', href: '/agents' },
+      { text: 'Files', href: '/files' },
     ],
   },
 })
@@ -52,7 +52,7 @@ const sidebarWidthClass = computed(() => (sidebarOpen.value ? 'w-64' : 'w-16'))
 <template>
   <div class="flex flex-col h-screen">
     <!-- Header Component -->
-    <header class="bg-indigo-600 text-white shadow-md z-10">
+    <header class="bg-zinc-950 text-white shadow-md z-10">
       <div
         class="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between"
       >
@@ -69,7 +69,7 @@ const sidebarWidthClass = computed(() => (sidebarOpen.value ? 'w-64' : 'w-16'))
               :key="index"
               @click="handleHeaderLinkClick(link)"
             >
-              <a :href="link.href" class="px-3 py-2 hover:bg-indigo-700 rounded-md transition">
+              <a :href="link.href" class="cursor-pointer px-3 py-2 hover:bg-indigo-700 rounded-md transition">
                 {{ link.text }}
               </a>
             </li>
@@ -83,7 +83,7 @@ const sidebarWidthClass = computed(() => (sidebarOpen.value ? 'w-64' : 'w-16'))
       <!-- Sidebar Component -->
       <div
         :class="[
-          'flex flex-col bg-indigo-600 text-white shadow-md transition-all duration-300 ease-in-out',
+          'flex flex-col bg-zinc-950 text-white shadow-md transition-all duration-300 ease-in-out',
           sidebarWidthClass,
         ]"
       >

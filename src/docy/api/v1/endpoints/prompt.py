@@ -3,7 +3,8 @@ from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from docy.db.session import get_session
 from docy.repositories import PromptRepository
-from docy.schemas import PromptIn, PromptUpdate
+from docy.models import Prompt
+from docy.schemas import PromptIn, PromptUpdate, PromptOut
 
 router = APIRouter(prefix="/prompts", tags=["prompts"])
 
@@ -12,7 +13,7 @@ def get_prompt_repo(session: AsyncSession = Depends(get_session)) -> PromptRepos
     return PromptRepository(session)
 
 
-@router.get("/")
+@router.get("/", response_model=list[Prompt])
 async def get_prompts(repo: PromptRepository = Depends(get_prompt_repo)):
     return await repo.get_multi()
 

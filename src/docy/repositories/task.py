@@ -5,7 +5,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 
-from ..models.message import Message
+# from ..models.message import Message
 from ..models.task import SubTask, Task
 from ..schemas.message import MessageIn
 from ..schemas.task import SubTaskIn, TaskIn, TaskUpdate
@@ -47,30 +47,30 @@ class TaskRepository(BaseRepository[Task, TaskIn, TaskUpdate]):
         await self.session.refresh(subtask_db)
         return subtask_db
 
-    async def add_task_message(self, task_id: int, message_in: MessageIn) -> Message:
-        """Add message to a task"""
-        statement = select(Task).where(Task.id == task_id)
-        result = await self.session.execute(statement)
-        task = result.scalar_one_or_none()
-        if not task:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
+    # async def add_task_message(self, task_id: int, message_in: MessageIn) -> Message:
+    #     """Add message to a task"""
+    #     statement = select(Task).where(Task.id == task_id)
+    #     result = await self.session.execute(statement)
+    #     task = result.scalar_one_or_none()
+    #     if not task:
+    #         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
 
-        message = Message(**message_in.model_dump(exclude_unset=True))
+    #     message = Message(**message_in.model_dump(exclude_unset=True))
 
-        self.session.add(message)
-        await self.session.commit()
-        await self.session.refresh(message)
-        return message
+    #     self.session.add(message)
+    #     await self.session.commit()
+    #     await self.session.refresh(message)
+    #     return message
 
-    async def get_task_messages(self, task_id: int, filters: Optional[Dict[str, Any]] = None):
-        if not filters:
-            filters = {}
+    # async def get_task_messages(self, task_id: int, filters: Optional[Dict[str, Any]] = None):
+    #     if not filters:
+    #         filters = {}
 
-        statement = select(Message).where(Message.task_id == task_id)
-        messages = await self.session.execute(statement)
-        result = list(messages.scalars().all())
+    #     statement = select(Message).where(Message.task_id == task_id)
+    #     messages = await self.session.execute(statement)
+    #     result = list(messages.scalars().all())
 
-        return result
+    #     return result
 
     async def create(self, create_model: TaskIn) -> Task:
         """Creates a new task, ensuring project exists and agent_id is initially None."""

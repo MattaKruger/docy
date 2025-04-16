@@ -1,37 +1,36 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 
-// Sample data for recent projects
 const recentProjects = ref([
   { id: 1, name: 'Annual Report Analysis', date: '2023-11-15', progress: 75 },
   { id: 2, name: 'Market Research Summary', date: '2023-11-10', progress: 90 },
   { id: 3, name: 'Technical Documentation', date: '2023-11-05', progress: 60 },
-]);
+])
 
-// Sample data for active agents
 const activeAgents = ref([
   { id: 1, name: 'Data Extractor', status: 'Running', documents: 247 },
   { id: 2, name: 'Summarizer', status: 'Idle', documents: 125 },
   { id: 3, name: 'FAQ Generator', status: 'Running', documents: 89 },
-]);
-
-// Sample stats for dashboard
+])
 const stats = ref([
   { label: 'Total Documents', value: '1,234', icon: '📄' },
   { label: 'Projects', value: '12', icon: '📁' },
   { label: 'Active Agents', value: '5', icon: '🤖' },
-]);
+])
 </script>
 
 <template>
   <!-- Welcome Banner -->
-  <section class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg shadow-lg p-6 mb-8 text-white">
+  <section
+    class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg shadow-lg p-6 mb-8 text-white"
+  >
     <h1 class="text-3xl font-bold mb-2">Welcome to Docy</h1>
     <p class="mb-4 max-w-2xl">
-      Your intelligent document management system. Organize, analyze, and extract insights from your documents with ease.
+      Your intelligent document management system. Organize, analyze, and extract insights from your
+      documents with ease.
     </p>
     <div class="flex space-x-4 mt-4">
       <button
@@ -74,10 +73,7 @@ const stats = ref([
     <section class="lg:col-span-2 bg-white rounded-lg shadow">
       <div class="p-4 border-b border-gray-200 flex justify-between items-center">
         <h2 class="text-xl font-semibold text-gray-800">Recent Projects</h2>
-        <button
-          class="text-indigo-600 hover:text-indigo-800"
-          @click="router.push('/projects')"
-        >
+        <button class="text-indigo-600 hover:text-indigo-800" @click="router.push('/projects')">
           View All
         </button>
       </div>
@@ -113,10 +109,7 @@ const stats = ref([
     <section class="bg-white rounded-lg shadow">
       <div class="p-4 border-b border-gray-200 flex justify-between items-center">
         <h2 class="text-xl font-semibold text-gray-800">Active Agents</h2>
-        <button
-          class="text-indigo-600 hover:text-indigo-800"
-          @click="router.push('/agents')"
-        >
+        <button class="text-indigo-600 hover:text-indigo-800" @click="router.push('/agents')">
           Manage
         </button>
       </div>
@@ -131,14 +124,16 @@ const stats = ref([
               <h3 class="font-medium">{{ agent.name }}</h3>
               <span
                 class="px-2 py-1 text-xs rounded-full"
-                :class="agent.status === 'Running' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'"
+                :class="
+                  agent.status === 'Running'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-gray-100 text-gray-800'
+                "
               >
                 {{ agent.status }}
               </span>
             </div>
-            <div class="text-sm text-gray-500 mt-1">
-              {{ agent.documents }} documents processed
-            </div>
+            <div class="text-sm text-gray-500 mt-1">{{ agent.documents }} documents processed</div>
           </div>
         </div>
         <div v-else class="text-center py-8 text-gray-500">
