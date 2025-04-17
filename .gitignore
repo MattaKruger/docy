@@ -22,3 +22,7 @@ src/agents/data/*
 
 # files
 .my_interactive_cli_history
+
+
+#direnv
+.direnv

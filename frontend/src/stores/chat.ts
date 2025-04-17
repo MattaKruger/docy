@@ -13,6 +13,9 @@ type MessageCreate = components["schemas"]["MessageCreate"];
 export const useChatStore = defineStore('chat', () => {
   const chats = ref<ChatRead[]>([]);
   const selectedChat = ref<ChatReadWithMessages | null>(null);
+  const chatCreate = ref<ChatCreate>({
+    name: "",
+  });
 
   const isLoadingChats = ref(false);
   const isLoadingMessages = ref(false);
@@ -36,6 +39,21 @@ export const useChatStore = defineStore('chat', () => {
       apiError.value = err instanceof Error ? err.message : 'Unknown error occurred'
     } finally {
       isLoadingChats.value = false
+    }
+  }
+
+  async function createChat() {
+    isCreatingChat.value = true;
+    apiError.value = null;
+    try {
+      const { data, error: apiError } = await client.POST('/api/v1/chat_v2/chats/');
+
+      chats.value.push(data);
+    } catch (err) {
+      console.error('Error creating chat:', err)
+      apiError.value = err instanceof Error ? err.message : 'Unknown error occurred'
+    } finally {
+      isCreatingChat.value = false
     }
   }
 });

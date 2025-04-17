@@ -3,9 +3,11 @@ import { defineStore } from 'pinia'
 import { client } from './client'
 import type { components } from '../api'
 
+type ProjectOut = components['schemas']['ProjectOut'];
+
 export const useProjectStore = defineStore('project', () => {
-  const projects = ref<components['schemas']['ProjectOut'][]>([])
-  const currentProject = ref<components['schemas']['ProjectOut'] | null>(null)
+  const projects = ref<ProjectOut[]>([])
+  const currentProject = ref<ProjectOut | null>(null)
   const loading = ref(false)
   const error = ref<string | null>(null)
 
