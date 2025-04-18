@@ -978,6 +978,7 @@ dependencies = [
     { name = "transformers" },
     { name = "typer" },
     { name = "uvicorn" },
+    { name = "websockets" },
 ]
 
 [package.metadata]
@@ -1027,6 +1028,7 @@ requires-dist = [
     { name = "transformers", specifier = ">=4.49.0" },
     { name = "typer", extras = ["all"], specifier = ">=0.15.2" },
     { name = "uvicorn", specifier = ">=0.34.0" },
+    { name = "websockets", specifier = ">=15.0.1" },
 ]
 
 [[package]]

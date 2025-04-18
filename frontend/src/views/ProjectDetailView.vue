@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
+
+import { useQuery } from '@pinia/colada'
+import { getProjectApiV1ProjectsProjectIdGet } from '@/client'
 import { useRoute, useRouter } from 'vue-router'
-import { useProjectStore } from '@/stores/project'
 
 const activeTab = ref('details')
 
@@ -15,25 +17,24 @@ const tabs = [
 const setActiveTab = (tabId) => {
   activeTab.value = tabId
 }
-
 const route = useRoute()
 const router = useRouter()
-const projectStore = useProjectStore()
-const project = ref(null)
-const loading = ref(true)
-const error = ref(null)
 
-onMounted(async () => {
-  try {
-    const projectId = parseInt(route.params.id as string)
-    project.value = await projectStore.getProject(projectId)
-    loading.value = false
-  } catch (e) {
-    error.value = 'Failed to load project details'
-  } finally {
-    loading.value = false
-  }
+const {
+  state: project,
+  isLoading,
+  refresh,
+  refetch
+} = useQuery({
+  key: ["projects", route.params.id as string],
+  query: async () => await getProjectApiV1ProjectsProjectIdGet({
+    path: {
+      project_id: parseInt(route.params.id as string, 10)
+    }
+  })
 })
+
+
 
 const goBack = () => {
   router.push('/projects')
@@ -44,7 +45,7 @@ const editProject = () => {
 }
 
 const deleteProject = () => {
-  if (confirm(`Are you sure you want to delete "${project.value.name}"?`)) {
+  if (confirm(`Are you sure you want to delete "${project.value.data?.data?.name}"?`)) {
     try {
       // await projectStore.deleteProject(project.value.id);
       // router.push("/projects");
@@ -115,7 +116,7 @@ const deleteProject = () => {
     </div>
 
     <!-- Loading state -->
-    <div v-if="loading" class="bg-gray-800 rounded-lg shadow p-6 animate-pulse">
+    <div v-if="isLoading" class="bg-gray-800 rounded-lg shadow p-6 animate-pulse">
       <div class="h-8 bg-gray-700 rounded w-1/3 mb-4"></div>
       <div class="h-4 bg-gray-700 rounded w-full mb-2"></div>
       <div class="h-4 bg-gray-700 rounded w-5/6 mb-2"></div>
@@ -124,36 +125,36 @@ const deleteProject = () => {
     </div>
 
     <!-- Error state -->
-    <div v-else-if="error" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg">
-      <p>{{ error }}</p>
+    <div v-else-if="project.error" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg">
+      <p>{{ project.error }}</p>
       <button @click="goBack" class="mt-2 text-red-600 underline">Return to projects</button>
     </div>
 
     <!-- Project details -->
     <div v-else-if="project" class="bg-gray-800 rounded-lg shadow overflow-hidden">
       <div class="p-6">
-        <h2 class="text-3xl font-bold text-white mb-2">{{ project.name }}</h2>
+        <h2 class="text-3xl font-bold text-white mb-2">{{ project.data?.data?.name }}</h2>
         <div class="flex flex-wrap gap-2 mb-4">
           <span class="inline-block bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-sm">
-            {{ project.project_type }}
+            {{ project.data?.data?.project_type }}
           </span>
           <span
             class="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm"
-            v-if="project.framework"
+            v-if="project.data?.data?.framework"
           >
-            {{ project.framework }}
+            {{ project.data?.data.framework }}
           </span>
         </div>
 
         <div class="mb-6">
           <h3 class="text-lg font-semibold text-gray-200 mb-2">Description</h3>
-          <p class="text-gray-300">{{ project.description || 'No description available' }}</p>
+          <p class="text-gray-300">{{ project.data?.data?.description || 'No description available' }}</p>
         </div>
 
         <!-- You can add more sections based on your project model -->
-        <div class="mb-6" v-if="project.created_at">
+        <div class="mb-6" v-if="project">
           <h3 class="text-lg font-semibold text-gray-200 mb-2">Created</h3>
-          <p class="text-gray-300">{{ new Date(project.created_at).toLocaleString() }}</p>
+          <!-- <p class="text-gray-300">{{ new Date(project.created_at).toLocaleString() }}</p> -->
         </div>
 
         <!-- Files or other project resources -->
@@ -167,20 +168,6 @@ const deleteProject = () => {
               </div>
             </li>
           </ul>
-        </div>
-
-        <!-- Team members or other project metadata -->
-        <div class="mb-6" v-if="project.team_members && project.team_members.length">
-          <h3 class="text-lg font-semibold text-gray-200 mb-2">Team</h3>
-          <div class="flex flex-wrap gap-2">
-            <div
-              v-for="member in project.team_members"
-              :key="member.id"
-              class="flex items-center bg-gray-700 px-3 py-1 rounded-full"
-            >
-              <span class="text-gray-300">{{ member.name }}</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>

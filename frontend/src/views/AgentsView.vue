@@ -1,21 +1,29 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { tryOnMounted } from '@vueuse/core'
+import { useQuery } from '@pinia/colada';
 
-import { useAgentStore } from '@/stores/agent'
-import { storeToRefs } from 'pinia'
-import { useRouter } from 'vue-router'
-import DataTable from '@/components/DataTable.vue'
-import type { components } from '@/api'
+import { useRouter } from 'vue-router';
 
-type Agent = components['schemas']['Agent']
+import { getAgentsApiV1AgentsGet } from '@/client';
 
-const agentStore = useAgentStore()
-const { agents, currentAgent, getAgent } = storeToRefs(agentStore)
+import type { components } from '@/api';
+
+import DataTable from '@/components/DataTable.vue';
+type Agent = components['schemas']['Agent'];
+
+const {
+  state: agents,
+  asyncStatus,
+  isLoading,
+  refresh,
+  refetch
+} = useQuery({
+  key: ["agents"],
+  query: async () => getAgentsApiV1AgentsGet()
+})
 
 const router = useRouter()
 const loading = ref(false)
-
 const columns = [
   {
     key: 'name',
@@ -51,10 +59,6 @@ const submitHandler = async () => {
   await new Promise((r) => setTimeout(r, 1000))
   submitted.value = true
 }
-tryOnMounted(async () => {
-  await agentStore.fetchAgents()
-  loading.value = false
-})
 
 const handleRowClick = (agent: Agent) => {
   router.push(`/agents/${agent.id}`)
@@ -81,8 +85,8 @@ const handleSelectionChange = (selectedItems) => {
     </div>
     <DataTable
       :columns="columns"
-      :items="agents"
-      :loading="loading"
+      :items="agents.data?.data"
+      :loading="isLoading"
       :actions="actions"
       :items-per-page="5"
       bg-color="bg-gray-900"

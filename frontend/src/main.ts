@@ -1,17 +1,23 @@
-import './assets/main.css'
+import './assets/main.css';
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import {PiniaColada } from '@pinia/colada'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
-import App from './App.vue'
-import router from './router'
+import { PiniaColada } from '@pinia/colada';
+import PrimeVue from 'primevue/config';
+import App from './App.vue';
 
-const app = createApp(App)
+import router from './router';
 
-app.use(createPinia())
-app.use(PiniaColada, {})
+const app = createApp(App);
 
-app.use(router)
+app.use(createPinia());
+app.use(PiniaColada, {});
 
-app.mount('#app')
+app.use(PrimeVue, {
+  unstyled: true
+});
+
+app.use(router);
+
+app.mount('#app');

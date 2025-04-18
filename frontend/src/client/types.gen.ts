@@ -85,26 +85,29 @@ export type ArtifactUpdate = {
 export type Category = 'coding' | 'writing' | 'planning';
 
 export type Chat = {
-    name?: string | null;
+    name: string;
     created_at?: string;
     id?: number | null;
+    user_id: number;
 };
 
 export type ChatCreate = {
-    name?: string | null;
+    name: string;
     created_at?: string;
 };
 
 export type ChatRead = {
-    name?: string | null;
+    name: string;
     created_at?: string;
     id: number;
+    user: User;
 };
 
 export type ChatReadWithMessages = {
-    name?: string | null;
+    name: string;
     created_at?: string;
     id: number;
+    user: User;
     messages?: Array<MessageRead>;
 };
 
@@ -582,87 +585,87 @@ export type UpdateArtifactApiV1ArtifactsArtifactIdPutResponses = {
     200: unknown;
 };
 
-export type ReadChatsApiV1ChatV2ChatsGetData = {
+export type ReadChatsApiV1ChatChatsGetData = {
     body?: never;
     path?: never;
     query?: {
         skip?: number;
         limit?: number;
     };
-    url: '/api/v1/chat_v2/chats/';
+    url: '/api/v1/chat/chats/';
 };
 
-export type ReadChatsApiV1ChatV2ChatsGetErrors = {
+export type ReadChatsApiV1ChatChatsGetErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type ReadChatsApiV1ChatV2ChatsGetError = ReadChatsApiV1ChatV2ChatsGetErrors[keyof ReadChatsApiV1ChatV2ChatsGetErrors];
+export type ReadChatsApiV1ChatChatsGetError = ReadChatsApiV1ChatChatsGetErrors[keyof ReadChatsApiV1ChatChatsGetErrors];
 
-export type ReadChatsApiV1ChatV2ChatsGetResponses = {
+export type ReadChatsApiV1ChatChatsGetResponses = {
     /**
      * Successful Response
      */
     200: Array<ChatRead>;
 };
 
-export type ReadChatsApiV1ChatV2ChatsGetResponse = ReadChatsApiV1ChatV2ChatsGetResponses[keyof ReadChatsApiV1ChatV2ChatsGetResponses];
+export type ReadChatsApiV1ChatChatsGetResponse = ReadChatsApiV1ChatChatsGetResponses[keyof ReadChatsApiV1ChatChatsGetResponses];
 
-export type CreateChatApiV1ChatV2ChatsPostData = {
+export type CreateChatApiV1ChatChatsPostData = {
     body: ChatCreate;
     path?: never;
     query?: never;
-    url: '/api/v1/chat_v2/chats/';
+    url: '/api/v1/chat/chats/';
 };
 
-export type CreateChatApiV1ChatV2ChatsPostErrors = {
+export type CreateChatApiV1ChatChatsPostErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type CreateChatApiV1ChatV2ChatsPostError = CreateChatApiV1ChatV2ChatsPostErrors[keyof CreateChatApiV1ChatV2ChatsPostErrors];
+export type CreateChatApiV1ChatChatsPostError = CreateChatApiV1ChatChatsPostErrors[keyof CreateChatApiV1ChatChatsPostErrors];
 
-export type CreateChatApiV1ChatV2ChatsPostResponses = {
+export type CreateChatApiV1ChatChatsPostResponses = {
     /**
      * Successful Response
      */
     201: ChatRead;
 };
 
-export type CreateChatApiV1ChatV2ChatsPostResponse = CreateChatApiV1ChatV2ChatsPostResponses[keyof CreateChatApiV1ChatV2ChatsPostResponses];
+export type CreateChatApiV1ChatChatsPostResponse = CreateChatApiV1ChatChatsPostResponses[keyof CreateChatApiV1ChatChatsPostResponses];
 
-export type ReadChatApiV1ChatV2ChatsChatIdGetData = {
+export type ReadChatApiV1ChatChatsChatIdGetData = {
     body?: never;
     path: {
         chat_id: number;
     };
     query?: never;
-    url: '/api/v1/chat_v2/chats/{chat_id}';
+    url: '/api/v1/chat/chats/{chat_id}';
 };
 
-export type ReadChatApiV1ChatV2ChatsChatIdGetErrors = {
+export type ReadChatApiV1ChatChatsChatIdGetErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type ReadChatApiV1ChatV2ChatsChatIdGetError = ReadChatApiV1ChatV2ChatsChatIdGetErrors[keyof ReadChatApiV1ChatV2ChatsChatIdGetErrors];
+export type ReadChatApiV1ChatChatsChatIdGetError = ReadChatApiV1ChatChatsChatIdGetErrors[keyof ReadChatApiV1ChatChatsChatIdGetErrors];
 
-export type ReadChatApiV1ChatV2ChatsChatIdGetResponses = {
+export type ReadChatApiV1ChatChatsChatIdGetResponses = {
     /**
      * Successful Response
      */
     200: ChatReadWithMessages;
 };
 
-export type ReadChatApiV1ChatV2ChatsChatIdGetResponse = ReadChatApiV1ChatV2ChatsChatIdGetResponses[keyof ReadChatApiV1ChatV2ChatsChatIdGetResponses];
+export type ReadChatApiV1ChatChatsChatIdGetResponse = ReadChatApiV1ChatChatsChatIdGetResponses[keyof ReadChatApiV1ChatChatsChatIdGetResponses];
 
-export type ReadMessagesForChatApiV1ChatV2ChatsChatIdMessagesGetData = {
+export type ReadMessagesForChatApiV1ChatChatsChatIdMessagesGetData = {
     body?: never;
     path: {
         chat_id: number;
@@ -671,53 +674,53 @@ export type ReadMessagesForChatApiV1ChatV2ChatsChatIdMessagesGetData = {
         skip?: number;
         limit?: number;
     };
-    url: '/api/v1/chat_v2/chats/{chat_id}/messages/';
+    url: '/api/v1/chat/chats/{chat_id}/messages/';
 };
 
-export type ReadMessagesForChatApiV1ChatV2ChatsChatIdMessagesGetErrors = {
+export type ReadMessagesForChatApiV1ChatChatsChatIdMessagesGetErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type ReadMessagesForChatApiV1ChatV2ChatsChatIdMessagesGetError = ReadMessagesForChatApiV1ChatV2ChatsChatIdMessagesGetErrors[keyof ReadMessagesForChatApiV1ChatV2ChatsChatIdMessagesGetErrors];
+export type ReadMessagesForChatApiV1ChatChatsChatIdMessagesGetError = ReadMessagesForChatApiV1ChatChatsChatIdMessagesGetErrors[keyof ReadMessagesForChatApiV1ChatChatsChatIdMessagesGetErrors];
 
-export type ReadMessagesForChatApiV1ChatV2ChatsChatIdMessagesGetResponses = {
+export type ReadMessagesForChatApiV1ChatChatsChatIdMessagesGetResponses = {
     /**
      * Successful Response
      */
     200: Array<MessageRead>;
 };
 
-export type ReadMessagesForChatApiV1ChatV2ChatsChatIdMessagesGetResponse = ReadMessagesForChatApiV1ChatV2ChatsChatIdMessagesGetResponses[keyof ReadMessagesForChatApiV1ChatV2ChatsChatIdMessagesGetResponses];
+export type ReadMessagesForChatApiV1ChatChatsChatIdMessagesGetResponse = ReadMessagesForChatApiV1ChatChatsChatIdMessagesGetResponses[keyof ReadMessagesForChatApiV1ChatChatsChatIdMessagesGetResponses];
 
-export type CreateMessageForChatApiV1ChatV2ChatsChatIdMessagesPostData = {
+export type CreateMessageForChatApiV1ChatChatsChatIdMessagesPostData = {
     body: MessageCreate;
     path: {
         chat_id: number;
     };
     query?: never;
-    url: '/api/v1/chat_v2/chats/{chat_id}/messages/';
+    url: '/api/v1/chat/chats/{chat_id}/messages/';
 };
 
-export type CreateMessageForChatApiV1ChatV2ChatsChatIdMessagesPostErrors = {
+export type CreateMessageForChatApiV1ChatChatsChatIdMessagesPostErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type CreateMessageForChatApiV1ChatV2ChatsChatIdMessagesPostError = CreateMessageForChatApiV1ChatV2ChatsChatIdMessagesPostErrors[keyof CreateMessageForChatApiV1ChatV2ChatsChatIdMessagesPostErrors];
+export type CreateMessageForChatApiV1ChatChatsChatIdMessagesPostError = CreateMessageForChatApiV1ChatChatsChatIdMessagesPostErrors[keyof CreateMessageForChatApiV1ChatChatsChatIdMessagesPostErrors];
 
-export type CreateMessageForChatApiV1ChatV2ChatsChatIdMessagesPostResponses = {
+export type CreateMessageForChatApiV1ChatChatsChatIdMessagesPostResponses = {
     /**
      * Successful Response
      */
     201: MessageRead;
 };
 
-export type CreateMessageForChatApiV1ChatV2ChatsChatIdMessagesPostResponse = CreateMessageForChatApiV1ChatV2ChatsChatIdMessagesPostResponses[keyof CreateMessageForChatApiV1ChatV2ChatsChatIdMessagesPostResponses];
+export type CreateMessageForChatApiV1ChatChatsChatIdMessagesPostResponse = CreateMessageForChatApiV1ChatChatsChatIdMessagesPostResponses[keyof CreateMessageForChatApiV1ChatChatsChatIdMessagesPostResponses];
 
 export type GetAllNotesApiV1NotesGetData = {
     body?: never;

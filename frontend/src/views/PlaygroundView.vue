@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import ProjectCard from '@/components/projects/ProjectCard.vue'
+import { ref } from 'vue';
+import ProjectCard from '@/components/projects/ProjectCard.vue';
 </script>
 
 <template>

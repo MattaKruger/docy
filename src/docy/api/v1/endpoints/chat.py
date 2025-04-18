@@ -1,19 +1,18 @@
-# main.py (or wherever your FastAPI app/router is)
 from typing import List
 
 import sqlalchemy
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.future import select
-from sqlalchemy.orm import selectinload # For eager loading
+from sqlalchemy.orm import selectinload
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from docy.models.chat import (
     Chat, ChatCreate, ChatRead, ChatReadWithMessages,
     Message, MessageCreate, MessageRead
 )
-from docy.db.session import get_session # Assuming get_session is in dependencies.py
+from docy.db.session import get_session
 
-router = APIRouter(prefix="/chat_v2", tags=["chat_v2"])
+router = APIRouter(prefix="/chat", tags=["chat"])
 
 # == Chat Endpoints ==
 

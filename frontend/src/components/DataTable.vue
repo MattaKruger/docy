@@ -276,8 +276,8 @@ const resetPagination = () => {
 
     <!-- Table -->
     <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead :class="bgColor">
+      <table class="table min-w-full divide-y divide-gray-200">
+        <thead>
           <tr>
             <!-- Selection column -->
             <th

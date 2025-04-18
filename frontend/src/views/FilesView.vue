@@ -1,13 +1,12 @@
 <script setup lang="ts">
+import { useQuery } from '@pinia/colada';
+import { getFilesApiV1FilesGet, GetProjectsApiV1ProjectsGetData } from '@/client';
+
 import { ref, computed } from 'vue'
 import { tryOnMounted } from '@vueuse/core'
-import ProjectCombobox from '@/components/ProjectCombobox.vue';
-
-import { useFileStore } from '@/stores/file'
-import { useProjectStore } from '@/stores/project'
-
-import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
+
+import ProjectCombobox from '@/components/ProjectCombobox.vue';
 
 import type { components } from '@/api'
 
@@ -16,14 +15,20 @@ type Project = components['schemas']['Project']
 
 const router = useRouter()
 
-const fileStore = useFileStore()
-const projectStore = useProjectStore()
+const {
+  state: files,
+  asyncStatus,
+  isLoading,
+  refresh,
+  refetch
+} = useQuery({
+  key: ["files"],
+  query: async () =>
+})
 
-const { files } = storeToRefs(fileStore)
-const { projects } = storeToRefs(projectStore)
-const loading = ref(false)
 
-const selectedProject = ref(projects.value[0])
+
+
 const query = ref('')
 const filteredProjects = computed(() =>
   query.value === ''

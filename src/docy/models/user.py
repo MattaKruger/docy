@@ -4,6 +4,7 @@ from sqlmodel import Field, Relationship, SQLModel
 
 from .base import Base
 
+
 if TYPE_CHECKING:
     from .chat import Chat
     from .project import Project
@@ -16,6 +17,6 @@ class User(Base, SQLModel, table=True):
     projects: List["Project"] = Relationship(
         back_populates="user", sa_relationship_kwargs=dict(lazy="selectin", cascade="all, delete-orphan")
     )
-    # chats: List["Chat"] = Relationship(
-    #     back_populates="user", sa_relationship_kwargs=dict(lazy="selectin", cascade="all, delete-orphan")
-    # )
+    chats: List["Chat"] = Relationship(
+        back_populates="user", sa_relationship_kwargs=dict(lazy="selectin", cascade="all, delete-orphan")
+    )

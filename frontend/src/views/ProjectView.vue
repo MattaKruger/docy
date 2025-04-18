@@ -1,24 +1,28 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { tryOnMounted } from '@vueuse/core'
-
-import { useProjectStore } from '@/stores/project'
-import { storeToRefs } from 'pinia'
+import { useQuery } from "@pinia/colada"
 import { useRouter } from 'vue-router'
+import { getProjectsApiV1ProjectsGet } from "@/client"
+import type { components } from '@/api'
 
 import DataTable from '@/components/DataTable.vue'
 
-import type { components } from '@/api'
-
-type Project = components['schemas']['Project']
+type Project = components['schemas']['ProjectOut']
 
 const router = useRouter()
-const loading = ref(true)
 
-const projectStore = useProjectStore()
+const {
+  state: projects,
+  asyncStatus,
+  isLoading,
+  refresh,
+  refetch
+} = useQuery({
+  key: ["projects"],
+  query: async () => getProjectsApiV1ProjectsGet()
+})
+
 
 // TODO figure a way out to dynamically generate columns based on 'schemas[TYPE]' fields.
-// Prob not that hard.
 const columns = [
   {
     key: 'name',
@@ -71,13 +75,6 @@ const actions = [
   },
 ]
 
-tryOnMounted(async () => {
-  await projectStore.fetchProjects()
-  loading.value = false
-})
-
-const { projects } = storeToRefs(projectStore)
-
 const handleRowClick = (project: Project) => {
   router.push(`/projects/${project.id}`)
 }
@@ -88,7 +85,7 @@ const createNewProject = () => {
 
 // Handle project deletion
 const deleteProject = (id: number) => {
-  projects.value = projects.value.filter((p) => p.id !== id)
+  // projects.value = projects.value.filter((p) => p.id !== id)
 }
 
 const handleSelectionChange = (selectedItems) => {
@@ -111,8 +108,8 @@ const handleSelectionChange = (selectedItems) => {
 
     <DataTable
       :columns="columns"
-      :items="projects"
-      :loading="loading"
+      :items="projects.data?.data"
+      :loading="isLoading"
       :actions="actions"
       :items-per-page="5"
       bg-color="bg-gray-900"

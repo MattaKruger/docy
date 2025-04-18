@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
 const recentProjects = ref([
   { id: 1, name: 'Annual Report Analysis', date: '2023-11-15', progress: 75 },
   { id: 2, name: 'Market Research Summary', date: '2023-11-10', progress: 90 },
@@ -27,6 +26,7 @@ const stats = ref([
   <section
     class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg shadow-lg p-6 mb-8 text-white"
   >
+
     <h1 class="text-3xl font-bold mb-2">Welcome to Docy</h1>
     <p class="mb-4 max-w-2xl">
       Your intelligent document management system. Organize, analyze, and extract insights from your
@@ -47,7 +47,9 @@ const stats = ref([
       </button>
     </div>
   </section>
-
+  <div box-="square">
+    <h1>Hi Mom</h1>
+  </div>
   <!-- Stats Overview -->
   <section class="mb-8">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">

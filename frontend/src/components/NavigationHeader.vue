@@ -1,33 +1,24 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 
-const props = defineProps({
-  siteTitle: {
-    type: String,
-    default: 'Docy',
-  },
-  title: {
-    type: String,
-    default: 'Navigation',
-  },
-  items: {
-    type: Array,
-    default: () => [],
-  },
-  isOpen: {
-    type: Boolean,
-    default: true,
-  },
-  headerLinks: {
-    type: Array,
-    default: () => [
-      { text: 'Home', href: '/' },
-      { text: 'Projects', href: '/projects' },
-      { text: 'Agents', href: '/agents' },
-      { text: 'Files', href: '/files' },
-    ],
-  },
-})
+
+interface Item {
+  text: string;
+  icon: string;
+}
+
+interface HeaderLink {
+  text: string;
+  href: string
+}
+
+const props = defineProps<{
+  siteTitle?: string
+  title?: string
+  items?: Array<Item>
+  isOpen?: boolean
+  headerLinks?: Array<HeaderLink>
+}>();
 
 const emit = defineEmits(['toggle', 'item-click', 'header-link-click'])
 
@@ -38,11 +29,11 @@ const toggleSidebar = () => {
   emit('toggle', sidebarOpen.value)
 }
 
-const handleItemClick = (item) => {
+const handleItemClick = (item: Item) => {
   emit('item-click', item)
 }
 
-const handleHeaderLinkClick = (link) => {
+const handleHeaderLinkClick = (link: HeaderLink) => {
   emit('header-link-click', link)
 }
 
